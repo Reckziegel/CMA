@@ -3,9 +3,10 @@
 #' This function glues back any arbitrary copula to marginal distributions
 #' of any kind.
 #'
-#' @param x A rectangular data structure with the marginals.
-#' @param u A rectangular data structure with the cdf's.
-#' @param U A rectangular data structure with the copulas.
+#' @param x A rectangular (non-tidy) data structure with the sorted marginals
+#' (ascending order).#' .
+#' @param u A rectangular (non-tidy) data structure with the CDF's.
+#' @param U A rectangular (non-tidy) data structure with the copulas.
 #'
 #' @return A \code{tbl} with the joint scenarios.
 #'
@@ -15,6 +16,7 @@
 #' set.seed(123)
 #'
 #' margins <- matrix(stats::rnorm(20), ncol = 2)
+#' colnames(margins) <- c("a", "b")
 #' probs   <- rep(1 / 25, 25)
 #'
 #' # separate

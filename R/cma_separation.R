@@ -1,16 +1,15 @@
 #' CMA Separation Step
 #'
-#' This function decomposes the the pure "individual" features contained in the
+#' This function decomposes the the pure "individual" features in the
 #' marginal distributions from the pure "joint" information available in the copulas.
 #'
-#' Arguments \code{x} and \code{p} must have the same number of rows. The function accepts data
-#' from the classes \code{numeric}, \code{matrix}, \code{xts} or \code{tbl}.
+#' Arguments \code{x} and \code{p} must have the same size.
 #'
-#' @param x A rectangular data structure where each column is a margin and each
-#' row is a joint realization.
-#' @param p A rectangular data structure of probabilities.
+#' @param x A rectangular (non-tidy) data structure.
+#' @param p A probability vector.
 #'
-#' @return An S3 list of the \code{cma} class.
+#' @return An S3 list of the \code{cma} class that contains two elements:
+#' \code{marginal} and \code{copula}.
 #'
 #' @export
 #'

@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' panic_copula(N = 2, J = 10, calm_cor = 0.3, panic_cor = 0.99, panic_prob = 0.02, sigma = 0.2)
-panic_copula <- function(N = 2, J = 50000, calm_cor = 0.3, panic_cor = .99, panic_prob = .02, sigma = 0.2) {
+panic_copula <- function(N = 2, J = 10000, calm_cor = 0.6, panic_cor = 0.99, panic_prob = 0.02, sigma = 0.2) {
 
   assertthat::assert_that(assertthat::is.number(N))
   assertthat::assert_that(assertthat::is.number(J))

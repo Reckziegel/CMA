@@ -7,11 +7,12 @@
 cma_combination(x, u, U)
 }
 \arguments{
-\item{x}{A rectangular data structure with the marginals.}
+\item{x}{A rectangular (non-tidy) data structure with the sorted marginals
+(ascending order).#' .}
 
-\item{u}{A rectangular data structure with the cdf's.}
+\item{u}{A rectangular (non-tidy) data structure with the CDF's.}
 
-\item{U}{A rectangular data structure with the copulas.}
+\item{U}{A rectangular (non-tidy) data structure with the copulas.}
 }
 \value{
 A \code{tbl} with the joint scenarios.
@@ -24,6 +25,7 @@ of any kind.
 set.seed(123)
 
 margins <- matrix(stats::rnorm(20), ncol = 2)
+colnames(margins) <- c("a", "b")
 probs   <- rep(1 / 25, 25)
 
 # separate

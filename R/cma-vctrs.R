@@ -5,7 +5,7 @@
 #'
 #' @return An objecto of the cma class.
 #'
-#' @export
+#' @keywords internal
 new_cma_separation <- function(x, ...) {
 
   dots <- as.list(...)
@@ -21,7 +21,7 @@ new_cma_separation <- function(x, ...) {
 }
 
 #' @rdname new_cma_separation
-#' @export
+#' @keywords internal
 new_cma_to_print <- function(x, ...) {
   tibble::new_tibble(x, nrow = nrow(x), class = "new_cma_to_print", ...)
 }
@@ -33,8 +33,8 @@ tbl_sum.new_cma_to_print <- function(x, ...) {
 }
 
 
-#' @export
 #' @importFrom vctrs obj_print_data
+#' @export
 obj_print_data.cma <- function(x, ...) {
   x <- new_cma_to_print(tibble::enframe(x, name = "argument"))
   print(x)

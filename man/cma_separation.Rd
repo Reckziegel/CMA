@@ -22,21 +22,20 @@ cma_separation(x, p = NULL)
 \method{cma_separation}{tbl}(x, p = NULL)
 }
 \arguments{
-\item{x}{A rectangular data structure where each column is a margin and each
-row is a joint realization.}
+\item{x}{A rectangular (non-tidy) data structure.}
 
-\item{p}{A rectangular data structure of probabilities.}
+\item{p}{A probability vector.}
 }
 \value{
-An S3 list of the \code{cma} class.
+An S3 list of the \code{cma} class that contains two elements:
+\code{marginal} and \code{copula}.
 }
 \description{
-This function decomposes the the pure "individual" features contained in the
+This function decomposes the the pure "individual" features in the
 marginal distributions from the pure "joint" information available in the copulas.
 }
 \details{
-Arguments \code{x} and \code{p} must have the same number of rows. The function accepts data
-from the classes \code{numeric}, \code{matrix}, \code{xts} or \code{tbl}.
+Arguments \code{x} and \code{p} must have the same size.
 }
 \examples{
 set.seed(123)

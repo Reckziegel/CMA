@@ -20,3 +20,4 @@ An objecto of the cma class.
 \description{
 Object created to make printing prettier.
 }
+\keyword{internal}

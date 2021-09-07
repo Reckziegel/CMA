@@ -1,6 +1,6 @@
 #' Simulations with Exact Means and Covariances
 #'
-#' This function generate scenarios from elliptical distributions in which the
+#' Generates scenarios from elliptical distributions in which the
 #' sample moments match the populational moments.
 #'
 #' @param M A \code{1xN} matrix with the location parameter of each invariant (asset).
@@ -15,7 +15,7 @@
 #' rets  <- diff(log(EuStockMarkets))
 #' mu    <- colMeans(rets)
 #' sigma <- stats::cov(rets)
-#' match_moments_normal(M = mu, S = sigma, J = 50)
+#' match_moments_normal(M = mu, S = sigma, J = 10)
 match_moments_normal <- function(M, S, J) {
 
   assertthat::assert_that(assertthat::is.number(J))
