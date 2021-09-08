@@ -30,7 +30,6 @@ match_moments_normal <- function(M, S, J) {
 
   N <- length(M)
 
-
   # generate antithetic variables (mean = 0)
   Y <- MASS::mvrnorm(n = J / 2, mu = matrix(0, N, 1), Sigma = S)
   Y <- rbind(Y, -Y)

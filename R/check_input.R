@@ -29,5 +29,5 @@ check_input.xts <- function(x) {
 
 #' @rdname check_input
 check_input.tbl <- function(x) {
-  as.matrix(dplyr::select_if(x, is.numeric))
+  as.matrix(dplyr::select(x, where(is.numeric)))
 }

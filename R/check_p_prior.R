@@ -17,7 +17,7 @@ check_p_prior.numeric <- function(p) {
   p <- as.matrix(p)
   if (sum(p) > 1.00001 | sum(p) < 0.99998) {
     stop("The probabilities must sum 1.", call. = FALSE)
-  } else if (any(p < 0.0001)) {
+  } else if (any(p < -0.00001)) {
     stop("The probabilities cann't be negative.", .call = FALSE)
   }
   p
@@ -28,7 +28,7 @@ check_p_prior.matrix <- function(p) {
   p <- matrix(p, ncol = 1)
   if (sum(p) > 1.00001 | sum(p) < 0.99998) {
     stop("The probabilities must sum 1.", call. = FALSE)
-  } else if (any(p < 0.0001)) {
+  } else if (any(p < -0.0001)) {
     stop("The probabilities cann't be negative.", .call = FALSE)
   }
   p
@@ -39,7 +39,7 @@ check_p_prior.xts <- function(p) {
   p <- matrix(p, ncol = 1)
   if (sum(p) > 1.00001 | sum(p) < 0.99998) {
     stop("The probabilities must sum 1.", call. = FALSE)
-  } else if (any(p < 0.0001)) {
+  } else if (any(p < -0.0001)) {
     stop("The probabilities cann't be negative.", .call = FALSE)
   }
   p
@@ -50,7 +50,7 @@ check_p_prior.tbl <- function(p) {
   p <- matrix(dplyr::select_if(p, is.numeric), ncol = 1)
   if (sum(p) > 1.00001 | sum(p) < 0.99998) {
     stop("The probabilities must sum 1.", call. = FALSE)
-  } else if (any(p < 0.0001)) {
+  } else if (any(p < -0.0001)) {
     stop("The probabilities cann't be negative.", .call = FALSE)
   }
   p
