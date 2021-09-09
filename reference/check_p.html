@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Functions to check the consistency of input arguments. — check_input • CMA</title>
+<title>Functions to check the consistency of prior probabilities. — check_p • CMA</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Functions to check the consistency of input arguments. — check_input" />
-<meta property="og:description" content="Functions to check the consistency of input arguments." />
+<meta property="og:title" content="Functions to check the consistency of prior probabilities. — check_p" />
+<meta property="og:description" content="Functions to check the consistency of prior probabilities." />
 
 
 
@@ -108,47 +108,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Functions to check the consistency of input arguments.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Reckziegel/CMA/blob/master/R/check_input.R'><code>R/check_input.R</code></a></small>
-    <div class="hidden name"><code>check_input.Rd</code></div>
+    <h1>Functions to check the consistency of prior probabilities.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Reckziegel/CMA/blob/master/R/check_p.R'><code>R/check_p.R</code></a></small>
+    <div class="hidden name"><code>check_p.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Functions to check the consistency of input arguments.</p>
+    <p>Functions to check the consistency of prior probabilities.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_input</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>check_p</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>check_input</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>check_p</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>check_input</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>check_p</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>check_input</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>check_p</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 
 <span class='co'># S3 method for xts</span>
-<span class='fu'>check_input</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>check_p</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>check_input</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>check_p</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 
 <span class='co'># S3 method for tbl</span>
-<span class='fu'>check_input</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+<span class='fu'>check_p</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>p</th>
       <td><p>A vector, a matrix, a xts or a tibble object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix object.</p>
+    <p>A matrix object with 1 column.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#</span>
