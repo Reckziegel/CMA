@@ -25,18 +25,19 @@ cma_separation <- function(x, p = NULL) {
 #' @rdname cma_separation
 #' @export
 cma_separation.default <- function(x, p = NULL) {
-  stop(paste0("CMA doesn't support the `", class(x), "` class yet.", call. = FALSE))
+  stop("CMA doesn't support the `", class(x), "` class yet.", call. = FALSE)
 }
 
 #' @rdname cma_separation
 #' @export
 cma_separation.matrix <- function(x, p = NULL) {
 
+  x <- check_input(x)
   assert_is_multivariate(x)
-  if (is_empty(p)) {
+  if (is.null(p)) {
     p <- rep(1 / NROW(x), NROW(x))
   } else {
-    assert_is_prob(p)
+    p <- check_p(p)
   }
 
   new_cma_separation(x, cma_separate(x = x, p = p))
@@ -47,13 +48,13 @@ cma_separation.matrix <- function(x, p = NULL) {
 #' @export
 cma_separation.xts <- function(x, p = NULL) {
 
+  x <- check_input(x)
   assert_is_multivariate(x)
-  if (is_empty(p)) {
+  if (is.null(p)) {
     p <- rep(1 / NROW(x), NROW(x))
   } else {
-    assert_is_prob(p)
+    p <- check_p(p)
   }
-  x <- sanitize(x)
 
   new_cma_separation(x, cma_separate(x = x, p = p))
 
@@ -79,14 +80,13 @@ cma_separation.xts <- function(x, p = NULL) {
 #' @export
 cma_separation.data.frame <- function(x, p = NULL) {
 
-  index <- dplyr::if_else(any_is_date(x), get_date_col(x), NULL)
-  x <- get_double_col(x)
-
+  x <- check_input(x)
   assert_is_multivariate(x)
-  assert_is_prob(p)
-
-  names <- names(x)
-  x <- as.matrix(x)
+  if (is.null(p)) {
+    p <- rep(1 / NROW(x), NROW(x))
+  } else {
+    p <- check_p(p)
+  }
 
   new_cma_separation(x, cma_separate(x = x, p = p))
 
@@ -95,10 +95,17 @@ cma_separation.data.frame <- function(x, p = NULL) {
 #' @rdname cma_separation
 #' @export
 cma_separation.tbl <- function(x, p = NULL) {
+
+  x <- check_input(x)
   assert_is_multivariate(x)
-  assert_is_prob(p)
-  x <- matrix(x, nrow = NROW(x), ncol = NCOL(x))
+  if (is.null(p)) {
+    p <- rep(1 / NROW(x), NROW(x))
+  } else {
+    p <- check_p(p)
+  }
+
   new_cma_separation(x, cma_separate(x = x, p = p))
+
 }
 
 

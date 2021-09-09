@@ -23,15 +23,6 @@
 #' colMeans(simulate_normal(mu, sigma, 10000))
 simulate_normal <- function(mu, sigma, n) {
 
-    # # Check Parameters
-    # if (method == "CPCA" && is.null(d)) {
-    #     method <- "PCA"
-    # }
-    #
-    # if (is.vector(sigma2)) {
-    #     sigma2 <- as.matrix(sigma2)
-    # }
-
     # Setup
     n_row <- nrow(sigma)
     half  <- ceiling(n / 2)
@@ -48,7 +39,7 @@ simulate_normal <- function(mu, sigma, n) {
     x[(half + 1):n, ] <- x_check_anti[1:(n - half), ]
 
     # Step 3: twist scenarios
-    x_ <- twist_scenarios_mom_match(x = x, mu = mu, sigma = sigma, p = NULL, method = "Riccati")
+    x_ <- affine_scenarios(x = x, mu = mu, sigma = sigma, p = NULL)
     x_
 }
 
@@ -67,7 +58,7 @@ simulate_t <- function(mu, sigma, nu, n, stoc_rep = FALSE) {
     if (stoc_rep == FALSE) {
 
         # ## Step 1: Riccati root
-        sigma <- transpose_square_root(sigma = sigma)
+        sigma <- solve_riccati(sigma)
 
         # ## Step 2: Radial scenarios
         u <- stats::runif(n = n, min = 0, max = 1) # uniform sample

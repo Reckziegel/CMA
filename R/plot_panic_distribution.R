@@ -22,7 +22,7 @@ plot_panic_distribution <- function(pnl, p = NULL, breaks) {
     if (is_empty(p)) {
         p <- rep(1 / NROW(pnl), NROW(pnl))
     } else {
-        assert_is_prob(p)
+        p <- check_p(p)
     }
 
     dist <- graphics::hist(x = pnl, breaks = breaks, plot = FALSE)

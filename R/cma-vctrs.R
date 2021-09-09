@@ -3,7 +3,7 @@
 #' @param x An object
 #' @param ... Additional arguments.
 #'
-#' @return An objecto of the cma class.
+#' @return An object of the cma class.
 #'
 #' @keywords internal
 new_cma_separation <- function(x, ...) {

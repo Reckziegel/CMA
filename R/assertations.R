@@ -14,12 +14,12 @@ assert_is_univariate <- function(x) {
   )
 }
 
-#' @keywords internal
-assert_is_prob <- function(p) {
-  assertthat::assert_that(is.double(p), msg = "`p` must be a double vector.")
-  assertthat::assert_that(abs(sum(p) - 1) < 0.001, msg = "`p` must sum up to 1.")
-  assertthat::assert_that(all(p > 0), msg = "`p` must contain only positive values.")
-}
+# @keywords internal
+# assert_is_prob <- function(p) {
+#   assertthat::assert_that(is.double(p), msg = "`p` must be a double vector.")
+#   assertthat::assert_that(abs(sum(p) - 1) < 0.001, msg = "`p` must sum up to 1.")
+#   assertthat::assert_that(all(p > 0), msg = "`p` must contain only positive values.")
+# }
 
 #' @keywords internal
 assert_cols_length <- function(x, y) {

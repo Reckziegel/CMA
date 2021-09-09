@@ -35,9 +35,9 @@ cma_combination <- function(x, u, U) {
   #assert_rows_length(x, U)
   #assert_rows_length(u, U)
 
-  x <- sanitize(x)
-  u <- sanitize(u)
-  U <- sanitize(U)
+  x <- check_input(x)
+  u <- check_input(u)
+  U <- check_input(U)
 
   cma_combine(x = x, u = u, U = U)
 

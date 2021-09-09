@@ -15,7 +15,7 @@ new_cma_to_print(x, ...)
 \item{...}{Additional arguments.}
 }
 \value{
-An objecto of the cma class.
+An object of the cma class.
 }
 \description{
 Object created to make printing prettier.

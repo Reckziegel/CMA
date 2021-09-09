@@ -2,19 +2,25 @@
 % Please edit documentation in R/check_input.R
 \name{check_input}
 \alias{check_input}
+\alias{check_input.default}
 \alias{check_input.numeric}
 \alias{check_input.matrix}
 \alias{check_input.xts}
+\alias{check_input.data.frame}
 \alias{check_input.tbl}
 \title{Functions to check the consistency of input arguments.}
 \usage{
 check_input(x)
+
+\method{check_input}{default}(x)
 
 \method{check_input}{numeric}(x)
 
 \method{check_input}{matrix}(x)
 
 \method{check_input}{xts}(x)
+
+\method{check_input}{data.frame}(x)
 
 \method{check_input}{tbl}(x)
 }
@@ -30,4 +36,3 @@ Functions to check the consistency of input arguments.
 \examples{
 #
 }
-\keyword{internal}
