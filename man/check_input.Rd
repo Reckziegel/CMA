@@ -8,7 +8,7 @@
 \alias{check_input.xts}
 \alias{check_input.data.frame}
 \alias{check_input.tbl}
-\title{Functions to check the consistency of input arguments.}
+\title{Internal Functions to check the consistency of input arguments.}
 \usage{
 check_input(x)
 
@@ -31,7 +31,7 @@ check_input(x)
 A matrix object.
 }
 \description{
-Functions to check the consistency of input arguments.
+Internal Functions to check the consistency of input arguments.
 }
 \examples{
 #

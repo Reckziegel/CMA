@@ -1,6 +1,6 @@
 #' CMA Separation Step
 #'
-#' This function decomposes the the pure "individual" features in the
+#' Decomposes the the pure "individual" features in the
 #' marginal distributions from the pure "joint" information available in the copulas.
 #'
 #' Arguments \code{x} and \code{p} must have the same size.

@@ -8,7 +8,7 @@
 \alias{check_p.xts}
 \alias{check_p.data.frame}
 \alias{check_p.tbl}
-\title{Functions to check the consistency of prior probabilities.}
+\title{Internal functions to check the consistency of probabilities.}
 \usage{
 check_p(p)
 
@@ -31,7 +31,7 @@ check_p(p)
 A matrix object with 1 column.
 }
 \description{
-Functions to check the consistency of prior probabilities.
+Internal functions to check the consistency of probabilities.
 }
 \examples{
 #

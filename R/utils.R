@@ -34,3 +34,6 @@ get_double_col <- function(x) {
 
 #' @keywords internal
 has_dim <- function(x) !is.null(dim(x))
+
+#' @keywords internal
+has_names <- function(x) !is.null(colnames(x))

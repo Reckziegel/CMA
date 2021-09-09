@@ -4,22 +4,21 @@
 \alias{cma_combination}
 \title{CMA combination Step}
 \usage{
-cma_combination(x, u, U)
+cma_combination(x, cdf, copula)
 }
 \arguments{
 \item{x}{A rectangular (non-tidy) data structure with the sorted marginals
-(ascending order).#' .}
+(ascending order).}
 
-\item{u}{A rectangular (non-tidy) data structure with the CDF's.}
+\item{cdf}{A rectangular (non-tidy) data structure with the CDF's.}
 
-\item{U}{A rectangular (non-tidy) data structure with the copulas.}
+\item{copula}{A rectangular (non-tidy) data structure with the copulas.}
 }
 \value{
 A \code{tbl} with the joint scenarios.
 }
 \description{
-This function glues back any arbitrary copula to marginal distributions
-of any kind.
+Joins copulas and marginals into the same dataset.
 }
 \examples{
 set.seed(123)
@@ -31,7 +30,7 @@ probs   <- rep(1 / 25, 25)
 # separate
 sep <- cma_separation(x = margins, p = probs)
 # combinate
-comb <- cma_combination(x = attributes(sep)$ord_margin, u = attributes(sep)$cdf, U = sep$copula)
+comb <- cma_combination(attributes(sep)$ord_margin, attributes(sep)$cdf, sep$copula)
 
 # The result is identical
 stopifnot(all.equal(margins, comb))

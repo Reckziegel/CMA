@@ -1,4 +1,4 @@
-#' Functions to check the consistency of input arguments.
+#' Internal Functions to check the consistency of input arguments.
 #'
 #' @param x A vector, a matrix, a xts or a tibble object.
 #'

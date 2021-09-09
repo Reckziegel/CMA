@@ -31,7 +31,7 @@ An S3 list of the \code{cma} class that contains two elements:
 \code{marginal} and \code{copula}.
 }
 \description{
-This function decomposes the the pure "individual" features in the
+Decomposes the the pure "individual" features in the
 marginal distributions from the pure "joint" information available in the copulas.
 }
 \details{

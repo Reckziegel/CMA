@@ -1,4 +1,4 @@
-#' Functions to check the consistency of prior probabilities.
+#' Internal functions to check the consistency of probabilities.
 #'
 #' @param p A vector, a matrix, a xts or a tibble object.
 #'

@@ -1,12 +1,11 @@
 #' CMA combination Step
 #'
-#' This function glues back any arbitrary copula to marginal distributions
-#' of any kind.
+#' Joins copulas and marginals into the same dataset.
 #'
 #' @param x A rectangular (non-tidy) data structure with the sorted marginals
-#' (ascending order).#' .
-#' @param u A rectangular (non-tidy) data structure with the CDF's.
-#' @param U A rectangular (non-tidy) data structure with the copulas.
+#' (ascending order).
+#' @param cdf A rectangular (non-tidy) data structure with the CDF's.
+#' @param copula A rectangular (non-tidy) data structure with the copulas.
 #'
 #' @return A \code{tbl} with the joint scenarios.
 #'
@@ -22,11 +21,11 @@
 #' # separate
 #' sep <- cma_separation(x = margins, p = probs)
 #' # combinate
-#' comb <- cma_combination(x = attributes(sep)$ord_margin, u = attributes(sep)$cdf, U = sep$copula)
+#' comb <- cma_combination(attributes(sep)$ord_margin, attributes(sep)$cdf, sep$copula)
 #'
 #' # The result is identical
 #' stopifnot(all.equal(margins, comb))
-cma_combination <- function(x, u, U) {
+cma_combination <- function(x, cdf, copula) {
 
   #assert_cols_length(x, u)
   #assert_cols_length(x, U)
@@ -36,9 +35,9 @@ cma_combination <- function(x, u, U) {
   #assert_rows_length(u, U)
 
   x <- check_input(x)
-  u <- check_input(u)
-  U <- check_input(U)
+  u <- check_input(cdf)
+  U <- check_input(copula)
 
-  cma_combine(x = x, u = u, U = U)
+  cma_combine(x = x, u = cdf, U = copula)
 
 }
