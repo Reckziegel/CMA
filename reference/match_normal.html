@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Panic-Copula for Stress-Testing — panic_copula • CMA</title>
+<title>Moment Matching for the Normal Distribution — match_normal • CMA</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Panic-Copula for Stress-Testing — panic_copula" />
-<meta property="og:description" content="This function generates a large dimensional panic copula that can be further
-used for stress-testing and panic-aware portfolio optimization." />
+<meta property="og:title" content="Moment Matching for the Normal Distribution — match_normal" />
+<meta property="og:description" content="Generates scenarios from the normal distribution that exactly matches
+the first two moments." />
 
 
 
@@ -109,87 +109,75 @@ used for stress-testing and panic-aware portfolio optimization." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Panic-Copula for Stress-Testing</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Reckziegel/CMA/blob/master/R/panic_copula.R'><code>R/panic_copula.R</code></a></small>
-    <div class="hidden name"><code>panic_copula.Rd</code></div>
+    <h1>Moment Matching for the Normal Distribution</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Reckziegel/CMA/blob/master/R/moment_matching.R'><code>R/moment_matching.R</code></a></small>
+    <div class="hidden name"><code>match_normal.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function generates a large dimensional panic copula that can be further
-used for stress-testing and panic-aware portfolio optimization.</p>
+    <p>Generates scenarios from the normal distribution that exactly matches
+the first two moments.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>panic_copula</span><span class='op'>(</span>
-  N <span class='op'>=</span> <span class='fl'>2</span>,
-  J <span class='op'>=</span> <span class='fl'>10000</span>,
-  calm_cor <span class='op'>=</span> <span class='fl'>0.6</span>,
-  panic_cor <span class='op'>=</span> <span class='fl'>0.99</span>,
-  panic_prob <span class='op'>=</span> <span class='fl'>0.02</span>,
-  sigma <span class='op'>=</span> <span class='fl'>0.2</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>match_normal</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>n</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>N</th>
-      <td><p>A numeric value with the number of assets.</p></td>
-    </tr>
-    <tr>
-      <th>J</th>
-      <td><p>A numeric value with the number of scenarios to be generated.</p></td>
-    </tr>
-    <tr>
-      <th>calm_cor</th>
-      <td><p>A numeric value for the correlation in calm markets.</p></td>
-    </tr>
-    <tr>
-      <th>panic_cor</th>
-      <td><p>A numeric value for the correlation in panic markets.</p></td>
-    </tr>
-    <tr>
-      <th>panic_prob</th>
-      <td><p>A numeric value with the probability in which panic markets
-can be triggered.</p></td>
+      <th>mu</th>
+      <td><p>A <code>double</code> with the location parameter.</p></td>
     </tr>
     <tr>
       <th>sigma</th>
-      <td><p>The unconditional volatility of the joint-distribution.</p></td>
+      <td><p>A variance-covariance <code>matrix</code> the dispersion parameter.</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>An <code>integer</code> with the number of scenarios to be generated.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object with <code>N</code> columns and <code>J</code> rows.</p>
+    <p>#TODO</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='match_t.html'>match_t</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>panic_copula</span><span class='op'>(</span>N <span class='op'>=</span> <span class='fl'>2</span>, J <span class='op'>=</span> <span class='fl'>10</span>, calm_cor <span class='op'>=</span> <span class='fl'>0.3</span>, panic_cor <span class='op'>=</span> <span class='fl'>0.99</span>, panic_prob <span class='op'>=</span> <span class='fl'>0.02</span>, sigma <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $Y
-#&gt;              [,1]        [,2]
-#&gt;  [1,]  0.02284182 -0.26705571
-#&gt;  [2,] -0.18180278  0.12092379
-#&gt;  [3,]  0.12092379  0.06978359
-#&gt;  [4,]  0.06978359  0.02284182
-#&gt;  [5,]  0.26705571  0.18180278
-#&gt;  [6,] -0.02284182  0.26705571
-#&gt;  [7,]  0.18180278 -0.12092379
-#&gt;  [8,] -0.12092379 -0.06978359
-#&gt;  [9,] -0.06978359 -0.02284182
-#&gt; [10,] -0.26705571 -0.18180278
-#&gt; 
-#&gt; $p_
-#&gt;       [,1]
-#&gt;  [1,]  0.1
-#&gt;  [2,]  0.1
-#&gt;  [3,]  0.1
-#&gt;  [4,]  0.1
-#&gt;  [5,]  0.1
-#&gt;  [6,]  0.1
-#&gt;  [7,]  0.1
-#&gt;  [8,]  0.1
-#&gt;  [9,]  0.1
-#&gt; [10,]  0.1
-#&gt; </div></pre>
+    <pre class="examples"><div class='input'><span class='va'>x</span>     <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>mu</span>    <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='va'>sigma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>match_normal</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;               [,1]         [,2]         [,3]         [,4]
+#&gt;  [1,] -0.002028885 -0.009268531 -0.009977048 -0.001287507
+#&gt;  [2,] -0.002958265  0.005832372 -0.003125622  0.010325578
+#&gt;  [3,] -0.005787895 -0.010920803 -0.010984207 -0.003051279
+#&gt;  [4,]  0.022208973  0.012842283  0.013172433  0.012235431
+#&gt;  [5,] -0.001382765  0.005125090 -0.013513566 -0.007588792
+#&gt;  [6,]  0.003332968  0.010904330  0.010851156  0.002151477
+#&gt;  [7,]  0.004262349 -0.004196573  0.003999730 -0.009461608
+#&gt;  [8,]  0.007091978  0.012556602  0.011858314  0.003915249
+#&gt;  [9,] -0.020904889 -0.011206484 -0.012298325 -0.011371461
+#&gt; [10,]  0.002686849 -0.003489291  0.014387674  0.008452762</div><div class='input'>
+<span class='co'># correlation structure is similar</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            DAX       SMI       CAC      FTSE
+#&gt; DAX  1.0000000 0.7031219 0.7344304 0.6394674
+#&gt; SMI  0.7031219 1.0000000 0.6160454 0.5847791
+#&gt; CAC  0.7344304 0.6160454 1.0000000 0.6485679
+#&gt; FTSE 0.6394674 0.5847791 0.6485679 1.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'>match_normal</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>10000</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           [,1]      [,2]      [,3]      [,4]
+#&gt; [1,] 1.0000000 0.7031219 0.7344304 0.6394674
+#&gt; [2,] 0.7031219 1.0000000 0.6160454 0.5847791
+#&gt; [3,] 0.7344304 0.6160454 1.0000000 0.6485679
+#&gt; [4,] 0.6394674 0.5847791 0.6485679 1.0000000</div><div class='input'>
+<span class='co'># as the location parameters</span>
+<span class='va'>mu</span>
+</div><div class='output co'>#&gt;          DAX          SMI          CAC         FTSE 
+#&gt; 0.0006520417 0.0008178997 0.0004370540 0.0004319851 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'>match_normal</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>10000</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0006520417 0.0008178997 0.0004370540 0.0004319851</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

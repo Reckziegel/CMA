@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="CMA combination Step — cma_combination" />
-<meta property="og:description" content="This function glues back any arbitrary copula to marginal distributions
-of any kind." />
+<meta property="og:description" content="Joins copulas and marginals into the same dataset." />
 
 
 
@@ -115,11 +114,10 @@ of any kind." />
     </div>
 
     <div class="ref-description">
-    <p>This function glues back any arbitrary copula to marginal distributions
-of any kind.</p>
+    <p>Joins copulas and marginals into the same dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cma_combination</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>u</span>, <span class='va'>U</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cma_combination</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cdf</span>, <span class='va'>copula</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,14 +125,14 @@ of any kind.</p>
     <tr>
       <th>x</th>
       <td><p>A rectangular (non-tidy) data structure with the sorted marginals
-(ascending order).#' .</p></td>
+(ascending order).</p></td>
     </tr>
     <tr>
-      <th>u</th>
+      <th>cdf</th>
       <td><p>A rectangular (non-tidy) data structure with the CDF's.</p></td>
     </tr>
     <tr>
-      <th>U</th>
+      <th>copula</th>
       <td><p>A rectangular (non-tidy) data structure with the copulas.</p></td>
     </tr>
     </table>
@@ -153,7 +151,7 @@ of any kind.</p>
 <span class='co'># separate</span>
 <span class='va'>sep</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cma_separation.html'>cma_separation</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>margins</span>, p <span class='op'>=</span> <span class='va'>probs</span><span class='op'>)</span>
 <span class='co'># combinate</span>
-<span class='va'>comb</span> <span class='op'>&lt;-</span> <span class='fu'>cma_combination</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>sep</span><span class='op'>)</span><span class='op'>$</span><span class='va'>ord_margin</span>, u <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>sep</span><span class='op'>)</span><span class='op'>$</span><span class='va'>cdf</span>, U <span class='op'>=</span> <span class='va'>sep</span><span class='op'>$</span><span class='va'>copula</span><span class='op'>)</span>
+<span class='va'>comb</span> <span class='op'>&lt;-</span> <span class='fu'>cma_combination</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>sep</span><span class='op'>)</span><span class='op'>$</span><span class='va'>ord_margin</span>, <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>sep</span><span class='op'>)</span><span class='op'>$</span><span class='va'>cdf</span>, <span class='va'>sep</span><span class='op'>$</span><span class='va'>copula</span><span class='op'>)</span>
 
 <span class='co'># The result is identical</span>
 <span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>margins</span>, <span class='va'>comb</span><span class='op'>)</span><span class='op'>)</span>
