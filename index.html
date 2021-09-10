@@ -65,6 +65,13 @@
 <a href="#cma" class="anchor"></a>CMA</h1></div>
 <!-- badges: start -->
 
+<!-- badges: end -->
+<blockquote>
+<p>Multivariate Distribution = Marginals + Copulas</p>
+</blockquote>
+<p>The Copula Marginal Algorithm (CMA) is a simple two step recipe to manipulate multivariate distributions under <a href="https://github.com/Reckziegel/FFP">Fully Flexible Probabilities</a>. CMA can quickly decompose any multivariate distribution between unique information (<em>marginals</em>) and shared components (<em>copulas</em>).</p>
+<p>This approach can add a high level of flexibility for estimation and simulation.</p>
+<p>For example, let’s suppose <code><a href="reference/cma_separation.html">cma_separation()</a></code> is used to isolate the margins from the copulas. Then, the statistician could stress-test any of these two components and “glue” back the new itens into the same dataset with <code><a href="reference/cma_combination.html">cma_combination()</a></code>.</p>
 </div>
   </div>
 
@@ -89,6 +96,7 @@
 <li><a href="https://github.com/Reckziegel/CMA/actions"><img src="https://github.com/Reckziegel/CMA/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/Reckziegel/CMA?branch=main"><img src="https://codecov.io/gh/Reckziegel/CMA/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://travis-ci.com/Reckziegel/CMA"><img src="https://travis-ci.com/Reckziegel/CMA.svg?branch=main" alt="Travis build status"></a></li>
 </ul>
 </div>
 </div>
