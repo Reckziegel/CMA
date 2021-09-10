@@ -2,6 +2,7 @@
 #'
 #' First CMA step: decomposes the the pure "individual" features of marginal
 #' distributions and the pure "joint" information available in the copulas.
+#' distributions from the pure "joint" information available in the copulas.
 #'
 #' Arguments \code{x} and \code{p} must have the same size.
 #'

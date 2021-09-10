@@ -28,5 +28,5 @@ simulation.
 
 For example, let’s suppose `cma_separation()` is used to isolate the
 margins from the copulas. Then, the statistician could stress-test any
-of these two components and “glue” back the new itens with
-`cma_combination()`.
+of these two components and “glue” back the new itens into the same
+dataset with `cma_combination()`.

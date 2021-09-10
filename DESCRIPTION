@@ -8,7 +8,7 @@ Description: Implements the Copula Marginal Algorithm (CMA) as described in
     Meucci, Attilio (2011).
 License: MIT + file LICENSE
 Depends:
-    R (>= 4.1.0),
+    R (>= 4.1.0)
 Imports: 
     assertthat (>= 0.2.1),
     crayon (>= 1.4.1),

@@ -16,6 +16,7 @@
 #' w <- rep(0.25, 4)
 #' pnl <- x$simulation %*% w
 #' plot_panic_distribution(pnl = pnl, p = x$p, 100)
+
 plot_panic_distribution <- function(pnl, p = NULL, breaks = 200) {
 
     assertthat::assert_that(assertthat::is.number(breaks))

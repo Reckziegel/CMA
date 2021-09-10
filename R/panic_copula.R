@@ -73,6 +73,7 @@ panic_copula <- function(x, n = 10000, panic_cor = 0.99, panic_prob = 0.02, dist
             un <- stats::pt(yn / sigma[[n]], df = 5)
         }
 
+
         if (is.null(y)) {
             y <- yn
             u <- un
