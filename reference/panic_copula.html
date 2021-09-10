@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Panic-Copula for Stress-Testing — panic_copula • CMA</title>
+<title>Panic-Copula for Stress-Testing — panic_copula • cma</title>
 
 
 <!-- jquery -->
@@ -72,7 +72,7 @@ used for stress-testing and panic-aware portfolio optimization." />
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">CMA</a>
+        <a class="navbar-link" href="../index.html">cma</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
@@ -90,12 +90,7 @@ used for stress-testing and panic-aware portfolio optimization." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/Reckziegel/CMA/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -110,7 +105,7 @@ used for stress-testing and panic-aware portfolio optimization." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Panic-Copula for Stress-Testing</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Reckziegel/CMA/blob/master/R/panic_copula.R'><code>R/panic_copula.R</code></a></small>
+    
     <div class="hidden name"><code>panic_copula.Rd</code></div>
     </div>
 
@@ -120,28 +115,23 @@ used for stress-testing and panic-aware portfolio optimization.</p>
     </div>
 
     <pre class="usage"><span class='fu'>panic_copula</span><span class='op'>(</span>
-  N <span class='op'>=</span> <span class='fl'>2</span>,
-  J <span class='op'>=</span> <span class='fl'>10000</span>,
-  calm_cor <span class='op'>=</span> <span class='fl'>0.6</span>,
+  <span class='va'>x</span>,
+  n <span class='op'>=</span> <span class='fl'>10000</span>,
   panic_cor <span class='op'>=</span> <span class='fl'>0.99</span>,
   panic_prob <span class='op'>=</span> <span class='fl'>0.02</span>,
-  sigma <span class='op'>=</span> <span class='fl'>0.2</span>
+  dist <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"normal"</span>, <span class='st'>"t"</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>N</th>
-      <td><p>A numeric value with the number of assets.</p></td>
+      <th>x</th>
+      <td><p>A rectangular (non-tidy) data structure.</p></td>
     </tr>
     <tr>
-      <th>J</th>
-      <td><p>A numeric value with the number of scenarios to be generated.</p></td>
-    </tr>
-    <tr>
-      <th>calm_cor</th>
-      <td><p>A numeric value for the correlation in calm markets.</p></td>
+      <th>n</th>
+      <td><p>An <code>integer</code> with the number of scenarios to be generated.</p></td>
     </tr>
     <tr>
       <th>panic_cor</th>
@@ -153,42 +143,64 @@ used for stress-testing and panic-aware portfolio optimization.</p>
 can be triggered.</p></td>
     </tr>
     <tr>
-      <th>sigma</th>
-      <td><p>The unconditional volatility of the joint-distribution.</p></td>
+      <th>dist</th>
+      <td><p>A <code>character</code> with <code>normal</code> or <code>t</code>. The default is
+<code>normal</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object with <code>N</code> columns and <code>J</code> rows.</p>
+    <p>An object of the <code>panic</code> class.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>panic_copula</span><span class='op'>(</span>N <span class='op'>=</span> <span class='fl'>2</span>, J <span class='op'>=</span> <span class='fl'>10</span>, calm_cor <span class='op'>=</span> <span class='fl'>0.3</span>, panic_cor <span class='op'>=</span> <span class='fl'>0.99</span>, panic_prob <span class='op'>=</span> <span class='fl'>0.02</span>, sigma <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $Y
-#&gt;              [,1]        [,2]
-#&gt;  [1,]  0.02284182 -0.26705571
-#&gt;  [2,] -0.18180278  0.12092379
-#&gt;  [3,]  0.12092379  0.06978359
-#&gt;  [4,]  0.06978359  0.02284182
-#&gt;  [5,]  0.26705571  0.18180278
-#&gt;  [6,] -0.02284182  0.26705571
-#&gt;  [7,]  0.18180278 -0.12092379
-#&gt;  [8,] -0.12092379 -0.06978359
-#&gt;  [9,] -0.06978359 -0.02284182
-#&gt; [10,] -0.26705571 -0.18180278
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>panic_copula</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>20</span>, panic_cor <span class='op'>=</span> <span class='fl'>0.99</span>, panic_prob <span class='op'>=</span> <span class='fl'>0.02</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $simulation
+#&gt;               [,1]         [,2]         [,3]        [,4]
+#&gt;  [1,] -0.088496367 -0.131833928 -0.128440788 -0.20003832
+#&gt;  [2,]  0.001623434 -0.025778094  0.063361703  0.14923580
+#&gt;  [3,]  0.150754525  0.096867104  0.153977167  0.12094491
+#&gt;  [4,]  0.045836655  0.002349218 -0.039259486  0.02956334
+#&gt;  [5,] -0.040632846  0.077567823  0.017330575 -0.07241235
+#&gt;  [6,]  0.121901636  0.194582299  0.047155289  0.07858886
+#&gt;  [7,] -0.026514189 -0.040867341 -0.010890400 -0.05662751
+#&gt;  [8,] -0.071115642  0.061119132  0.079972768  0.00129530
+#&gt;  [9,] -0.158110086 -0.109334815 -0.106541450 -0.10822715
+#&gt; [10,]  0.098044504 -0.055622750  0.194582299  0.01471196
+#&gt; [11,]  0.080127723  0.149513582  0.124298151  0.19458230
+#&gt; [12,] -0.012879153  0.015832212 -0.069772486 -0.13048437
+#&gt; [13,] -0.200879068 -0.200879068 -0.200879068 -0.15954701
+#&gt; [14,] -0.055642359 -0.012250234  0.030969324 -0.04202945
+#&gt; [15,]  0.030448945 -0.089057743 -0.024593826  0.06031718
+#&gt; [16,] -0.130762893 -0.159289458 -0.055089021 -0.08997472
+#&gt; [17,]  0.016039461  0.030493159  0.003491557  0.04468514
+#&gt; [18,]  0.061576893 -0.071137542 -0.086600109 -0.01247461
+#&gt; [19,]  0.194582299  0.119557229  0.099836208  0.09826040
+#&gt; [20,] -0.106388462  0.045840791 -0.154784061 -0.02683407
 #&gt; 
-#&gt; $p_
-#&gt;       [,1]
-#&gt;  [1,]  0.1
-#&gt;  [2,]  0.1
-#&gt;  [3,]  0.1
-#&gt;  [4,]  0.1
-#&gt;  [5,]  0.1
-#&gt;  [6,]  0.1
-#&gt;  [7,]  0.1
-#&gt;  [8,]  0.1
-#&gt;  [9,]  0.1
-#&gt; [10,]  0.1
+#&gt; $p
+#&gt;             [,1]
+#&gt;  [1,] 0.04531510
+#&gt;  [2,] 0.05199406
+#&gt;  [3,] 0.05238225
+#&gt;  [4,] 0.05235466
+#&gt;  [5,] 0.04947864
+#&gt;  [6,] 0.05492518
+#&gt;  [7,] 0.04862435
+#&gt;  [8,] 0.04937134
+#&gt;  [9,] 0.04735651
+#&gt; [10,] 0.04804812
+#&gt; [11,] 0.05536423
+#&gt; [12,] 0.04825235
+#&gt; [13,] 0.04462584
+#&gt; [14,] 0.04792000
+#&gt; [15,] 0.05070543
+#&gt; [16,] 0.04567733
+#&gt; [17,] 0.05159628
+#&gt; [18,] 0.05081562
+#&gt; [19,] 0.05297762
+#&gt; [20,] 0.05221507
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

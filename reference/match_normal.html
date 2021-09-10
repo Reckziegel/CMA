@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Moment Matching for the Normal Distribution — match_normal • CMA</title>
+<title>Moment Matching for the Normal Distribution — match_normal • cma</title>
 
 
 <!-- jquery -->
@@ -72,7 +72,7 @@ the first two moments." />
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">CMA</a>
+        <a class="navbar-link" href="../index.html">cma</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
@@ -90,12 +90,7 @@ the first two moments." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/Reckziegel/CMA/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -110,7 +105,7 @@ the first two moments." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Moment Matching for the Normal Distribution</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Reckziegel/CMA/blob/master/R/moment_matching.R'><code>R/moment_matching.R</code></a></small>
+    
     <div class="hidden name"><code>match_normal.Rd</code></div>
     </div>
 
@@ -150,17 +145,17 @@ the first two moments.</p>
 <span class='va'>mu</span>    <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='va'>sigma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='fu'>match_normal</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               [,1]         [,2]         [,3]         [,4]
-#&gt;  [1,] -0.002028885 -0.009268531 -0.009977048 -0.001287507
-#&gt;  [2,] -0.002958265  0.005832372 -0.003125622  0.010325578
-#&gt;  [3,] -0.005787895 -0.010920803 -0.010984207 -0.003051279
-#&gt;  [4,]  0.022208973  0.012842283  0.013172433  0.012235431
-#&gt;  [5,] -0.001382765  0.005125090 -0.013513566 -0.007588792
-#&gt;  [6,]  0.003332968  0.010904330  0.010851156  0.002151477
-#&gt;  [7,]  0.004262349 -0.004196573  0.003999730 -0.009461608
-#&gt;  [8,]  0.007091978  0.012556602  0.011858314  0.003915249
-#&gt;  [9,] -0.020904889 -0.011206484 -0.012298325 -0.011371461
-#&gt; [10,]  0.002686849 -0.003489291  0.014387674  0.008452762</div><div class='input'>
+</div><div class='output co'>#&gt;                [,1]          [,2]          [,3]          [,4]
+#&gt;  [1,]  0.0038335854  0.0022471404 -0.0025138316  8.320764e-03
+#&gt;  [2,] -0.0170952116 -0.0026627691 -0.0140507482 -9.461574e-03
+#&gt;  [3,]  0.0100252929  0.0072780337  0.0011776693 -5.653275e-03
+#&gt;  [4,] -0.0101913531 -0.0183913066 -0.0144262537 -1.048609e-02
+#&gt;  [5,]  0.0005429430  0.0025299477 -0.0125371687 -9.443085e-05
+#&gt;  [6,] -0.0025295019 -0.0006113411  0.0033879395 -7.456794e-03
+#&gt;  [7,]  0.0183992951  0.0042985684  0.0149248562  1.032554e-02
+#&gt;  [8,] -0.0087212094 -0.0056422344 -0.0003035614  6.517246e-03
+#&gt;  [9,]  0.0114954366  0.0200271059  0.0153003617  1.135006e-02
+#&gt; [10,]  0.0007611405 -0.0008941484  0.0134112767  9.584010e-04</div><div class='input'>
 <span class='co'># correlation structure is similar</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            DAX       SMI       CAC      FTSE

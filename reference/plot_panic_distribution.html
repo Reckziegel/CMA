@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualize a Panic Distribution — plot_panic_distribution • CMA</title>
+<title>Visualize a Panic Distribution — plot_panic_distribution • cma</title>
 
 
 <!-- jquery -->
@@ -71,7 +71,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">CMA</a>
+        <a class="navbar-link" href="../index.html">cma</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
@@ -89,12 +89,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/Reckziegel/CMA/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -109,7 +104,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Visualize a Panic Distribution</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Reckziegel/CMA/blob/master/R/plot_panic_distribution.R'><code>R/plot_panic_distribution.R</code></a></small>
+    
     <div class="hidden name"><code>plot_panic_distribution.Rd</code></div>
     </div>
 
@@ -143,10 +138,11 @@ plot the marginal panic distribution.</p></td>
     <p>A <code>ggplot2</code> object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='panic_copula.html'>panic_copula</a></span><span class='op'>(</span>J <span class='op'>=</span> <span class='fl'>10000</span>, calm_cor <span class='op'>=</span> <span class='fl'>0.1</span>, panic_prob <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
-<span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>0.5</span><span class='op'>)</span>
-<span class='va'>pnl</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>Y</span> <span class='op'>%*%</span> <span class='va'>w</span>
-<span class='fu'>plot_panic_distribution</span><span class='op'>(</span>pnl <span class='op'>=</span> <span class='va'>pnl</span>, p <span class='op'>=</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>p_</span>, <span class='fl'>100</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='panic_copula.html'>panic_copula</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>10000</span>, panic_prob <span class='op'>=</span> <span class='fl'>0.02</span><span class='op'>)</span>
+<span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>pnl</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>simulation</span> <span class='op'>%*%</span> <span class='va'>w</span>
+<span class='fu'>plot_panic_distribution</span><span class='op'>(</span>pnl <span class='op'>=</span> <span class='va'>pnl</span>, p <span class='op'>=</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>p</span>, <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='img'><img src='plot_panic_distribution-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
