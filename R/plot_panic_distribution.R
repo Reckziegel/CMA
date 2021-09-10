@@ -1,7 +1,7 @@
 #' Visualize a Panic Distribution
 #'
 #' @param pnl An univariante time series with the PnL marginal distribution.
-#' @param p A \code{double} vector of probabilities. If \code{NULL}, `p` is automaticaly
+#' @param p A \code{double} vector of probabilities. If \code{NULL}, `p` is automatically
 #' set to 1 over n.
 #' @param breaks An \code{integer} with the number of break point to be used to
 #' plot the marginal panic distribution.
@@ -11,11 +11,12 @@
 #' @importFrom rlang .data
 #'
 #' @examples
-#' x <- panic_copula(J = 10000, calm_cor = 0.1, panic_prob = 0.1)
-#' w <- c(0.5, 0.5)
-#' pnl <- x$Y %*% w
-#' plot_panic_distribution(pnl = pnl, p = x$p_, 100)
-plot_panic_distribution <- function(pnl, p = NULL, breaks) {
+#' x <- diff(log(EuStockMarkets))
+#' x <- panic_copula(x = x, n = 10000, panic_prob = 0.02)
+#' w <- rep(0.25, 4)
+#' pnl <- x$simulation %*% w
+#' plot_panic_distribution(pnl = pnl, p = x$p, 100)
+plot_panic_distribution <- function(pnl, p = NULL, breaks = 200) {
 
     assertthat::assert_that(assertthat::is.number(breaks))
     assert_is_univariate(pnl)
@@ -43,6 +44,7 @@ plot_panic_distribution <- function(pnl, p = NULL, breaks) {
     tibble::tibble(x = as.vector(x), f = as.vector(f)) |>
         ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$f)) +
         ggplot2::geom_area() +
-        ggplot2::scale_y_continuous(labels = scales::percent_format(scale = 10))
+        ggplot2::scale_x_continuous(labels = scales::percent_format()) +
+        ggplot2::scale_y_continuous(labels = scales::percent_format(scale = 1000))
 
 }

@@ -1,6 +1,6 @@
 #' CMA combination Step
 #'
-#' Joins copulas and marginals into the same dataset.
+#' Second CMA step: joins copulas and marginals into the same data structure.
 #'
 #' @param x A rectangular (non-tidy) data structure with the sorted marginals
 #' (ascending order).
@@ -10,6 +10,8 @@
 #' @return A \code{tbl} with the joint scenarios.
 #'
 #' @export
+#'
+#' @seealso \code{\link{cma_separation}}
 #'
 #' @examples
 #' set.seed(123)

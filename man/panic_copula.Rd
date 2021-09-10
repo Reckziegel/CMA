@@ -5,35 +5,34 @@
 \title{Panic-Copula for Stress-Testing}
 \usage{
 panic_copula(
-  N = 2,
-  J = 10000,
-  calm_cor = 0.6,
+  x,
+  n = 10000,
   panic_cor = 0.99,
   panic_prob = 0.02,
-  sigma = 0.2
+  dist = c("normal", "t")
 )
 }
 \arguments{
-\item{N}{A numeric value with the number of assets.}
+\item{x}{A rectangular (non-tidy) data structure.}
 
-\item{J}{A numeric value with the number of scenarios to be generated.}
-
-\item{calm_cor}{A numeric value for the correlation in calm markets.}
+\item{n}{An \code{integer} with the number of scenarios to be generated.}
 
 \item{panic_cor}{A numeric value for the correlation in panic markets.}
 
 \item{panic_prob}{A numeric value with the probability in which panic markets
 can be triggered.}
 
-\item{sigma}{The unconditional volatility of the joint-distribution.}
+\item{dist}{A \code{character} with \code{normal} or \code{t}. The default is
+\code{normal}}
 }
 \value{
-An object with \code{N} columns and \code{J} rows.
+An object of the \code{panic} class.
 }
 \description{
 This function generates a large dimensional panic copula that can be further
 used for stress-testing and panic-aware portfolio optimization.
 }
 \examples{
-panic_copula(N = 2, J = 10, calm_cor = 0.3, panic_cor = 0.99, panic_prob = 0.02, sigma = 0.2)
+x <- diff(log(EuStockMarkets))
+panic_copula(x = x, n = 20, panic_cor = 0.99, panic_prob = 0.02)
 }

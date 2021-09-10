@@ -1,4 +1,4 @@
 library(testthat)
-library(CMA)
+library(cma)
 
-test_check("CMA")
+test_check("cma")

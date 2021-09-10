@@ -4,12 +4,12 @@
 \alias{plot_panic_distribution}
 \title{Visualize a Panic Distribution}
 \usage{
-plot_panic_distribution(pnl, p = NULL, breaks)
+plot_panic_distribution(pnl, p = NULL, breaks = 200)
 }
 \arguments{
 \item{pnl}{An univariante time series with the PnL marginal distribution.}
 
-\item{p}{A \code{double} vector of probabilities. If \code{NULL}, `p` is automaticaly
+\item{p}{A \code{double} vector of probabilities. If \code{NULL}, `p` is automatically
 set to 1 over n.}
 
 \item{breaks}{An \code{integer} with the number of break point to be used to
@@ -22,8 +22,9 @@ A \code{ggplot2} object.
 Visualize a Panic Distribution
 }
 \examples{
-x <- panic_copula(J = 10000, calm_cor = 0.1, panic_prob = 0.1)
-w <- c(0.5, 0.5)
-pnl <- x$Y \%*\% w
-plot_panic_distribution(pnl = pnl, p = x$p_, 100)
+x <- diff(log(EuStockMarkets))
+x <- panic_copula(x = x, n = 10000, panic_prob = 0.02)
+w <- rep(0.25, 4)
+pnl <- x$simulation \%*\% w
+plot_panic_distribution(pnl = pnl, p = x$p, 100)
 }

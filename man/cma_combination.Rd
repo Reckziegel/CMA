@@ -18,7 +18,7 @@ cma_combination(x, cdf, copula)
 A \code{tbl} with the joint scenarios.
 }
 \description{
-Joins copulas and marginals into the same dataset.
+Second CMA step: joins copulas and marginals into the same data structure.
 }
 \examples{
 set.seed(123)
@@ -34,4 +34,7 @@ comb <- cma_combination(attributes(sep)$ord_margin, attributes(sep)$cdf, sep$cop
 
 # The result is identical
 stopifnot(all.equal(margins, comb))
+}
+\seealso{
+\code{\link{cma_separation}}
 }

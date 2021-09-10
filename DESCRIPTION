@@ -1,14 +1,14 @@
 Type: Package
-Package: CMA
+Package: cma
 Title: Copula Marginal Algorithm (CMA)
 Version: 0.1.0
 Author: Bernardo Reckziegel
 Maintainer: Bernardo Reckziegel <bernardo_cse@hotmail.com>
-Description: More about what it does (maybe more than one line) Use four
-    spaces when indenting paragraphs within the Description.
+Description: Implements the Copula Marginal Algorithm (CMA) as described in 
+    Meucci, Attilio (2011).
 License: MIT + file LICENSE
-URL: https://github.com/ReckziegelCMA
-BugReports: https://github.com/Reckziegel/CMA/issues
+Depends:
+    R (>= 4.1.0),
 Imports: 
     assertthat (>= 0.2.1),
     crayon (>= 1.4.1),
@@ -16,7 +16,6 @@ Imports:
     ggplot2 (>= 3.3.5),
     Hmisc (>= 4.5-0),
     lubridate (>= 1.7.10),
-    MASS (>= 7.3-54),
     matlab (>= 1.0.2),
     methods,
     NlcOptim (>= 0.6),
