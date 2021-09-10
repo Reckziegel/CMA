@@ -31,8 +31,8 @@ An S3 list of the \code{cma} class that contains two elements:
 \code{marginal} and \code{copula}.
 }
 \description{
-Decomposes the the pure "individual" features in the
-marginal distributions from the pure "joint" information available in the copulas.
+First CMA step: decomposes the the pure "individual" features of marginal
+distributions from the pure "joint" information available in the copulas.
 }
 \details{
 Arguments \code{x} and \code{p} must have the same size.
@@ -42,4 +42,7 @@ set.seed(123)
 margins <- matrix(stats::rnorm(20), ncol = 2)
 probs   <- rep(1 / 20, 20)
 cma_separation(x = margins, p = probs)
+}
+\seealso{
+\code{\link{cma_combination}}
 }

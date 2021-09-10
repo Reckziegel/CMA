@@ -16,16 +16,16 @@ fp_moments(x, p = NULL)
 
 \method{fp_moments}{numeric}(x, p = NULL)
 
-\method{fp_moments}{matrix}(x, p)
+\method{fp_moments}{matrix}(x, p = NULL)
 
-\method{fp_moments}{xts}(x, p)
+\method{fp_moments}{xts}(x, p = NULL)
 
-\method{fp_moments}{data.frame}(x, p)
+\method{fp_moments}{data.frame}(x, p = NULL)
 
-\method{fp_moments}{tbl}(x, p)
+\method{fp_moments}{tbl}(x, p = NULL)
 }
 \arguments{
-\item{x}{A tabular (non-tidy) time series.}
+\item{x}{A tabular (non-tidy) data structure.}
 
 \item{p}{A probability vector.}
 }

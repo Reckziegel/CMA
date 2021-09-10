@@ -3,6 +3,7 @@
 \name{check_p}
 \alias{check_p}
 \alias{check_p.default}
+\alias{check_p.NULL}
 \alias{check_p.numeric}
 \alias{check_p.matrix}
 \alias{check_p.xts}
@@ -13,6 +14,8 @@
 check_p(p)
 
 \method{check_p}{default}(p)
+
+\method{check_p}{`NULL`}(p)
 
 \method{check_p}{numeric}(p)
 

@@ -20,6 +20,10 @@ check_p.default <- function(p) {
 
 #' @rdname check_p
 #' @export
+check_p.NULL <- function(p) NULL
+
+#' @rdname check_p
+#' @export
 check_p.numeric <- function(p) {
   p <- as.matrix(p)
   if (sum(p) > 1.00001 | sum(p) < 0.99998) {

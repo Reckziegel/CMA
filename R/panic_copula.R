@@ -3,71 +3,87 @@
 #' This function generates a large dimensional panic copula that can be further
 #' used for stress-testing and panic-aware portfolio optimization.
 #'
-#' @param N A numeric value with the number of assets.
-#' @param J A numeric value with the number of scenarios to be generated.
-#' @param calm_cor A numeric value for the correlation in calm markets.
+#' @param x A rectangular (non-tidy) data structure.
+#' @param n An \code{integer} with the number of scenarios to be generated.
 #' @param panic_cor A numeric value for the correlation in panic markets.
 #' @param panic_prob A numeric value with the probability in which panic markets
 #' can be triggered.
-#' @param sigma The unconditional volatility of the joint-distribution.
+#' @param dist A \code{character} with \code{normal} or \code{t}. The default is
+#' \code{normal}
 #'
-#' @return An object with \code{N} columns and \code{J} rows.
+#' @return An object of the \code{panic} class.
 #'
 #' @export
 #'
 #' @examples
-#' panic_copula(N = 2, J = 10, calm_cor = 0.3, panic_cor = 0.99, panic_prob = 0.02, sigma = 0.2)
-panic_copula <- function(N = 2, J = 10000, calm_cor = 0.6, panic_cor = 0.99, panic_prob = 0.02, sigma = 0.2) {
+#' x <- diff(log(EuStockMarkets))
+#' panic_copula(x = x, n = 20, panic_cor = 0.99, panic_prob = 0.02)
+panic_copula <- function(x, n = 10000, panic_cor = 0.99, panic_prob = 0.02, dist = c("normal", "t")) {
 
-  assertthat::assert_that(assertthat::is.number(N))
-  assertthat::assert_that(assertthat::is.number(J))
-  assertthat::assert_that(assertthat::is.number(calm_cor))
-  assertthat::assert_that(assertthat::is.number(panic_cor))
-  assertthat::assert_that(assertthat::is.number(panic_prob))
-  assertthat::assert_that(assertthat::is.number(sigma))
+    assertthat::assert_that(assertthat::is.number(n))
+    assertthat::assert_that(assertthat::is.number(panic_cor))
+    assertthat::assert_that(assertthat::is.number(panic_prob))
+    dist <- match.arg(dist, c("normal", "t"))[[1L]]
 
-  # generate panic distribution
-  p    <- matrix(1, nrow = J, ncol = 1) / J
-  c2_c <- (1 - calm_cor) * diag(N) + calm_cor * matrix(1, N , N)
-  c2_p <- (1 - panic_cor) * diag(N) + panic_cor * matrix(1, N, N)
+    N <- ncol(x)
+    data_cor <- stats::cor(x)
+    #data_cor <- 1 - mean(lower.tri(data_cor))
+    sigma <- mean(((1 + apply(x, 2, stats::sd)) ^ 252)) / 100
 
-  s2 <- pracma::blkdiag(c2_c, c2_p)
-  Z <- match_moments_normal(matrix(0, 2 * N, 1), s2, J)
+    # generate panic distribution
+    p    <- matrix(1, nrow = n, ncol = 1) / n
+    c2_c <- (1 - data_cor) * diag(N) + data_cor * matrix(1, N , N)
+    c2_p <- (1 - panic_cor) * diag(N) + panic_cor * matrix(1, N, N)
 
-  X_c <- Z[ , 1:N]
-  X_p <- Z[ , (N + 1):ncol(Z)]
-
-  D <- stats::pnorm(X_p) < panic_prob
-
-  X <- (1 - D) * X_c + (D * X_p)
-
-  # perturb probabilities via Fully Flexible Views
-  Aeq <- matrix(1, 1, J) # constrain probabilities to sum to one...
-  Aeq <- rbind(Aeq , t(X)) # ...constrain the first moments...
-  beq <- 1
-  beq <- as.matrix(rbind(beq , matrix(0, N , 1)))
-  p_  <- entropy_pooling(p, NULL, NULL, Aeq, beq)
-
-  sep_step <- cma_separation(X, p_)
-
-  # merge panic copula with normal marginals
-  y <- NULL
-  u <- NULL
-  for (n in 1:N) {
-    yn <- as.matrix(seq(from = -4 * sigma, to = 4 * sigma, length.out = 100))
-    un <- stats::pnorm(yn , 0, sigma)
-
-    if (is.null(y)) {
-      y <- yn
-      u <- un
+    s2 <- pracma::blkdiag(c2_c, c2_p)
+    if (dist == "normal") {
+        Z <- match_normal(mu = matrix(rep(0, N * 2)), sigma = s2, n = n)
     } else {
-      y <- cbind(y, yn)
-      u <- cbind(u, un)
+        Z <- match_t(mu = matrix(rep(0, N * 2)), sigma = s2, nu = 5, n = n)
     }
-  }
 
-  Y <- cma_combination(y, u, sep_step$copula)
+    X_c <- Z[ , 1:N]
+    X_p <- Z[ , (N + 1):ncol(Z)]
 
-  list(Y = Y, p_ = p_)
+    if (dist == "normal") {
+        D <- stats::pnorm(X_p) < panic_prob
+    } else {
+        D <- stats::pt(X_p, df = 5) < panic_prob
+    }
+
+    X <- (1 - D) * X_c + (D * X_p)
+
+    # perturb probabilities via Fully Flexible Views
+    Aeq <- matrix(1, 1, n) # constrain probabilities to sum to one...
+    Aeq <- rbind(Aeq , t(X)) # ...constrain the first moments...
+    beq <- 1
+    beq <- as.matrix(rbind(beq , matrix(0, N , 1)))
+    p_  <- entropy_pooling(p, NULL, NULL, Aeq, beq)
+
+    sep_step <- cma_separation(X, p_)
+
+    # merge panic copula with normal marginals
+    y <- NULL
+    u <- NULL
+    for (n in 1:N) {
+        yn <- as.matrix(seq(from = -4 * sigma, to = 4 * sigma, length.out = 1000))
+        if (dist == "normal") {
+            un <- stats::pnorm(yn , 0, sigma)
+        } else {
+            un <- stats::pt(yn / sigma, df = 5)
+        }
+
+        if (is.null(y)) {
+            y <- yn
+            u <- un
+        } else {
+            y <- cbind(y, yn)
+            u <- cbind(u, un)
+        }
+    }
+
+    Y <- cma_combination(y, u, sep_step$copula)
+
+    list(simulation = Y, p = p_)
 
 }

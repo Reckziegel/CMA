@@ -11,10 +11,11 @@
 #' @importFrom rlang .data
 #'
 #' @examples
-#' x <- panic_copula(J = 10000, calm_cor = 0.1, panic_prob = 0.1)
-#' w <- c(0.5, 0.5)
-#' pnl <- x$Y %*% w
-#' plot_panic_distribution(pnl = pnl, p = x$p_, 100)
+#' x <- diff(log(EuStockMarkets))
+#' x <- panic_copula(x = x, n = 10000, panic_prob = 0.02)
+#' w <- rep(0.25, 4)
+#' pnl <- x$simulation %*% w
+#' plot_panic_distribution(pnl = pnl, p = x$p, 100)
 plot_panic_distribution <- function(pnl, p = NULL, breaks) {
 
     assertthat::assert_that(assertthat::is.number(breaks))

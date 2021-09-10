@@ -2,7 +2,7 @@
 #'
 #' Computes the location and dispersion statistics under flexible probabilities.
 #'
-#' @param x A tabular (non-tidy) time series.
+#' @param x A tabular (non-tidy) data structure.
 #' @param p A probability vector.
 #'
 #' @return A \code{list} with 2 elements: \code{mu} and \code{sigma}.
@@ -37,27 +37,27 @@ fp_moments.numeric <- function(x, p = NULL) {
 
 #' @rdname fp_moments
 #' @export
-fp_moments.matrix <- function(x, p) {
+fp_moments.matrix <- function(x, p = NULL) {
     fp_moments_(x = x, p = check_p(p))
 }
 
 #' @rdname fp_moments
 #' @export
-fp_moments.xts <- function(x, p) {
+fp_moments.xts <- function(x, p = NULL) {
     fp_moments_(x = as.matrix(x), p = check_p(p))
 }
 
 #' @rdname fp_moments
 #' @export
-fp_moments.data.frame <- function(x, p) {
-    numeric_cols <- apply(x, 2, is.numeric)
-    assertthat::assert_that(sum(numeric_cols) > 0, msg = "`x` argument must contain at least one numeric column.")
-    fp_moments_(x = as.matrix(x[ , numeric_cols]), p = check_p(p))
+fp_moments.data.frame <- function(x, p = NULL) {
+    x <- dplyr::select(x, where(is.numeric))
+    assertthat::assert_that(!is_empty(x), msg = "`x` argument must contain at least one numeric column.")
+    fp_moments_(x = as.matrix(x), p = check_p(p))
 }
 
 #' @rdname fp_moments
 #' @export
-fp_moments.tbl <- function(x, p) {
+fp_moments.tbl <- function(x, p = NULL) {
     x <- dplyr::select(x, where(is.numeric))
     assertthat::assert_that(!is_empty(x), msg = "`x` argument must contain at least one numeric column.")
     fp_moments_(x = as.matrix(x), p = check_p(p))
@@ -89,3 +89,5 @@ fp_moments_ <- function(x, p = NULL) {
     list(mu = mu, sigma = sigma)
 
 }
+
+
