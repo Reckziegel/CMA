@@ -73,7 +73,7 @@ the first two moments." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cma</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9000</span>
       </span>
     </div>
 
@@ -145,17 +145,17 @@ the first two moments.</p>
 <span class='va'>mu</span>    <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='va'>sigma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='fu'>match_normal</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                [,1]          [,2]          [,3]          [,4]
-#&gt;  [1,]  0.0038335854  0.0022471404 -0.0025138316  8.320764e-03
-#&gt;  [2,] -0.0170952116 -0.0026627691 -0.0140507482 -9.461574e-03
-#&gt;  [3,]  0.0100252929  0.0072780337  0.0011776693 -5.653275e-03
-#&gt;  [4,] -0.0101913531 -0.0183913066 -0.0144262537 -1.048609e-02
-#&gt;  [5,]  0.0005429430  0.0025299477 -0.0125371687 -9.443085e-05
-#&gt;  [6,] -0.0025295019 -0.0006113411  0.0033879395 -7.456794e-03
-#&gt;  [7,]  0.0183992951  0.0042985684  0.0149248562  1.032554e-02
-#&gt;  [8,] -0.0087212094 -0.0056422344 -0.0003035614  6.517246e-03
-#&gt;  [9,]  0.0114954366  0.0200271059  0.0153003617  1.135006e-02
-#&gt; [10,]  0.0007611405 -0.0008941484  0.0134112767  9.584010e-04</div><div class='input'>
+</div><div class='output co'>#&gt;                [,1]         [,2]         [,3]         [,4]
+#&gt;  [1,] -0.0112865717 -0.005044912 -0.003490341  0.005432531
+#&gt;  [2,] -0.0023989421 -0.009073385  0.008770385 -0.003306144
+#&gt;  [3,]  0.0007940403  0.005942585  0.004525653  0.005305001
+#&gt;  [4,] -0.0176339341 -0.014304201 -0.021969634 -0.014251958
+#&gt;  [5,]  0.0073078741 -0.005559045 -0.001743746  0.006619362
+#&gt;  [6,]  0.0125906552  0.006680711  0.004364449 -0.004568560
+#&gt;  [7,]  0.0037030256  0.010709185 -0.007896277  0.004170114
+#&gt;  [8,]  0.0005100432 -0.004306786 -0.003651545 -0.004441031
+#&gt;  [9,]  0.0189380176  0.015940001  0.022843742  0.015115928
+#&gt; [10,] -0.0060037906  0.007194844  0.002617854 -0.005755392</div><div class='input'>
 <span class='co'># correlation structure is similar</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            DAX       SMI       CAC      FTSE

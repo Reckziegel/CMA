@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Copula Marginal Algorithm (CMA)">
-<meta property="og:description" content="Implements the Copula Marginal Algorithm (CMA) as described in 
-    Meucci, Attilio (2011).">
+<meta property="og:description" content="Implements the Copula Marginal Algorithm (CMA) as described
+    in Meucci, Attilio (2011).">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">cma</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9000</span>
       </span>
     </div>
 
@@ -69,9 +69,9 @@
 <blockquote>
 <p>Multivariate Distribution = Marginals + Copulas</p>
 </blockquote>
-<p>The Copula Marginal Algorithm (CMA) is a simple two step recipe to manipulate multivariate distributions under <a href="https://github.com/Reckziegel/FFP">Fully Flexible Probabilities</a>. CMA can quickly decompose any multivariate distribution between unique information (<em>marginals</em>) and shared components (<em>copulas</em>).</p>
-<p>This approach can add a high level of flexibility for estimation and simulation.</p>
-<p>For example, let’s suppose <code><a href="reference/cma_separation.html">cma_separation()</a></code> is used to isolate the margins from the copulas. Then, the statistician could stress-test any of these two components and “glue” back the new itens into the same dataset with <code><a href="reference/cma_combination.html">cma_combination()</a></code>.</p>
+<p>The Copula Marginal Algorithm (CMA) is a simple two step recipe to manipulate multivariate distributions under <a href="https://github.com/Reckziegel/FFP">Fully Flexible Probabilities</a>.</p>
+<p>CMA can quickly decompose any multivariate distribution between unique (<em>marginals</em>) and shared components (<em>copulas</em>). This approach can add a high level of flexibility for estimation and simulation purposes.</p>
+<p>For example, let’s suppose <code><a href="reference/cma_separation.html">cma_separation()</a></code> is used to isolate the margins from the copulas. Then, the statistician could stress-test any of these two components and “glue” back the new items into the same dataset with <code><a href="reference/cma_combination.html">cma_combination()</a></code>.</p>
 </div>
   </div>
 
@@ -96,7 +96,6 @@
 <li><a href="https://github.com/Reckziegel/CMA/actions"><img src="https://github.com/Reckziegel/CMA/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/Reckziegel/CMA?branch=main"><img src="https://codecov.io/gh/Reckziegel/CMA/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://travis-ci.com/Reckziegel/CMA"><img src="https://travis-ci.com/Reckziegel/CMA.svg?branch=main" alt="Travis build status"></a></li>
 </ul>
 </div>
 </div>

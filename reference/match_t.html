@@ -73,7 +73,7 @@ exactly matches the first two moments." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cma</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9000</span>
       </span>
     </div>
 
@@ -155,17 +155,17 @@ representation should be used. The default if <code>FALSE</code>.</p></td>
 <span class='va'>sigma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='va'>nu</span>    <span class='op'>&lt;-</span> <span class='fl'>5</span>
 <span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>nu</span>, <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                [,1]         [,2]          [,3]          [,4]
-#&gt;  [1,] -0.0002530402  0.004801303  0.0028381956  9.310065e-04
-#&gt;  [2,] -0.0184872156 -0.014815051 -0.0259566341 -1.433514e-02
-#&gt;  [3,]  0.0029386991  0.008128494 -0.0047226493  4.133796e-03
-#&gt;  [4,] -0.0056049540 -0.000814431 -0.0023888521 -7.222095e-03
-#&gt;  [5,] -0.0232998288 -0.012716790 -0.0064271041  6.717868e-03
-#&gt;  [6,]  0.0014976853 -0.002845900 -0.0008240688  6.098899e-05
-#&gt;  [7,]  0.0070096951  0.005843065  0.0095527417  5.679673e-03
-#&gt;  [8,] -0.0026230975 -0.008312564  0.0067331665 -3.434121e-03
-#&gt;  [9,]  0.0131784392  0.003824072  0.0065051616  1.711971e-02
-#&gt; [10,]  0.0118459391  0.006488343  0.0040773152 -2.459859e-03</div><div class='input'>
+</div><div class='output co'>#&gt;               [,1]          [,2]          [,3]          [,4]
+#&gt;  [1,] -0.011786830 -0.0129350508 -0.0117680040 -0.0092638244
+#&gt;  [2,] -0.015896919 -0.0164632617 -0.0163786075 -0.0149819359
+#&gt;  [3,] -0.012033912  0.0005050390  0.0024432929  0.0021526558
+#&gt;  [4,] -0.001427209  0.0121099636 -0.0003584148 -0.0166868510
+#&gt;  [5,]  0.003936352 -0.0007429861  0.0088803494  0.0007775425
+#&gt;  [6,]  0.013938383  0.0145368391  0.0139185248  0.0106644410
+#&gt;  [7,]  0.010142281  0.0104620321  0.0104219670  0.0096019209
+#&gt;  [8,]  0.004218369  0.0008625320 -0.0001771410  0.0003622893
+#&gt;  [9,]  0.002151379 -0.0086693707  0.0012894555  0.0145536667
+#&gt; [10,] -0.007482280  0.0034142081 -0.0199768587 -0.0004285048</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            DAX       SMI       CAC      FTSE
 #&gt; DAX  1.0000000 0.7031219 0.7344304 0.6394674
@@ -173,14 +173,14 @@ representation should be used. The default if <code>FALSE</code>.</p></td>
 #&gt; CAC  0.7344304 0.6160454 1.0000000 0.6485679
 #&gt; FTSE 0.6394674 0.5847791 0.6485679 1.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>5</span>, <span class='fl'>10000</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;           [,1]      [,2]      [,3]      [,4]
-#&gt; [1,] 1.0000000 0.6933572 0.7330714 0.6365929
-#&gt; [2,] 0.6933572 1.0000000 0.6203787 0.5786044
-#&gt; [3,] 0.7330714 0.6203787 1.0000000 0.6448066
-#&gt; [4,] 0.6365929 0.5786044 0.6448066 1.0000000</div><div class='input'>
+#&gt; [1,] 1.0000000 0.7158304 0.7327479 0.6505911
+#&gt; [2,] 0.7158304 1.0000000 0.6000641 0.5897002
+#&gt; [3,] 0.7327479 0.6000641 1.0000000 0.6450261
+#&gt; [4,] 0.6505911 0.5897002 0.6450261 1.0000000</div><div class='input'>
 <span class='va'>mu</span>
 </div><div class='output co'>#&gt;          DAX          SMI          CAC         FTSE 
 #&gt; 0.0006520417 0.0008178997 0.0004370540 0.0004319851 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>nu</span>, <span class='fl'>10000</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.0005742940 0.0005761962 0.0005414819 0.0006224467</div></pre>
+</div><div class='output co'>#&gt; [1] 0.0006049114 0.0005579556 0.0005611877 0.0005623183</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
