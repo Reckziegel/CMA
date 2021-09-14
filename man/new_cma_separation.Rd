@@ -2,12 +2,9 @@
 % Please edit documentation in R/cma-vctrs.R
 \name{new_cma_separation}
 \alias{new_cma_separation}
-\alias{new_cma_to_print}
 \title{Object created to make printing prettier.}
 \usage{
 new_cma_separation(x, ...)
-
-new_cma_to_print(x, ...)
 }
 \arguments{
 \item{x}{An object}

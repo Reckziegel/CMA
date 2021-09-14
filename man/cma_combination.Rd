@@ -24,16 +24,16 @@ Second CMA step: joins copulas and marginals into the same data structure.
 set.seed(123)
 
 margins <- matrix(stats::rnorm(20), ncol = 2)
-colnames(margins) <- c("a", "b")
-probs   <- rep(1 / 25, 25)
+probs   <- rep(1 / 10, 10)
 
 # separate
 sep <- cma_separation(x = margins, p = probs)
 # combinate
-comb <- cma_combination(attributes(sep)$ord_margin, attributes(sep)$cdf, sep$copula)
+comb <- cma_combination(margins, sep$cdf, sep$copula)
 
 # The result is identical
-stopifnot(all.equal(margins, comb))
+stopifnot(all.equal(margins[ , 1], comb[ , 1]))
+stopifnot(all.equal(margins[ , 2], comb[ , 2]))
 }
 \seealso{
 \code{\link{cma_separation}}

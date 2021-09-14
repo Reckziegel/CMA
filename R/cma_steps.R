@@ -12,6 +12,10 @@ cma_separate <- function(x, p) {
   u <- 0 * x
   U <- 0 * x
 
+  if (has_names(x)) {
+    nms <- colnames(x)
+  }
+
   # begin core algorithm
   # MATLAB does this operation in one shot. In R, we have to loop over...
   X    <- 0 * x
@@ -32,7 +36,17 @@ cma_separate <- function(x, p) {
     U[ , n] <- cum_p[Rnk] * l # compute grade
   }
 
-  list(ordered_margin = X, ordered_cdf = u, copula = U)
+  if (has_names(x)) {
+    colnames(X) <- nms
+    colnames(u) <- nms
+    colnames(U) <- nms
+  } else {
+    colnames(X) <- make_tidy_names(X)
+    colnames(u) <- make_tidy_names(u)
+    colnames(U) <- make_tidy_names(U)
+  }
+
+  list(sorted_margin = X, cdf = u, copula = U)
 
 }
 
@@ -42,7 +56,15 @@ cma_separate <- function(x, p) {
 #' @keywords internal
 cma_combine <- function(x, u, U) {
 
-  J <- nrow(x)
+  is_unsorted <- any(apply(x, 2, is.unsorted))
+  if (is_unsorted) {
+    warning(
+      "The marginal distribution was unsorted. Sorting in ascending order.",
+      immediate. = TRUE
+    )
+    x <- apply(x, 2, sort)
+  }
+
   K <- ncol(x)
   X <- 0 * U
 
@@ -59,4 +81,3 @@ cma_combine <- function(x, u, U) {
   X
 
 }
-

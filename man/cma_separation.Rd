@@ -40,9 +40,14 @@ Arguments \code{x} and \code{p} must have the same size.
 }
 \examples{
 set.seed(123)
-margins <- matrix(stats::rnorm(20), ncol = 2)
-probs   <- rep(1 / 20, 20)
-cma_separation(x = margins, p = probs)
+margins <- matrix(stats::rnorm(30), ncol = 3)
+cma <- cma_separation(x = margins)
+cma
+
+# Access the elements with `$`
+cma$copula
+cma$marginal
+cma$cdf
 }
 \seealso{
 \code{\link{cma_combination}}

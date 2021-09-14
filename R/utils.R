@@ -40,3 +40,6 @@ has_names <- function(x) !is.null(colnames(x))
 
 #' @keywords internal
 not_null <- function(x) !is.null(x)
+
+#' @keywords internal
+make_tidy_names <- function(x) paste0("..", 1:NCOL(x))
