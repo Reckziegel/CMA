@@ -157,13 +157,13 @@ Defaults to <code>FALSE</code>.</p></td>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 
 <span class='fu'>fit_hyp</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>     <span class='co'># multivariate estimation</span>
-</div><div class='output co'>#&gt; &lt;list_of&lt;double&gt;[21]&gt;
+</div><div class='output co'>#&gt; <span style='color: #555555;'># Margins Estimation</span>
 #&gt; Converged:       TRUE
 #&gt; Dimension:       4
 #&gt; AIC:            -52714.94
 #&gt; Log-Likelihood:  26376.47
 #&gt; Model:           Asymmetric Hyperbolic</div><div class='input'><span class='fu'>fit_hyp</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>4</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># univariate estimation</span>
-</div><div class='output co'>#&gt; &lt;list_of&lt;double&gt;[21]&gt;
+</div><div class='output co'>#&gt; <span style='color: #555555;'># Margins Estimation</span>
 #&gt; Converged:       TRUE
 #&gt; Dimension:       1
 #&gt; AIC:            -12784.62

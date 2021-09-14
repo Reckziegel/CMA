@@ -156,33 +156,14 @@ Defaults to <code>FALSE</code>.</p></td>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 
-<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>     <span class='co'># multivariate estimation</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Singularity: Some standardized observations are close to 0 (&lt;  2.220446E-16)!</span>
-#&gt; <span class='warning'>Observations set to  2.220446E-16.</span></div><div class='output co'>#&gt; &lt;list_of&lt;double&gt;[21]&gt;
+<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>     <span class='co'># multivariate estimation</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># Margins Estimation</span>
 #&gt; Converged:       TRUE
-#&gt; Dimension:       4
-#&gt; AIC:            -54375.43
-#&gt; Log-Likelihood:  27206.72
+#&gt; Dimension:       2
+#&gt; AIC:            -25416.89
+#&gt; Log-Likelihood:  12716.45
 #&gt; Model:           Asymmetric Variance Gamma</div><div class='input'><span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>4</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># univariate estimation</span>
-</div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; &lt;list_of&lt;double&gt;[21]&gt;
+</div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span style='color: #555555;'># Margins Estimation</span>
 #&gt; Converged:       TRUE
 #&gt; Dimension:       1
 #&gt; AIC:            -12783.01

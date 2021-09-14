@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimation of the Student-t Distribution — fit_t • cma</title>
+<title>Generate Copulas — generate_copulas • cma</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="Estimation of the Student-t Distribution — fit_t" />
-<meta property="og:description" content="This function is a wrapper around the fit.tuv and
-fit.tmv, that performs a maximum likelihood estimation
-on the Student-t distribution." />
+<meta property="og:title" content="Generate Copulas — generate_copulas" />
+<meta property="og:description" content="This function takes a fitted object from the cma_copula class and generate
+new scenarios for the copula" />
 
 
 
@@ -105,70 +104,38 @@ on the Student-t distribution." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimation of the Student-t Distribution</h1>
+    <h1>Generate Copulas</h1>
     
-    <div class="hidden name"><code>fit_t.Rd</code></div>
+    <div class="hidden name"><code>generate_copulas.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function is a wrapper around the <code><a href='https://rdrr.io/pkg/ghyp/man/fit.ghypuv.html'>fit.tuv</a></code> and
-<code><a href='https://rdrr.io/pkg/ghyp/man/fit.ghypmv.html'>fit.tmv</a></code>, that performs a maximum likelihood estimation
-on the Student-t distribution.</p>
+    <p>This function takes a fitted object from the <code>cma_copula</code> class and generate
+new scenarios for the copula</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fit_t</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>fit_t</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='co'># S3 method for tbl</span>
-<span class='fu'>fit_t</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='co'># S3 method for xts</span>
-<span class='fu'>fit_t</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='co'># S3 method for matrix</span>
-<span class='fu'>fit_t</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>generate_copulas</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>n</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.invariant</th>
-      <td><p>A tabular data structure.</p></td>
+      <th>model</th>
+      <td><p>An object of the <code>cma_copula</code> class.</p></td>
     </tr>
     <tr>
-      <th>.symmetric</th>
-      <td><p>A flag. Should the estimated distribution be symmetric?
-Defaults to <code>FALSE</code>.</p></td>
+      <th>n</th>
+      <td><p>An <code>integer</code> with the number of samples to be generated.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the the class <code>mle.ghyp</code>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='fit_ghd.html'>fit_ghd</a></code> <code><a href='fit_hyp.html'>fit_hyp</a></code> <code><a href='fit_nig.html'>fit_nig</a></code> <code><a href='fit_vg.html'>fit_vg</a></code></p></div>
+    <p>An S3 <code>list</code> of the class <code>bla bla bla</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>##### fit_t #####</span>
-
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-
-<span class='fu'>fit_t</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>     <span class='co'># multivariate estimation</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># Margins Estimation</span>
-#&gt; Converged:       TRUE
-#&gt; Dimension:       4
-#&gt; AIC:            -52711.16
-#&gt; Log-Likelihood:  26374.58
-#&gt; Model:           Asymmetric Student-t</div><div class='input'><span class='fu'>fit_t</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>4</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># univariate estimation</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># Margins Estimation</span>
-#&gt; Converged:       TRUE
-#&gt; Dimension:       1
-#&gt; AIC:            -12791.05
-#&gt; Log-Likelihood:  6399.524
-#&gt; Model:           Asymmetric Student-t</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>#</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
