@@ -37,7 +37,7 @@ on the Variance-Gamma (VG) distribution.
 
 x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 
-fit_vg(x)     # multivariate estimation
+fit_vg(x[ , 3:4])     # multivariate estimation
 fit_vg(x[ , 4, drop = FALSE]) # univariate estimation
 }
 \seealso{

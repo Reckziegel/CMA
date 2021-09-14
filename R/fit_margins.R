@@ -251,7 +251,7 @@ fit_nig_ <- function(.invariant, .symmetric = FALSE) {
 #'
 #' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 #'
-#' fit_vg(x)     # multivariate estimation
+#' fit_vg(x[ , 3:4])     # multivariate estimation
 #' fit_vg(x[ , 4, drop = FALSE]) # univariate estimation
 fit_vg <- function(.invariant, .symmetric = FALSE) {
     UseMethod("fit_vg", .invariant)
@@ -380,70 +380,3 @@ fit_t_ <- function(.invariant, .symmetric = FALSE) {
 
 
 
-# Printing Methods --------------------------------------------------------
-
-#' Internal function to create a prayer fit class.
-#'
-#' @param x A fitted object
-#' @param ... Any arguments to be passed as attributes
-#'
-#' @return A \code{list} of the \code{prayer_fit} class.
-#' @keywords internal
-new_cma_fit <- function(x, ...) {
-
-    if (inherits(x, "mle.ghyp")) {
-
-        out <- list()
-        out$n_iter             <- x@n.iter
-        out$llh                <- x@llh
-        out$converged          <- x@converged
-        out$error_code         <- x@error.code
-        out$error_message      <- x@error.message
-        out$aic                <- x@aic
-        out$parameter_variance <- x@parameter.variance
-        out$trace_pars         <- x@trace.pars
-        out$call               <- x@call
-        out$lambda             <- x@lambda
-        out$alpha_bar          <- x@alpha.bar
-        out$chi                <- x@chi
-        out$psi                <- x@psi
-        out$mu                 <- x@mu
-        out$sigma              <- x@sigma
-        out$model              <- x@model
-        out$dimension          <- x@dimension
-        out$expected_value     <- x@expected.value
-        out$variance           <- x@variance
-        out$parametrization    <- x@parametrization
-        out$data               <- x@data
-
-        vctrs::new_list_of(x = out, ptype = double(), ghyp = x, ..., class = "cma_fit")
-
-    }
-}
-
-#' @rdname new_cma_fit
-#' @importFrom vctrs obj_print_data
-#' @export
-obj_print_data.cma_fit <- function(x, ...) {
-    if (x$converged) {
-        cat("Converged:      ", x$converged)
-        cat("\n")
-        cat("Dimension:      ", x$dimension)
-        cat("\n")
-        cat("AIC:           ", x$aic)
-        cat("\n")
-        cat("Log-Likelihood: ", x$llh)
-        cat("\n")
-        cat("Model:          " , x$model[[1L]])
-    } else {
-        cat("Converged:    ", x$converged)
-        cat("\n")
-        cat("Error Code:   ", x$error_code)
-        cat("\n")
-        cat("Error Message:", x$error_message)
-        cat("\n")
-    }
-}
-
-# for compatibility with the S4 system
-methods::setOldClass(c("cma_fit", "vctrs_vctr"))

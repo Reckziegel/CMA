@@ -1,3 +1,50 @@
 template:
   params:
     bootswatch: yeti
+
+reference:
+    - title: Package Information
+      desc: Summary
+      contents:
+      - CMA
+
+    - title: CMA Algorithm
+      desc: Two-Step Recipe
+      contents:
+      - cma_separation
+      - cma_combination
+
+    - title: Fit on different components of a distribution
+    - subtitle: Marginal Distribution
+      contents:
+      - fit_ghd
+      - fit_hyp
+      - fit_nig
+      - fit_t
+      - fit_vg
+
+    - subtitle: Copulas
+      contents:
+      - fit_copula_normal
+      - fit_copula_t
+      - fit_copula_gumbel
+      - fit_copula_clayton
+      - fit_copula_frank
+      - fit_copula_joe
+
+    - title: Generate
+      desc: criate distributions
+      contents:
+      - generate_margins
+      - generate_copulas
+
+    - title: Moment-Matching
+      desc: Match the moments of distributions
+      contents:
+      - match_normal
+      - match_t
+
+    - title: Panic
+      contents:
+      - panic_copula
+      - plot_panic_distribution

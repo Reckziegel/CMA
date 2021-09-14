@@ -27,7 +27,7 @@ cma_sep_tbl_ep <- cma_separation(x = data_tbl)
 
 test_that("cma_separation works on matrices", {
     expect_type(cma_sep_mtx, "list")
-    expect_s3_class(cma_sep_mtx, "cma")
+    expect_s3_class(cma_sep_mtx, "cma_separation")
     expect_length(cma_sep_mtx, 3L)
     expect_named(cma_sep_mtx, c("marginal", "cdf", "copula"))
     expect_equal(colnames(cma_sep_mtx$marginal), c("..1", "..2"))
@@ -35,7 +35,7 @@ test_that("cma_separation works on matrices", {
     expect_equal(colnames(cma_sep_mtx$copula),   c("..1", "..2"))
 
     expect_type(cma_sep_mtx_ep, "list")
-    expect_s3_class(cma_sep_mtx_ep, "cma")
+    expect_s3_class(cma_sep_mtx_ep, "cma_separation")
     expect_length(cma_sep_mtx_ep, 3L)
     expect_named(cma_sep_mtx_ep, c("marginal", "cdf", "copula"))
     expect_equal(colnames(cma_sep_mtx_ep$marginal), c("..1", "..2"))
@@ -45,36 +45,36 @@ test_that("cma_separation works on matrices", {
 
 test_that("cma_separation works on xts", {
     expect_type(cma_sep_xts, "list")
-    expect_s3_class(cma_sep_xts, "cma")
+    expect_s3_class(cma_sep_xts, "cma_separation")
     expect_length(cma_sep_xts, 3L)
     expect_named(cma_sep_xts, c("marginal", "cdf", "copula"))
 
     expect_type(cma_sep_xts_ep, "list")
-    expect_s3_class(cma_sep_xts_ep, "cma")
+    expect_s3_class(cma_sep_xts_ep, "cma_separation")
     expect_length(cma_sep_xts_ep, 3L)
     expect_named(cma_sep_xts_ep, c("marginal", "cdf", "copula"))
 })
 
 test_that("cma_separation works on data.frames", {
     expect_type(cma_sep_df, "list")
-    expect_s3_class(cma_sep_df, "cma")
+    expect_s3_class(cma_sep_df, "cma_separation")
     expect_length(cma_sep_df, 3L)
     expect_named(cma_sep_df, c("marginal", "cdf", "copula"))
 
     expect_type(cma_sep_df_ep, "list")
-    expect_s3_class(cma_sep_df_ep, "cma")
+    expect_s3_class(cma_sep_df_ep, "cma_separation")
     expect_length(cma_sep_df_ep, 3L)
     expect_named(cma_sep_df_ep, c("marginal", "cdf", "copula"))
 })
 
 test_that("cma_separation works on tbl", {
     expect_type(cma_sep_tbl, "list")
-    expect_s3_class(cma_sep_tbl, "cma")
+    expect_s3_class(cma_sep_tbl, "cma_separation")
     expect_length(cma_sep_tbl, 3L)
     expect_named(cma_sep_tbl, c("marginal", "cdf", "copula"))
 
     expect_type(cma_sep_tbl_ep, "list")
-    expect_s3_class(cma_sep_tbl_ep, "cma")
+    expect_s3_class(cma_sep_tbl_ep, "cma_separation")
     expect_length(cma_sep_tbl_ep, 3L)
     expect_named(cma_sep_tbl_ep, c("marginal", "cdf", "copula"))
 })
