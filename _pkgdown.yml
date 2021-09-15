@@ -2,20 +2,24 @@ template:
   params:
     bootswatch: yeti
 
+navbar:
+  right:
+    - icon: fab fa-github
+      href: https://github.com/Reckziegel/CMA
+
 reference:
     - title: Package Information
-      desc: Summary
       contents:
       - CMA
 
     - title: CMA Algorithm
-      desc: Two-Step Recipe
+      desc: A two-step recipe to manipulate multivariate distributions
       contents:
       - cma_separation
       - cma_combination
 
-    - title: Fit on different components of a distribution
-    - subtitle: Marginal Distribution
+    - title: Marginal Distributions
+      desc: Tools to manipulate the _unique_ characteristics of a distribution
       contents:
       - fit_ghd
       - fit_hyp
@@ -23,7 +27,8 @@ reference:
       - fit_t
       - fit_vg
 
-    - subtitle: Copulas
+    - title: Copulas
+      desc: Tools to manipulate the _joint_ characteristics of a distribution
       contents:
       - fit_copula_normal
       - fit_copula_t
@@ -33,18 +38,19 @@ reference:
       - fit_copula_joe
 
     - title: Generate
-      desc: criate distributions
+      desc: A helper to generate scenarios from fitted objects
       contents:
       - generate_margins
       - generate_copulas
 
     - title: Moment-Matching
-      desc: Match the moments of distributions
+      desc: An algorithm to match exactly the location and dispersion parameters of a distribution
       contents:
       - match_normal
       - match_t
 
     - title: Panic
+      desc: Generate _ex-ante_ worst case scenarios
       contents:
       - panic_copula
       - plot_panic_distribution

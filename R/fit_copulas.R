@@ -1,4 +1,4 @@
-#' Archimedean Copulas Scenario Analysis
+#' Archimedean Copulas for Scenario Analysis
 #'
 #' These functions are constructed to help the user to build new types of copulas.
 #'

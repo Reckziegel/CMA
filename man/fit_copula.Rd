@@ -7,7 +7,7 @@
 \alias{fit_copula_t}
 \alias{fit_copula_normal}
 \alias{fit_copula_joe}
-\title{Archimedean Copulas Scenario Analysis}
+\title{Archimedean Copulas for Scenario Analysis}
 \usage{
 fit_copula_clayton(
   copula,
