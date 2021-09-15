@@ -17,6 +17,7 @@
 #' set.seed(123)
 #'
 #' margins <- matrix(stats::rnorm(20), ncol = 2)
+#' colnames(margins) <- c("a", "b")
 #' probs   <- rep(1 / 10, 10)
 #'
 #' # separate
@@ -36,9 +37,9 @@ cma_combination <- function(x, cdf, copula) {
   #assert_rows_length(x, U)
   #assert_rows_length(u, U)
 
-  x <- check_input(x)
-  u <- check_input(cdf)
-  U <- check_input(copula)
+  x      <- check_input(x)
+  cdf    <- check_input(cdf)
+  copula <- check_input(copula)
 
   cma_combine(x = x, u = cdf, U = copula)
 

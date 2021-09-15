@@ -24,6 +24,7 @@ Second CMA step: joins copulas and marginals into the same data structure.
 set.seed(123)
 
 margins <- matrix(stats::rnorm(20), ncol = 2)
+colnames(margins) <- c("a", "b")
 probs   <- rep(1 / 10, 10)
 
 # separate

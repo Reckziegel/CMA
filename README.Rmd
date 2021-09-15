@@ -25,6 +25,8 @@ knitr::opts_chunk$set(
 
 The Copula Marginal Algorithm (CMA) is a simple two step recipe to manipulate multivariate distributions under [Fully Flexible Probabilities](https://github.com/Reckziegel/FFP).
 
-CMA can quickly decompose any multivariate distribution between unique (*marginals*) and shared components (*copulas*). This approach can add a high level of flexibility for estimation and simulation purposes.
+CMA can quickly decompose any multivariate distribution between unique (*marginals*) and their shared components (*copulas*). This approach can add a high level of flexibility for estimation and simulation purposes.
 
-For example, let's suppose `cma_separation()` is used to isolate the margins from the copulas. Then, the statistician could stress-test any of these two components and "glue" back the new items into the same dataset with `cma_combination()`.
+# Application 1: Panic Copulas
+
+# Application 2: "What if" Analysis 

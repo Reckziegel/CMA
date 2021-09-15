@@ -26,5 +26,5 @@ x <- diff(log(EuStockMarkets))
 x <- panic_copula(x = x, n = 10000, panic_prob = 0.02)
 w <- rep(0.25, 4)
 pnl <- x$simulation \%*\% w
-plot_panic_distribution(pnl = pnl, p = x$p, 100)
+plot_panic_distribution(pnl = pnl, p = x$p)
 }

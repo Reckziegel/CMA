@@ -16,7 +16,11 @@ new_cma_separation <- function(x, ...) {
     colnames(x) <- make_tidy_names(x)
   }
   vctrs::new_list_of(
-    x          = list(marginal = x, cdf = dots$cdf, copula = dots$copula),
+    x          = list(
+      marginal = tibble::as_tibble(x, .name_repair = "minimal"),
+      cdf      = tibble::as_tibble(dots$cdf, .name_repair = "minimal"),
+      copula   = tibble::as_tibble(dots$copula, .name_repair = "minimal")
+      ),
     ptype      = double(),
     ord_margin = dots$sorted_margin,
     class      = "cma_separation"
@@ -224,4 +228,40 @@ obj_print_data.cma_copula <- function(x, ...) {
   cat("Log-Likelihood:", x$loglik)
   cat("\n")
   cat("Model:         ", attributes(x)$model)
+}
+
+
+# Panic Copula ------------------------------------------------------------
+
+#' Internal vctrs methods
+#'
+#' @param x A numeric vector.
+#' @return No return value, called for side effects.
+#' @import vctrs
+#' @keywords internal
+#' @name cma-panic
+NULL
+
+#' @rdname cma-panic
+new_panic_copula <- function(x, ...) {
+  vctrs::new_list_of(x = x, ptype = double(), class = "panic_copula")
+}
+
+# for compatibility with the S4 system
+methods::setOldClass(c("panic_copula", "vctrs_vctr"))
+
+#' @importFrom vctrs obj_print_header
+#' @export
+obj_print_header.panic_copula <- function(x, ...) {
+  cat(crayon::blue("# Panic Copula"))
+  cat("\n")
+}
+
+#' @rdname cma-copula
+#' @export
+obj_print_data.panic_copula <- function(x, ...) {
+  cat("simulation: << dim", NROW(x$simulation), "x", NCOL(x$simulation),">>")
+  cat("\n")
+  cat("p:          << dim", NROW(x$p), "x", NCOL(x$p),">>")
+  cat("\n")
 }

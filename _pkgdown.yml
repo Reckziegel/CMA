@@ -8,6 +8,7 @@ navbar:
       href: https://github.com/Reckziegel/CMA
 
 reference:
+
     - title: Package Information
       contents:
       - CMA
@@ -30,6 +31,7 @@ reference:
     - title: Copulas
       desc: Tools to manipulate the _joint_ characteristics of a distribution
       contents:
+      - copula_transformation
       - fit_copula_normal
       - fit_copula_t
       - fit_copula_gumbel
@@ -54,3 +56,4 @@ reference:
       contents:
       - panic_copula
       - plot_panic_distribution
+
