@@ -67,6 +67,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div id="cma" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#cma" class="anchor"></a>CMA</h1></div>
@@ -77,9 +78,17 @@
 <p>Multivariate Distribution = Marginals + Copulas</p>
 </blockquote>
 <p>The Copula Marginal Algorithm (CMA) is a simple two step recipe to manipulate multivariate distributions under <a href="https://github.com/Reckziegel/FFP">Fully Flexible Probabilities</a>.</p>
-<p>CMA can quickly decompose any multivariate distribution between unique (<em>marginals</em>) and shared components (<em>copulas</em>). This approach can add a high level of flexibility for estimation and simulation purposes.</p>
-<p>For example, let’s suppose <code><a href="reference/cma_separation.html">cma_separation()</a></code> is used to isolate the margins from the copulas. Then, the statistician could stress-test any of these two components and “glue” back the new items into the same dataset with <code><a href="reference/cma_combination.html">cma_combination()</a></code>.</p>
+<p>CMA can quickly decompose any multivariate distribution between unique (<em>marginals</em>) and their shared components (<em>copulas</em>). This approach can add a high level of flexibility for estimation and simulation purposes.</p>
 </div>
+<div id="application-1-panic-copulas" class="section level1">
+<h1 class="hasAnchor">
+<a href="#application-1-panic-copulas" class="anchor"></a>Application 1: Panic Copulas</h1>
+</div>
+<div id="application-2-what-if-analysis" class="section level1">
+<h1 class="hasAnchor">
+<a href="#application-2-what-if-analysis" class="anchor"></a>Application 2: “What if” Analysis</h1>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
