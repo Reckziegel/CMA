@@ -24,15 +24,15 @@ cma_separation(x, p = NULL)
 \arguments{
 \item{x}{A rectangular (non-tidy) data structure.}
 
-\item{p}{A probability vector.}
+\item{p}{A probability vector. If \code{NULL} (the default) the standard
+1 over N is used.}
 }
 \value{
 An S3 list of the \code{cma} class that contains two elements:
 \code{marginal} and \code{copula}.
 }
 \description{
-First CMA step: decomposes the the pure "individual" features of marginal
-distributions and the pure "joint" information available in the copulas.
+First CMA step: decomposes the the pure "individual" features of the marginal
 distributions from the pure "joint" information available in the copulas.
 }
 \details{

@@ -1,6 +1,6 @@
 #' Visualize a Panic Distribution
 #'
-#' @param pnl An univariante time series with the PnL marginal distribution.
+#' @param pnl An univariate time series with the PnL marginal distribution.
 #' @param p A \code{double} vector of probabilities. If \code{NULL}, `p` is automatically
 #' set to 1 over n.
 #' @param breaks An \code{integer} with the number of break point to be used to
@@ -14,11 +14,12 @@
 #' x <- diff(log(EuStockMarkets))
 #' x <- panic_copula(x = x, n = 10000, panic_prob = 0.02)
 #' w <- rep(0.25, 4)
-#' pnl <- x$simulation %*% w
+#' pnl <- as.matrix(x$simulation) %*% w
 #' plot_panic_distribution(pnl = pnl, p = x$p)
 plot_panic_distribution <- function(pnl, p = NULL, breaks = 200) {
 
     assertthat::assert_that(assertthat::is.number(breaks))
+    pnl <- check_input(pnl)
     assert_is_univariate(pnl)
     if (is_empty(p)) {
         p <- rep(1 / NROW(pnl), NROW(pnl))

@@ -1,6 +1,6 @@
 #' CMA combination Step
 #'
-#' Second CMA step: joins copulas and marginals into the same data structure.
+#' Second CMA step: "glue" copulas and marginals into the same data structure.
 #'
 #' @param x A rectangular (non-tidy) data structure with the sorted marginals
 #' (ascending order).
@@ -26,8 +26,10 @@
 #' comb <- cma_combination(margins, sep$cdf, sep$copula)
 #'
 #' # The result is identical
-#' stopifnot(all.equal(margins[ , 1], comb[ , 1]))
-#' stopifnot(all.equal(margins[ , 2], comb[ , 2]))
+#' margins
+#' comb
+#' stopifnot(all.equal(margins[ , "a"], comb$a))
+#' stopifnot(all.equal(margins[ , "b"], comb$b))
 cma_combination <- function(x, cdf, copula) {
 
   #assert_cols_length(x, u)

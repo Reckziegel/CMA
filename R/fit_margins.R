@@ -2,15 +2,15 @@
 
 #' Estimation of the Generalized Hyperbolic Distribution
 #'
-#' This function is a wrapper around the \code{\link[ghyp]{fit.ghypuv}} and
-#' \code{\link[ghyp]{fit.ghypmv}}, that performs a maximum likelihood estimation
-#' on generalized hyperbolic distribution.
+#' Performs maximum likelihood estimation on the Generalized Hyperbolic distribution
+#' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.ghypuv}} and
+#' \code{\link[ghyp]{fit.ghypmv}}.
 #'
-#' @param .invariant A tabular data structure.
-#' @param .symmetric A flag. Should the estimated distribution be symmetric?
+#' @param .invariant A tabular (non-tidy) data structure.
+#' @param .symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
-#' @return An object of the the class \code{mle.ghyp}.
+#' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
 #' @seealso \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}} \code{\link{fit_t}}
 #'
@@ -79,15 +79,15 @@ fit_ghd_ <- function(.invariant, .symmetric = FALSE) {
 
 #' Estimation of the Hyperbolic Distribution
 #'
-#' This function is a wrapper around the \code{\link[ghyp]{fit.hypuv}} and
-#' \code{\link[ghyp]{fit.hypmv}}, that performs a maximum likelihood estimation
-#' on the hyperbolic distribution.
+#' Performs a maximum likelihood estimation on the Hyperbolic distribution
+#' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.hypuv}} and
+#' \code{\link[ghyp]{fit.hypmv}}
 #'
-#' @param .invariant A tabular data structure.
+#' @param .invariant A tabular (non-tidy) data structure.
 #' @param .symmetric A flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
-#' @return An object of the the class \code{mle.ghyp}.
+#' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
 #' @seealso \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}} \code{\link{fit_t}}
 #'
@@ -155,15 +155,15 @@ fit_hyp_ <- function(.invariant, .symmetric = FALSE) {
 
 #' Estimation of the Normal-Inverse Gaussian Distribution
 #'
-#' This function is a wrapper around the \code{\link[ghyp]{fit.NIGuv}} and
-#' \code{\link[ghyp]{fit.NIGmv}}, that performs a maximum likelihood estimation
-#' on the Normal-Inverse Gaussian (NIG) distribution.
+#' Performs maximum likelihood estimation on the Normal-Inverse Gaussian (NIG)
+#' distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.NIGuv}}
+#' and \code{\link[ghyp]{fit.NIGmv}}.
 #'
-#' @param .invariant A tabular data structure.
-#' @param .symmetric A flag. Should the estimated distribution be symmetric?
+#' @param .invariant A tabular (non-tidy) data structure.
+#' @param .symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
-#' @return An object of the the class \code{mle.ghyp}.
+#' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
 #' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_vg}} \code{\link{fit_t}}
 #'
@@ -232,15 +232,15 @@ fit_nig_ <- function(.invariant, .symmetric = FALSE) {
 
 #' Estimation of the Variance-Gamma Distribution
 #'
-#' This function is a wrapper around the \code{\link[ghyp]{fit.VGuv}} and
-#' \code{\link[ghyp]{fit.VGmv}}, that performs a maximum likelihood estimation
-#' on the Variance-Gamma (VG) distribution.
+#' Performs maximum likelihood estimation on the Variance-Gamma (VG)
+#' distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.VGuv}}
+#' and \code{\link[ghyp]{fit.VGmv}}.
 #'
-#' @param .invariant A tabular data structure.
-#' @param .symmetric A flag. Should the estimated distribution be symmetric?
+#' @param .invariant A tabular (non-tidy) data structure.
+#' @param .symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
-#' @return An object of the the class \code{mle.ghyp}.
+#' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
 #' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_t}}
 #'
@@ -307,15 +307,15 @@ fit_vg_ <- function(.invariant, .symmetric = FALSE) {
 
 #' Estimation of the Student-t Distribution
 #'
-#' This function is a wrapper around the \code{\link[ghyp]{fit.tuv}} and
-#' \code{\link[ghyp]{fit.tmv}}, that performs a maximum likelihood estimation
-#' on the Student-t distribution.
+#' Performs maximum likelihood estimation on the Student-t distribution
+#' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.tuv}}
+#' and \code{\link[ghyp]{fit.tmv}}.
 #'
-#' @param .invariant A tabular data structure.
-#' @param .symmetric A flag. Should the estimated distribution be symmetric?
+#' @param .invariant A tabular (non-tidy) data structure.
+#' @param .symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
-#' @return An object of the the class \code{mle.ghyp}.
+#' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
 #' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}}
 #'

@@ -27,7 +27,7 @@ fit_copula_clayton <- function(copula, method = c("mpl", "ml", "itau", "irho", "
         method <- match.arg(method, c("mpl", "ml", "itau", "irho", "itau.mpl"))[[1L]]
         x <- copula::fitCopula(
             copula = copula::claytonCopula(dim = n_col),
-            data   = copula$copula,
+            data   = as.matrix(copula$copula),
             method = method,
             ...
         )
@@ -49,7 +49,7 @@ fit_copula_gumbel <- function(copula, method = c("mpl", "ml", "itau", "irho", "i
         method <- match.arg(method, c("mpl", "ml", "itau", "irho", "itau.mpl"))[[1L]]
         x <- copula::fitCopula(
             copula = copula::gumbelCopula(dim = n_col),
-            data   = copula$copula,
+            data   = as.matrix(copula$copula),
             method = method,
             ...
         )
@@ -71,7 +71,7 @@ fit_copula_frank <- function(copula, method = c("mpl", "ml", "itau", "irho", "it
         method <- match.arg(method, c("mpl", "ml", "itau", "irho", "itau.mpl"))[[1L]]
         x <- copula::fitCopula(
             copula = copula::frankCopula(dim = n_col),
-            data   = copula$copula,
+            data   = as.matrix(copula$copula),
             method = method,
             ...
         )
@@ -93,7 +93,7 @@ fit_copula_t <- function(copula, method = c("mpl", "ml", "itau", "irho", "itau.m
         method <- match.arg(method, c("mpl", "ml", "itau", "irho", "itau.mpl"))[[1L]]
         x <- copula::fitCopula(
             copula = copula::tCopula(dim = n_col),
-            data   = copula$copula,
+            data   = as.matrix(copula$copula),
             method = method,
             ...
         )
@@ -115,7 +115,7 @@ fit_copula_normal <- function(copula, method = c("mpl", "ml", "itau", "irho", "i
         method <- match.arg(method, c("mpl", "ml", "itau", "irho", "itau.mpl"))[[1L]]
         x <- copula::fitCopula(
             copula = copula::normalCopula(dim = n_col),
-            data   = copula$copula,
+            data   = as.matrix(copula$copula),
             method = method,
             ...
         )
@@ -137,7 +137,7 @@ fit_copula_joe <- function(copula, method = c("mpl", "ml", "itau", "irho", "itau
         method <- match.arg(method, c("mpl", "ml", "itau", "irho", "itau.mpl"))[[1L]]
         x <- copula::fitCopula(
             copula = copula::joeCopula(dim = n_col),
-            data   = copula$copula,
+            data   = as.matrix(copula$copula),
             method = method,
             ...
         )

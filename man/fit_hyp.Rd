@@ -19,18 +19,18 @@ fit_hyp(.invariant, .symmetric = FALSE)
 \method{fit_hyp}{matrix}(.invariant, .symmetric = FALSE)
 }
 \arguments{
-\item{.invariant}{A tabular data structure.}
+\item{.invariant}{A tabular (non-tidy) data structure.}
 
 \item{.symmetric}{A flag. Should the estimated distribution be symmetric?
 Defaults to \code{FALSE}.}
 }
 \value{
-An object of the the class \code{mle.ghyp}.
+A \code{list} of the the class \code{cma_fit} with \code{21} components.
 }
 \description{
-This function is a wrapper around the \code{\link[ghyp]{fit.hypuv}} and
-\code{\link[ghyp]{fit.hypmv}}, that performs a maximum likelihood estimation
-on the hyperbolic distribution.
+Performs a maximum likelihood estimation on the Hyperbolic distribution
+(univariate and multivariate). Wrappers \code{\link[ghyp]{fit.hypuv}} and
+\code{\link[ghyp]{fit.hypmv}}
 }
 \examples{
 ##### fit_hyp #####

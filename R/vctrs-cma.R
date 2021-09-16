@@ -39,11 +39,11 @@ obj_print_header.cma_separation <- function(x, ...) {
 #' @export
 obj_print_data.cma_separation <- function(x, ...) {
   cat("\n")
-  cat("marginal: << dim", NROW(x$marginal), "x", NCOL(x$marginal),">>")
+  cat("marginal: <<", crayon::silver("tbl"), NROW(x$marginal), "x", NCOL(x$marginal),">>")
   cat("\n")
-  cat("cdf     : << dim", NROW(x$cdf), "x", NCOL(x$cdf),">>")
+  cat("cdf     : <<", crayon::silver("tbl"), NROW(x$cdf), "x", NCOL(x$cdf),">>")
   cat("\n")
-  cat("copula  : << dim", NROW(x$copula), "x", NCOL(x$copula),">>")
+  cat("copula  : <<", crayon::silver("tbl"), NROW(x$copula), "x", NCOL(x$copula),">>")
   cat("\n")
 }
 
@@ -147,7 +147,7 @@ new_marginal <- function(x, ...) {
   if (!has_names(x)) {
     colnames(x) <- make_tidy_names(x)
   }
-  vctrs::new_list_of(x     = list(marginal = x),
+  vctrs::new_list_of(x     = list(marginal = tibble::as_tibble(x)),
                      ptype = double(),
                      model = dots$model,
                      class = "marginal"
@@ -165,7 +165,7 @@ obj_print_header.marginal <- function(x, ...) {
 obj_print_data.marginal <- function(x, ...) {
     cat(crayon::cyan(attributes(x)$model))
     cat("\n")
-    cat("marginal: << dim", NROW(x$marginal), "x", NCOL(x$marginal),">>")
+    cat("marginal: <<", crayon::silver("tbl"), NROW(x$marginal), "x", NCOL(x$marginal),">>")
 }
 
 
@@ -260,8 +260,8 @@ obj_print_header.panic_copula <- function(x, ...) {
 #' @rdname cma-copula
 #' @export
 obj_print_data.panic_copula <- function(x, ...) {
-  cat("simulation: << dim", NROW(x$simulation), "x", NCOL(x$simulation),">>")
+  cat("simulation: <<", crayon::silver("tbl"), NROW(x$simulation), "x", NCOL(x$simulation),">>")
   cat("\n")
-  cat("p:          << dim", NROW(x$p), "x", NCOL(x$p),">>")
+  cat("p:          <<", crayon::silver("tbl"), NROW(x$p), "x", NCOL(x$p),">>")
   cat("\n")
 }

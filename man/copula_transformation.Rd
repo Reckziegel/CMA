@@ -15,18 +15,22 @@ copula_transformation(x, copula)
 A \code{tibble}
 }
 \description{
-This function transforms the entries of the copula to respect the boundaries
-of the unit cube.
+This function transforms the entries an arbitrary copula so they can be compatible
+with the first two moments of a dataset.
 }
 \details{
 The copula transformation is a 4-step recipe:
     \itemize{
-      \item 1. Generate new copula scenarios;
-      \item 2. Normalize the copula to have a standard normal distribution;
-      \item 3. Operate an affine transformation on the normalized variables;
-      \item 4. Extract the copulas from the new rotated variables.
+      \item 1. Normalize the copula to have a standard normal distribution;
+      \item 2. Operate an affine transformation on the normalized variables;
+      \item 3. Do the CMA Separation step on the new rotated variables;
+      \item 4. Extract the copula component that appears in 3.
     }
 }
 \examples{
-#
+x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+sep <- cma_separation(x)
+clayton <- fit_copula_clayton(sep)
+gen <- generate_copulas(clayton, 10)
+copula_transformation(x, gen)
 }

@@ -78,6 +78,6 @@ cma_combine <- function(x, u, U) {
       ties   = "ordered")$y
   }
 
-  X
+  tibble::as_tibble(X, .name_repair = "minimal")
 
 }

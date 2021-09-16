@@ -19,18 +19,18 @@ fit_vg(.invariant, .symmetric = FALSE)
 \method{fit_vg}{matrix}(.invariant, .symmetric = FALSE)
 }
 \arguments{
-\item{.invariant}{A tabular data structure.}
+\item{.invariant}{A tabular (non-tidy) data structure.}
 
-\item{.symmetric}{A flag. Should the estimated distribution be symmetric?
+\item{.symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
 Defaults to \code{FALSE}.}
 }
 \value{
-An object of the the class \code{mle.ghyp}.
+A \code{list} of the the class \code{cma_fit} with \code{21} components.
 }
 \description{
-This function is a wrapper around the \code{\link[ghyp]{fit.VGuv}} and
-\code{\link[ghyp]{fit.VGmv}}, that performs a maximum likelihood estimation
-on the Variance-Gamma (VG) distribution.
+Performs maximum likelihood estimation on the Variance-Gamma (VG)
+distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.VGuv}}
+and \code{\link[ghyp]{fit.VGmv}}.
 }
 \examples{
 ##### fit_vg #####

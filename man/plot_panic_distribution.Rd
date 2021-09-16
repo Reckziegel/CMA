@@ -7,7 +7,7 @@
 plot_panic_distribution(pnl, p = NULL, breaks = 200)
 }
 \arguments{
-\item{pnl}{An univariante time series with the PnL marginal distribution.}
+\item{pnl}{An univariate time series with the PnL marginal distribution.}
 
 \item{p}{A \code{double} vector of probabilities. If \code{NULL}, `p` is automatically
 set to 1 over n.}
@@ -25,6 +25,6 @@ Visualize a Panic Distribution
 x <- diff(log(EuStockMarkets))
 x <- panic_copula(x = x, n = 10000, panic_prob = 0.02)
 w <- rep(0.25, 4)
-pnl <- x$simulation \%*\% w
+pnl <- as.matrix(x$simulation) \%*\% w
 plot_panic_distribution(pnl = pnl, p = x$p)
 }

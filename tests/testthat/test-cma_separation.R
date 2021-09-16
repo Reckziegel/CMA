@@ -30,17 +30,17 @@ test_that("cma_separation works on matrices", {
     expect_s3_class(cma_sep_mtx, "cma_separation")
     expect_length(cma_sep_mtx, 3L)
     expect_named(cma_sep_mtx, c("marginal", "cdf", "copula"))
-    expect_equal(colnames(cma_sep_mtx$marginal), c("..1", "..2"))
-    expect_equal(colnames(cma_sep_mtx$cdf),      c("..1", "..2"))
-    expect_equal(colnames(cma_sep_mtx$copula),   c("..1", "..2"))
+    expect_equal(colnames(cma_sep_mtx$marginal), c("...1", "...2"))
+    expect_equal(colnames(cma_sep_mtx$cdf),      c("...1", "...2"))
+    expect_equal(colnames(cma_sep_mtx$copula),   c("...1", "...2"))
 
     expect_type(cma_sep_mtx_ep, "list")
     expect_s3_class(cma_sep_mtx_ep, "cma_separation")
     expect_length(cma_sep_mtx_ep, 3L)
     expect_named(cma_sep_mtx_ep, c("marginal", "cdf", "copula"))
-    expect_equal(colnames(cma_sep_mtx_ep$marginal), c("..1", "..2"))
-    expect_equal(colnames(cma_sep_mtx_ep$cdf),      c("..1", "..2"))
-    expect_equal(colnames(cma_sep_mtx_ep$copula),   c("..1", "..2"))
+    expect_equal(colnames(cma_sep_mtx_ep$marginal), c("...1", "...2"))
+    expect_equal(colnames(cma_sep_mtx_ep$cdf),      c("...1", "...2"))
+    expect_equal(colnames(cma_sep_mtx_ep$copula),   c("...1", "...2"))
 })
 
 test_that("cma_separation works on xts", {
