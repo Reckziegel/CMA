@@ -40,9 +40,9 @@
 
 
 <meta property="og:title" content="Estimation of the Hyperbolic Distribution — fit_hyp" />
-<meta property="og:description" content="This function is a wrapper around the fit.hypuv and
-fit.hypmv, that performs a maximum likelihood estimation
-on the hyperbolic distribution." />
+<meta property="og:description" content="Performs a maximum likelihood estimation on the Hyperbolic distribution
+(univariate and multivariate). Wrappers fit.hypuv and
+fit.hypmv" />
 
 
 
@@ -116,9 +116,9 @@ on the hyperbolic distribution." />
     </div>
 
     <div class="ref-description">
-    <p>This function is a wrapper around the <code><a href='https://rdrr.io/pkg/ghyp/man/fit.ghypuv.html'>fit.hypuv</a></code> and
-<code><a href='https://rdrr.io/pkg/ghyp/man/fit.ghypmv.html'>fit.hypmv</a></code>, that performs a maximum likelihood estimation
-on the hyperbolic distribution.</p>
+    <p>Performs a maximum likelihood estimation on the Hyperbolic distribution
+(univariate and multivariate). Wrappers <code><a href='https://rdrr.io/pkg/ghyp/man/fit.ghypuv.html'>fit.hypuv</a></code> and
+<code><a href='https://rdrr.io/pkg/ghyp/man/fit.ghypmv.html'>fit.hypmv</a></code></p>
     </div>
 
     <pre class="usage"><span class='fu'>fit_hyp</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -140,7 +140,7 @@ on the hyperbolic distribution.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.invariant</th>
-      <td><p>A tabular data structure.</p></td>
+      <td><p>A tabular (non-tidy) data structure.</p></td>
     </tr>
     <tr>
       <th>.symmetric</th>
@@ -151,7 +151,7 @@ Defaults to <code>FALSE</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the the class <code>mle.ghyp</code>.</p>
+    <p>A <code>list</code> of the the class <code>cma_fit</code> with <code>21</code> components.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>fit_hyp</code> <code><a href='fit_nig.html'>fit_nig</a></code> <code><a href='fit_vg.html'>fit_vg</a></code> <code><a href='fit_t.html'>fit_t</a></code></p></div>

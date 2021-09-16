@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="CMA combination Step — cma_combination" />
-<meta property="og:description" content="Second CMA step: joins copulas and marginals into the same data structure." />
+<meta property="og:description" content="Second CMA step: &quot;glue&quot; copulas and marginals into the same data structure." />
 
 
 
@@ -114,7 +114,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Second CMA step: joins copulas and marginals into the same data structure.</p>
+    <p>Second CMA step: "glue" copulas and marginals into the same data structure.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cma_combination</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>cdf</span>, <span class='va'>copula</span><span class='op'>)</span></pre>
@@ -157,8 +157,32 @@
 <span class='va'>comb</span> <span class='op'>&lt;-</span> <span class='fu'>cma_combination</span><span class='op'>(</span><span class='va'>margins</span>, <span class='va'>sep</span><span class='op'>$</span><span class='va'>cdf</span>, <span class='va'>sep</span><span class='op'>$</span><span class='va'>copula</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: The marginal distribution was unsorted. Sorting in ascending order.</span></div><div class='input'>
 <span class='co'># The result is identical</span>
-<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>margins</span><span class='op'>[</span> , <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>comb</span><span class='op'>[</span> , <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>margins</span><span class='op'>[</span> , <span class='fl'>2</span><span class='op'>]</span>, <span class='va'>comb</span><span class='op'>[</span> , <span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>margins</span>
+</div><div class='output co'>#&gt;                 a          b
+#&gt;  [1,] -0.56047565  1.2240818
+#&gt;  [2,] -0.23017749  0.3598138
+#&gt;  [3,]  1.55870831  0.4007715
+#&gt;  [4,]  0.07050839  0.1106827
+#&gt;  [5,]  0.12928774 -0.5558411
+#&gt;  [6,]  1.71506499  1.7869131
+#&gt;  [7,]  0.46091621  0.4978505
+#&gt;  [8,] -1.26506123 -1.9666172
+#&gt;  [9,] -0.68685285  0.7013559
+#&gt; [10,] -0.44566197 -0.4727914</div><div class='input'><span class='va'>comb</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 × 2</span>
+#&gt;          a      b
+#&gt;      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> -<span style='color: #BB0000;'>0.560</span>   1.22 
+#&gt; <span style='color: #BCBCBC;'> 2</span> -<span style='color: #BB0000;'>0.230</span>   0.360
+#&gt; <span style='color: #BCBCBC;'> 3</span>  1.56    0.401
+#&gt; <span style='color: #BCBCBC;'> 4</span>  0.070<span style='text-decoration: underline;'>5</span>  0.111
+#&gt; <span style='color: #BCBCBC;'> 5</span>  0.129  -<span style='color: #BB0000;'>0.556</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span>  1.72    1.79 
+#&gt; <span style='color: #BCBCBC;'> 7</span>  0.461   0.498
+#&gt; <span style='color: #BCBCBC;'> 8</span> -<span style='color: #BB0000;'>1.27</span>   -<span style='color: #BB0000;'>1.97</span> 
+#&gt; <span style='color: #BCBCBC;'> 9</span> -<span style='color: #BB0000;'>0.687</span>   0.701
+#&gt; <span style='color: #BCBCBC;'>10</span> -<span style='color: #BB0000;'>0.446</span>  -<span style='color: #BB0000;'>0.473</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>margins</span><span class='op'>[</span> , <span class='st'>"a"</span><span class='op'>]</span>, <span class='va'>comb</span><span class='op'>$</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>margins</span><span class='op'>[</span> , <span class='st'>"b"</span><span class='op'>]</span>, <span class='va'>comb</span><span class='op'>$</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

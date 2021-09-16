@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="CMA Separation Step — cma_separation" />
-<meta property="og:description" content="First CMA step: decomposes the the pure &quot;individual&quot; features of marginal
-distributions and the pure &quot;joint&quot; information available in the copulas.
+<meta property="og:description" content="First CMA step: decomposes the the pure &quot;individual&quot; features of the marginal
 distributions from the pure &quot;joint&quot; information available in the copulas." />
 
 
@@ -116,8 +115,7 @@ distributions from the pure &quot;joint&quot; information available in the copul
     </div>
 
     <div class="ref-description">
-    <p>First CMA step: decomposes the the pure "individual" features of marginal
-distributions and the pure "joint" information available in the copulas.
+    <p>First CMA step: decomposes the the pure "individual" features of the marginal
 distributions from the pure "joint" information available in the copulas.</p>
     </div>
 
@@ -147,7 +145,8 @@ distributions from the pure "joint" information available in the copulas.</p>
     </tr>
     <tr>
       <th>p</th>
-      <td><p>A probability vector.</p></td>
+      <td><p>A probability vector. If <code>NULL</code> (the default) the standard
+1 over N is used.</p></td>
     </tr>
     </table>
 
@@ -168,9 +167,9 @@ distributions from the pure "joint" information available in the copulas.</p>
 <span class='va'>cma</span> <span class='op'>&lt;-</span> <span class='fu'>cma_separation</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>margins</span><span class='op'>)</span>
 <span class='va'>cma</span>
 </div><div class='output co'>#&gt; <span style='color: #00BBBB;'># CMA Decomposition</span>
-#&gt; marginal: &lt;&lt; dim 10 x 3 &gt;&gt;
-#&gt; cdf     : &lt;&lt; dim 10 x 3 &gt;&gt;
-#&gt; copula  : &lt;&lt; dim 10 x 3 &gt;&gt;</div><div class='input'>
+#&gt; marginal: &lt;&lt; <span style='color: #555555;'>tbl</span> 10 x 3 &gt;&gt;
+#&gt; cdf     : &lt;&lt; <span style='color: #555555;'>tbl</span> 10 x 3 &gt;&gt;
+#&gt; copula  : &lt;&lt; <span style='color: #555555;'>tbl</span> 10 x 3 &gt;&gt;</div><div class='input'>
 <span class='co'># Access the elements with `$`</span>
 <span class='va'>cma</span><span class='op'>$</span><span class='va'>copula</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 × 3</span>

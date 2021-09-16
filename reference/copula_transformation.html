@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Copula Normalization — copula_transformation" />
-<meta property="og:description" content="This function transforms the entries of the copula to respect the boundaries
-of the unit cube." />
+<meta property="og:description" content="This function transforms the entries an arbitrary copula so they can be compatible
+with the first two moments of a dataset." />
 
 
 
@@ -115,8 +115,8 @@ of the unit cube." />
     </div>
 
     <div class="ref-description">
-    <p>This function transforms the entries of the copula to respect the boundaries
-of the unit cube.</p>
+    <p>This function transforms the entries an arbitrary copula so they can be compatible
+with the first two moments of a dataset.</p>
     </div>
 
     <pre class="usage"><span class='fu'>copula_transformation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>copula</span><span class='op'>)</span></pre>
@@ -140,16 +140,32 @@ of the unit cube.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The copula transformation is a 4-step recipe:</p><ul>
-<li><p>1. Generate new copula scenarios;</p></li>
-<li><p>2. Normalize the copula to have a standard normal distribution;</p></li>
-<li><p>3. Operate an affine transformation on the normalized variables;</p></li>
-<li><p>4. Extract the copulas from the new rotated variables.</p></li>
+<li><p>1. Normalize the copula to have a standard normal distribution;</p></li>
+<li><p>2. Operate an affine transformation on the normalized variables;</p></li>
+<li><p>3. Do the CMA Separation step on the new rotated variables;</p></li>
+<li><p>4. Extract the copula component that appears in 3.</p></li>
 </ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>sep</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cma_separation.html'>cma_separation</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='va'>clayton</span> <span class='op'>&lt;-</span> <span class='fu'><a href='fit_copula_clayton.html'>fit_copula_clayton</a></span><span class='op'>(</span><span class='va'>sep</span><span class='op'>)</span>
+<span class='va'>gen</span> <span class='op'>&lt;-</span> <span class='fu'><a href='generate_copulas.html'>generate_copulas</a></span><span class='op'>(</span><span class='va'>clayton</span>, <span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'>copula_transformation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>gen</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 × 4</span>
+#&gt;      ...1   ...2   ...3   ...4
+#&gt;     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> 0.909  0.909  0.545  0.545 
+#&gt; <span style='color: #BCBCBC;'> 2</span> 0.364  0.818  0.727  0.818 
+#&gt; <span style='color: #BCBCBC;'> 3</span> 0.182  0.727  0.182  0.364 
+#&gt; <span style='color: #BCBCBC;'> 4</span> 0.636  0.273  0.818  0.909 
+#&gt; <span style='color: #BCBCBC;'> 5</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> 0.545  0.455  0.455  0.455 
+#&gt; <span style='color: #BCBCBC;'> 7</span> 0.818  0.636  0.909  0.636 
+#&gt; <span style='color: #BCBCBC;'> 8</span> 0.455  0.364  0.636  0.182 
+#&gt; <span style='color: #BCBCBC;'> 9</span> 0.273  0.182  0.364  0.273 
+#&gt; <span style='color: #BCBCBC;'>10</span> 0.727  0.545  0.273  0.727 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

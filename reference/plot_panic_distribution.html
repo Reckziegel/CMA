@@ -124,7 +124,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>pnl</th>
-      <td><p>An univariante time series with the PnL marginal distribution.</p></td>
+      <td><p>An univariate time series with the PnL marginal distribution.</p></td>
     </tr>
     <tr>
       <th>p</th>
@@ -146,7 +146,7 @@ plot the marginal panic distribution.</p></td>
     <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='panic_copula.html'>panic_copula</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>10000</span>, panic_prob <span class='op'>=</span> <span class='fl'>0.02</span><span class='op'>)</span>
 <span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>pnl</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>simulation</span> <span class='op'>%*%</span> <span class='va'>w</span>
+<span class='va'>pnl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>simulation</span><span class='op'>)</span> <span class='op'>%*%</span> <span class='va'>w</span>
 <span class='fu'>plot_panic_distribution</span><span class='op'>(</span>pnl <span class='op'>=</span> <span class='va'>pnl</span>, p <span class='op'>=</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>p</span><span class='op'>)</span>
 </div><div class='img'><img src='plot_panic_distribution-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
