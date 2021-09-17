@@ -58,10 +58,10 @@ cma_combine <- function(x, u, U) {
 
   is_unsorted <- any(apply(x, 2, is.unsorted))
   if (is_unsorted) {
-    warning(
-      "The marginal distribution was unsorted. Sorting in ascending order.",
-      immediate. = TRUE
-    )
+    #warning(
+    #  "The marginal distribution was unsorted. Sorting in ascending order.",
+    #  immediate. = TRUE
+    #)
     x <- apply(x, 2, sort)
   }
 

@@ -31,12 +31,18 @@ CMA can quickly decompose any multivariate distribution between unique (*margina
 
 # Application 2: "What if" Analysis
 
-Suppose you have an investment strategy and want to know different outcomes compatible with the strategy. One way of doing this is separating the marginals from the copulas, then generating large number of potential scenarios and "glue" back this outcomes into the empirical copula.
+Suppose we want to know what performances could be consistent with a certain investment strategy. One could be tempted to bootstrap this series, but if this route is taken, the dependency structure would change too, which is not the ideal, since we full control over this environment (our"market").
 
-```{r}
+One interesting way of solve this problem is via the Copula Marginal Algorithm (CMA).
+
+First, separate the marginals from the copulas. Second, generate a large number of potential scenarios from a target distribution; and, finally, "glue" these outputs back via the CMA combination step.
+
+```{r, message=FALSE, warning=FALSE}
+# load packages
 library(cma)
 library(tidyverse)
-# log returns
+
+# compute log returns
 x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 
 # First CMA Step
@@ -44,36 +50,69 @@ step_one <- cma_separation(x)
 step_one
 ```
 
-Now that we have the decomposition done, let's generate 100 paths that comes from the student-t distribution:
+Once the decomposition done, the student-t distribution is fitted to the data (it could be *any* distribution):
 
 ```{r}
 dist_t <- fit_t(step_one$marginal)
 dist_t
 ```
 
+The next step requires some `tidyverse` skills. Start building the new scenarios:
+
 ```{r}
-scenarios <- purrr::map(
-    .x = rep(1859, 100), 
-    .f = ~ generate_margins(model = dist_t, n = .x)
-)
-map(.x = scenarios, 
-    .y = step_one, 
-    .f = ~ suppressWarnings(
-        cma_combination(x = .x$marginal, cdf = .y$cdf, copula = .y$copula)
+simul_tbl <- tibble(simulations = 1:100) |> 
+    mutate(new_scenarios = map(
+        .x = rep(1859, 100), 
+        .f = ~ generate_margins(model = dist_t, n = .x)
+        )
+    )
+simul_tbl
+```
+
+The output of `new_scenarios()` is a list. It's easy to pass over it with the command bellow:
+
+```{r}
+simul_tbl <- simul_tbl |> 
+  mutate(new_scenarios = map(new_scenarios, 1))
+simul_tbl
+```
+
+Now we have a `tibble` with 100 simulations consistent with the student-t distribution fitted in the object `dist_t`.
+
+```{r}
+simul_tbl <- simul_tbl |> 
+  mutate(cma_comb = map(
+    .x = new_scenarios, 
+    .f = ~ cma_combination(
+      x      = .x,
+      cdf    = step_one$cdf, 
+      copula = step_one$copula
     ) 
-) |> 
-    map(as.matrix) |> 
-    map(~ . %*% rep(0.25, 4)) |> 
-    map(as_tibble, .name_repair = "minimal") |> 
-    bind_rows() |> 
-    mutate(simulation = rep(1:100, each = 1859)) |> 
-    group_by(simulation) |> 
+  ), 
+  weights = list(rep(0.25, 4))
+  )
+simul_tbl
+```
+
+```{r}
+simul_tbl <- simul_tbl |> 
+  mutate(pnl = map2(.x = cma_comb, 
+                    .y = weights, 
+                    .f = ~ as.matrix(.x) %*% .y)) |> 
+  select(-c(cma_comb, weights))
+simul_tbl
+```
+
+```{r out.height="80%", out.width="80%", fig.align='center'}
+simul_tbl |> 
+    mutate(pnl_prices = map(.x = pnl, .f = ~ cumprod(exp(.x)))) |> 
+    unnest(cols = pnl_prices) |> 
+  
+    group_by(simulations) |> 
     mutate(rowid = 1:1859) |> 
-    mutate(ret = cumprod(exp(...1)), original = cumprod(exp(x %*% rep(0.25, 4)))) |> 
     ungroup() |> 
-    ggplot(aes(x= rowid, y = ret, group = simulation)) +
-    geom_line(color = 'grey') + 
-    geom_line(mapping = aes(y = original)) + 
+  
+    ggplot(aes(x = rowid, y = pnl_prices, group = simulations)) + 
+    geom_line(col = "grey") + 
     scale_y_log10()
-    
 ```
