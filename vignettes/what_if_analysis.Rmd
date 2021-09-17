@@ -1,0 +1,123 @@
+---
+title: "What If Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{what_if_analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Suppose we would like to price a *what if* scenario for an investment strategy. This goal can be achieved with the Copula Marginal Algorithm (CMA) because the separation among copulas and margins offer a high level of flexibility to model the environment, in this case, the "Market".
+
+<!-- First, separate the copulas from the margins and choose one of these components to  -->
+
+<!-- manipulate. Second, generate a large number of potential scenarios from a desired  -->
+
+<!-- distribution; Finally, "glue" the output back via the CMA combination step. -->
+
+Let's get started!
+
+```{r, message=FALSE, warning=FALSE}
+# load packages
+library(cma)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(ggplot2)
+
+# compute log returns
+x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+head(x)
+```
+
+## Step 1. Separate the Copulas from the Margins
+
+The first step evolves separating the margins from the copulas with `cma_separation()`. 
+The output of this operation offers a "menu" of components that can potently 
+be tweaked. We choose an element to "twist" in order to accommodate our views on 
+the market.
+
+```{r}
+# First CMA Step
+step_one <- cma_separation(x)
+step_one
+```
+
+Here, we manipulate the margins, while keeping the copula structure intact.
+
+## Step 2. Fit a Target Distribution
+
+Next, we fit a target to the data. For simplicity, we choose the Student-t, but we emphasize that it could be *any* distribution.
+
+```{r}
+dist_t <- fit_t(step_one$marginal)
+dist_t
+```
+
+The next step requires some `tidyverse` skills.
+
+## Step 3. Map the New Scenarios
+
+Start building a list-column for the new scenarios wit `generate_margins()`:
+
+```{r}
+simul_tbl <- tibble(simulations = 1:100) |> 
+    mutate(new_scenarios = map(
+        .x = rep(1859, 100), 
+        .f = ~ generate_margins(model = dist_t, n = .x)
+        )
+    ) |> 
+    unnest(cols = new_scenarios)
+simul_tbl
+```
+
+Now we have a tidy `tibble` with 100 marginal distributions that are consistent 
+with the `dist_t` object fitted in step 2.
+
+## Step 4. "Glue" the New Scenarios Into the Empirical Copula
+
+
+
+```{r}
+simul_tbl <- simul_tbl |> 
+  mutate(cma_comb = map(
+    .x = new_scenarios, 
+    .f = ~ cma_combination(
+      x      = .x,
+      cdf    = step_one$cdf, 
+      copula = step_one$copula)
+    )
+  )
+simul_tbl
+```
+
+```{r}
+simul_tbl <- simul_tbl |> 
+    mutate(weights = list(rep(0.25, 4)), 
+           pnl     = map2(.x = cma_comb, 
+                          .y = weights, 
+                          .f = ~ as.matrix(.x) %*% .y)) |> 
+    select(-c(cma_comb, weights))
+simul_tbl
+```
+
+```{r out.height="80%", out.width="50%", fig.align='center'}
+simul_tbl |> 
+    mutate(pnl_prices = map(.x = pnl, .f = ~ cumprod(exp(.x)))) |> 
+    unnest(cols = pnl_prices) |> 
+  
+    group_by(simulations) |> 
+    mutate(rowid = 1:1859) |> 
+    ungroup() |> 
+  
+    ggplot(aes(x = rowid, y = pnl_prices, group = simulations)) + 
+    geom_line(col = "grey") + 
+    scale_y_log10()
+```
