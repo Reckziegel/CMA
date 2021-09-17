@@ -47,6 +47,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/what_if_analysis.html">What If Analysis</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -87,138 +99,6 @@
 <div id="application-2-what-if-analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#application-2-what-if-analysis" class="anchor"></a>Application 2: “What if” Analysis</h1>
-<p>Suppose we want to know what performances could be consistent with a certain investment strategy. One could be tempted to bootstrap this series, but if this route is taken, the dependency structure would change too, which is not the ideal, since we full control over this environment (our“market”).</p>
-<p>One interesting way of solve this problem is via the Copula Marginal Algorithm (CMA).</p>
-<p>First, separate the marginals from the copulas. Second, generate a large number of potential scenarios from a target distribution; and, finally, “glue” these outputs back via the CMA combination step.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cma</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
-
-<span class="co"># compute log returns</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">EuStockMarkets</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-
-<span class="co"># First CMA Step</span>
-<span class="va">step_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cma_separation.html">cma_separation</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="va">step_one</span>
-<span class="co">#&gt; # CMA Decomposition</span>
-<span class="co">#&gt; marginal: &lt;&lt; tbl 1859 x 4 &gt;&gt;</span>
-<span class="co">#&gt; cdf     : &lt;&lt; tbl 1859 x 4 &gt;&gt;</span>
-<span class="co">#&gt; copula  : &lt;&lt; tbl 1859 x 4 &gt;&gt;</span></code></pre></div>
-<p>Once the decomposition done, the student-t distribution is fitted to the data (it could be <em>any</em> distribution):</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dist_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_t.html">fit_t</a></span><span class="op">(</span><span class="va">step_one</span><span class="op">$</span><span class="va">marginal</span><span class="op">)</span>
-<span class="va">dist_t</span>
-<span class="co">#&gt; # Margins Estimation</span>
-<span class="co">#&gt; Converged:       TRUE</span>
-<span class="co">#&gt; Dimension:       4</span>
-<span class="co">#&gt; AIC:            -52711.16</span>
-<span class="co">#&gt; Log-Likelihood:  26374.58</span>
-<span class="co">#&gt; Model:           Asymmetric Student-t</span></code></pre></div>
-<p>The next step requires some <code>tidyverse</code> skills. Start building the new scenarios:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>simulations <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> |&gt; 
-    <span class="fu">mutate</span><span class="op">(</span>new_scenarios <span class="op">=</span> <span class="fu">map</span><span class="op">(</span>
-        .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1859</span>, <span class="fl">100</span><span class="op">)</span>, 
-        .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="reference/generate_margins.html">generate_margins</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">dist_t</span>, n <span class="op">=</span> <span class="va">.x</span><span class="op">)</span>
-        <span class="op">)</span>
-    <span class="op">)</span>
-<span class="va">simul_tbl</span>
-<span class="co">#&gt; # A tibble: 100 x 2</span>
-<span class="co">#&gt;    simulations new_scenarios  </span>
-<span class="co">#&gt;          &lt;int&gt; &lt;list&gt;         </span>
-<span class="co">#&gt;  1           1 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt;  2           2 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt;  3           3 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt;  4           4 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt;  5           5 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt;  6           6 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt;  7           7 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt;  8           8 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt;  9           9 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt; 10          10 &lt;list&lt;dbl&gt; [1]&gt;</span>
-<span class="co">#&gt; # ... with 90 more rows</span></code></pre></div>
-<p>The output of <code>new_scenarios()</code> is a list. It’s easy to pass over it with the command bellow:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> <span class="op">&lt;-</span> <span class="va">simul_tbl</span> |&gt; 
-  <span class="fu">mutate</span><span class="op">(</span>new_scenarios <span class="op">=</span> <span class="fu">map</span><span class="op">(</span><span class="va">new_scenarios</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="va">simul_tbl</span>
-<span class="co">#&gt; # A tibble: 100 x 2</span>
-<span class="co">#&gt;    simulations new_scenarios       </span>
-<span class="co">#&gt;          &lt;int&gt; &lt;list&gt;              </span>
-<span class="co">#&gt;  1           1 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt;  2           2 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt;  3           3 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt;  4           4 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt;  5           5 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt;  6           6 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt;  7           7 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt;  8           8 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt;  9           9 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt; 10          10 &lt;tibble [1,859 x 4]&gt;</span>
-<span class="co">#&gt; # ... with 90 more rows</span></code></pre></div>
-<p>Now we have a <code>tibble</code> with 100 simulations consistent with the student-t distribution fitted in the object <code>dist_t</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> <span class="op">&lt;-</span> <span class="va">simul_tbl</span> |&gt; 
-  <span class="fu">mutate</span><span class="op">(</span>cma_comb <span class="op">=</span> <span class="fu">map</span><span class="op">(</span>
-    .x <span class="op">=</span> <span class="va">new_scenarios</span>, 
-    .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="reference/cma_combination.html">cma_combination</a></span><span class="op">(</span>
-      x      <span class="op">=</span> <span class="va">.x</span>,
-      cdf    <span class="op">=</span> <span class="va">step_one</span><span class="op">$</span><span class="va">cdf</span>, 
-      copula <span class="op">=</span> <span class="va">step_one</span><span class="op">$</span><span class="va">copula</span>
-    <span class="op">)</span> 
-  <span class="op">)</span>, 
-  weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span>
-<span class="va">simul_tbl</span>
-<span class="co">#&gt; # A tibble: 100 x 4</span>
-<span class="co">#&gt;    simulations new_scenarios        cma_comb             weights  </span>
-<span class="co">#&gt;          &lt;int&gt; &lt;list&gt;               &lt;list&gt;               &lt;list&gt;   </span>
-<span class="co">#&gt;  1           1 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt;  2           2 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt;  3           3 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt;  4           4 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt;  5           5 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt;  6           6 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt;  7           7 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt;  8           8 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt;  9           9 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt; 10          10 &lt;tibble [1,859 x 4]&gt; &lt;tibble [1,859 x 4]&gt; &lt;dbl [4]&gt;</span>
-<span class="co">#&gt; # ... with 90 more rows</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> <span class="op">&lt;-</span> <span class="va">simul_tbl</span> |&gt; 
-  <span class="fu">mutate</span><span class="op">(</span>pnl <span class="op">=</span> <span class="fu">map2</span><span class="op">(</span>.x <span class="op">=</span> <span class="va">cma_comb</span>, 
-                    .y <span class="op">=</span> <span class="va">weights</span>, 
-                    .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">.y</span><span class="op">)</span><span class="op">)</span> |&gt; 
-  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">cma_comb</span>, <span class="va">weights</span><span class="op">)</span><span class="op">)</span>
-<span class="va">simul_tbl</span>
-<span class="co">#&gt; # A tibble: 100 x 3</span>
-<span class="co">#&gt;    simulations new_scenarios        pnl              </span>
-<span class="co">#&gt;          &lt;int&gt; &lt;list&gt;               &lt;list&gt;           </span>
-<span class="co">#&gt;  1           1 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt;  2           2 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt;  3           3 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt;  4           4 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt;  5           5 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt;  6           6 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt;  7           7 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt;  8           8 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt;  9           9 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt; 10          10 &lt;tibble [1,859 x 4]&gt; &lt;dbl [1,859 x 1]&gt;</span>
-<span class="co">#&gt; # ... with 90 more rows</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> |&gt; 
-    <span class="fu">mutate</span><span class="op">(</span>pnl_prices <span class="op">=</span> <span class="fu">map</span><span class="op">(</span>.x <span class="op">=</span> <span class="va">pnl</span>, .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> |&gt; 
-    <span class="fu">unnest</span><span class="op">(</span>cols <span class="op">=</span> <span class="va">pnl_prices</span><span class="op">)</span> |&gt; 
-  
-    <span class="fu">group_by</span><span class="op">(</span><span class="va">simulations</span><span class="op">)</span> |&gt; 
-    <span class="fu">mutate</span><span class="op">(</span>rowid <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1859</span><span class="op">)</span> |&gt; 
-    <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> |&gt; 
-  
-    <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">rowid</span>, y <span class="op">=</span> <span class="va">pnl_prices</span>, group <span class="op">=</span> <span class="va">simulations</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu">geom_line</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="80%" height="80%" style="display: block; margin: auto;"></p>
 </div>
 
   </div>
