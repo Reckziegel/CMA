@@ -1,0 +1,22 @@
+---
+title: "Panic Copula"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{panic_copula}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+As in 
+
+```{r setup}
+library(cma)
+```
+
