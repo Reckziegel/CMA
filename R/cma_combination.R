@@ -32,13 +32,6 @@
 #' all.equal(margins[ , "b"], comb$b)
 cma_combination <- function(x, cdf, copula) {
 
-  #assert_cols_length(x, u)
-  #assert_cols_length(x, U)
-  #assert_cols_length(u, U)
-  #assert_rows_length(x, u)
-  #assert_rows_length(x, U)
-  #assert_rows_length(u, U)
-
   x      <- check_input(x)
   cdf    <- check_input(cdf)
   copula <- check_input(copula)

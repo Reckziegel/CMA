@@ -68,22 +68,6 @@ cma_separation.xts <- function(x, p = NULL) {
 
 }
 
-# #' @rdname cma_separation
-# #' @export
-# cma_separation.ts <- function(x, p = NULL) {
-#
-#   assert_is_multivariate(x)
-#   if (is_empty(p)) {
-#     p <- rep(1 / NROW(x), NROW(x))
-#   } else {
-#     assert_is_prob(p)
-#   }
-#   x <- sanitize(x)
-#
-#   new_cma_separation(x, cma_separate(x = x, p = p))
-#
-# }
-
 #' @rdname cma_separation
 #' @export
 cma_separation.data.frame <- function(x, p = NULL) {

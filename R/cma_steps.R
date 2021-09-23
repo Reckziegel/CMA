@@ -31,7 +31,7 @@ cma_separate <- function(x, p) {
     I       <- Indx[ , n]     # sort
     cum_p   <- cumsum(p[I])   # compute cdf
     u[ , n] <- cum_p * l      # rescale to be < 1 at the far right
-    Rnk     <- suppressWarnings(pracma::interp1(x = I , y = 1:J , xi = 1:J))
+    Rnk     <- interp_one(x = I , y = 1:J , xi = 1:J)
     #Rnk     <- stats::approx(x = I, y = 1:J, xout = 1:J)$x # compute ranking of each entry
     U[ , n] <- cum_p[Rnk] * l # compute grade
   }
@@ -69,7 +69,7 @@ cma_combine <- function(x, u, U) {
   X <- 0 * U
 
   for (k in 1:K) {
-    X[ , k] <- Hmisc::approxExtrap(
+    X[ , k] <- approx_extrap(
       x      = u[ , k],
       y      = x[ , k],
       xout   = U[ , k],
