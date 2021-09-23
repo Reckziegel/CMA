@@ -16,10 +16,10 @@ match_t(mu, sigma, nu, n, stochastic = FALSE)
 \item{n}{An \code{integer} with the number of scenarios to be generated.}
 
 \item{stochastic}{A \code{logical} flag indicating whether (or not) the stochastic
-representation should be used. The default if \code{FALSE}.}
+representation should be used. The default if \code{TRUE}.}
 }
 \value{
-# TODO
+A \code{tibble} in the wide format.
 }
 \description{
 Generates scenarios from the Student-t distribution that
@@ -33,10 +33,10 @@ nu    <- 5
 match_t(mu, sigma, nu, 10)
 
 cor(x)
-cor(match_t(mu, sigma, 5, 10000))
+cor(match_t(mu, sigma, 5, 100000))
 
 mu
-colMeans(match_t(mu, sigma, nu, 10000))
+colMeans(match_t(mu, sigma, nu, 100000))
 }
 \seealso{
 \code{\link{match_normal}}

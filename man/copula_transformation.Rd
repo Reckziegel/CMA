@@ -19,7 +19,7 @@ This function transforms the entries an arbitrary copula so they can be compatib
 with the first two moments of a dataset.
 }
 \details{
-The copula transformation is a 4-step recipe:
+Under the hood, the copula transformation is a 4-step recipe:
     \itemize{
       \item 1. Normalize the copula to have a standard normal distribution;
       \item 2. Operate an affine transformation on the normalized variables;

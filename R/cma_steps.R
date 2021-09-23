@@ -12,7 +12,7 @@ cma_separate <- function(x, p) {
   u <- 0 * x
   U <- 0 * x
 
-  if (has_names(x)) {
+  if (has_colnames(x)) {
     nms <- colnames(x)
   }
 
@@ -36,7 +36,7 @@ cma_separate <- function(x, p) {
     U[ , n] <- cum_p[Rnk] * l # compute grade
   }
 
-  if (has_names(x)) {
+  if (has_colnames(x)) {
     colnames(X) <- nms
     colnames(u) <- nms
     colnames(U) <- nms

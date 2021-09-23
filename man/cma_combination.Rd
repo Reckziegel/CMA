@@ -33,10 +33,10 @@ sep <- cma_separation(x = margins, p = probs)
 comb <- cma_combination(margins, sep$cdf, sep$copula)
 
 # The result is identical
-margins
-comb
-stopifnot(all.equal(margins[ , "a"], comb$a))
-stopifnot(all.equal(margins[ , "b"], comb$b))
+margins # matrix
+comb    # tibble
+all.equal(margins[ , "a"], comb$a)
+all.equal(margins[ , "b"], comb$b)
 }
 \seealso{
 \code{\link{cma_separation}}
