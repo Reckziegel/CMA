@@ -2,6 +2,7 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  panic_copula: panic_copula.html
   what_if_analysis: what_if_analysis.html
-last_built: 2021-09-17T21:19Z
+last_built: 2021-09-23T01:51Z
 

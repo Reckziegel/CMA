@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/panic_copula.html">Panic Copula</a>
+    </li>
+    <li>
       <a href="../articles/what_if_analysis.html">What If Analysis</a>
     </li>
   </ul>
@@ -89,21 +92,31 @@
 
     
     
-<p>Suppose we would like to price a <em>what if</em> scenario for an investment strategy. This goal can be achieved with the Copula Marginal Algorithm (CMA) because the separation among copulas and margins offer a high level of flexibility to model the environment, in this case, the “Market”.</p>
-<!-- First, separate the copulas from the margins and choose one of these components to  -->
-<!-- manipulate. Second, generate a large number of potential scenarios from a desired  -->
-<!-- distribution; Finally, "glue" the output back via the CMA combination step. -->
-<p>Let’s get started!</p>
+<p>This brief introduction shows how use CMA to price alternative scenarios for an investment strategy. The recipe goes as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Detach the copulas from the margins;</p></li>
+<li>
+<p>Pick one element to play with;</p>
+<ul>
+<li>Example: if the “Market” is normally distributed, the t-distribution could be used to see how VaR and CVaR changes;</li>
+</ul>
+</li>
+<li><p>Generate new scenarios;</p></li>
+<li><p>Merge the newly generated scenarios into the empirical copulas.</p></li>
+</ol>
+<p>For this vignette, the <code>EuStockMarket</code> dataset is used as <em>proxy</em> for the “Market”.</p>
+<p>The setup goes as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cma</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cma</span><span class="op">)</span>     <span class="co"># core package</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>   <span class="co"># data manipulation</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>   <span class="co"># data manipulation</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>   <span class="co"># vetorized loops</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span> <span class="co"># plotting</span>
 
-<span class="co"># compute log returns</span>
+<span class="co"># compute log returns (stationarity)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">EuStockMarkets</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="va">n_row</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt;              [,1]         [,2]         [,3]         [,4]</span>
 <span class="co">#&gt; [1,] -0.009326550  0.006178360 -0.012658756  0.006770286</span>
@@ -115,7 +128,7 @@
 <div id="step-1--separate-the-copulas-from-the-margins" class="section level2">
 <h2 class="hasAnchor">
 <a href="#step-1--separate-the-copulas-from-the-margins" class="anchor"></a>Step 1. Separate the Copulas from the Margins</h2>
-<p>The first step evolves separating the margins from the copulas with <code><a href="../reference/cma_separation.html">cma_separation()</a></code>. The output of this operation offers a “menu” of components that can potently be tweaked. We choose an element to “twist” in order to accommodate our views on the market.</p>
+<p>The first step evolves separating the margins from the copulas with <code><a href="../reference/cma_separation.html">cma_separation()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># First CMA Step</span>
 <span class="va">step_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cma_separation.html">cma_separation</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -124,12 +137,13 @@
 <span class="co">#&gt; marginal: &lt;&lt; tbl 1859 x 4 &gt;&gt;</span>
 <span class="co">#&gt; cdf     : &lt;&lt; tbl 1859 x 4 &gt;&gt;</span>
 <span class="co">#&gt; copula  : &lt;&lt; tbl 1859 x 4 &gt;&gt;</span></code></pre></div>
-<p>Here, we manipulate the margins, while keeping the copula structure intact.</p>
+<p>The output is a list with three components: the margins, the CDF, and the copula.</p>
+<p>In this vignette, the margins are manipulated while keeping the copula structure unchanged.</p>
 </div>
-<div id="step-2--fit-a-target-distribution" class="section level2">
+<div id="step-2--choose-a-target-distribution" class="section level2">
 <h2 class="hasAnchor">
-<a href="#step-2--fit-a-target-distribution" class="anchor"></a>Step 2. Fit a Target Distribution</h2>
-<p>Next, we fit a target to the data. For simplicity, we choose the Student-t, but we emphasize that it could be <em>any</em> distribution.</p>
+<a href="#step-2--choose-a-target-distribution" class="anchor"></a>Step 2. Choose a Target Distribution</h2>
+<p>Once the the “separation” is done it’s necessary to choose a target distribution for the data. For simplicity, let’s fit a Student-t, but it could be <em>any</em> distribution.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dist_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_t.html">fit_t</a></span><span class="op">(</span><span class="va">step_one</span><span class="op">$</span><span class="va">marginal</span><span class="op">)</span>
 <span class="va">dist_t</span>
@@ -139,20 +153,20 @@
 <span class="co">#&gt; AIC:            -52711.16</span>
 <span class="co">#&gt; Log-Likelihood:  26374.58</span>
 <span class="co">#&gt; Model:           Asymmetric Student-t</span></code></pre></div>
-<p>The next step requires some <code>tidyverse</code> skills.</p>
 </div>
-<div id="step-3--map-the-new-scenarios" class="section level2">
+<div id="step-3--create-new-scenarios" class="section level2">
 <h2 class="hasAnchor">
-<a href="#step-3--map-the-new-scenarios" class="anchor"></a>Step 3. Map the New Scenarios</h2>
+<a href="#step-3--create-new-scenarios" class="anchor"></a>Step 3. Create New Scenarios</h2>
+<p>The next step requires some <code>tidyverse</code> skills.</p>
 <p>Start building a list-column for the new scenarios wit <code><a href="../reference/generate_margins.html">generate_margins()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> |&gt; 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>new_scenarios <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>
-        .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1859</span>, <span class="fl">100</span><span class="op">)</span>, 
+<code class="sourceCode R"><span class="va">simul_tbl</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>new_scenarios <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>
+        .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">n_row</span>, <span class="fl">100</span><span class="op">)</span>, 
         .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/generate_margins.html">generate_margins</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">dist_t</span>, n <span class="op">=</span> <span class="va">.x</span><span class="op">)</span>
         <span class="op">)</span>
     <span class="op">)</span> |&gt; 
-    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">new_scenarios</span><span class="op">)</span>
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">new_scenarios</span><span class="op">)</span>
 <span class="va">simul_tbl</span>
 <span class="co">#&gt; # A tibble: 100 × 2</span>
 <span class="co">#&gt;    simulations new_scenarios</span>
@@ -168,22 +182,23 @@
 <span class="co">#&gt;  9           9   [1,859 × 4]</span>
 <span class="co">#&gt; 10          10   [1,859 × 4]</span>
 <span class="co">#&gt; # … with 90 more rows</span></code></pre></div>
-<p>Now we have a tidy <code>tibble</code> with 100 marginal distributions that are consistent with the <code>dist_t</code> object fitted in step 2.</p>
+<p>The <code>simul_tbl</code> is a <em>tidy</em> (long-format) <code>tibble</code> with 100 marginal distributions that are consistent with the <code>dist_t</code> object fitted in step 2 (every row in <code>new_scenarios</code> holds a different simulation).</p>
 </div>
 <div id="step-4--glue-the-new-scenarios-into-the-empirical-copula" class="section level2">
 <h2 class="hasAnchor">
 <a href="#step-4--glue-the-new-scenarios-into-the-empirical-copula" class="anchor"></a>Step 4. “Glue” the New Scenarios Into the Empirical Copula</h2>
+<p>To complete the scenario generation process it’s important to “glue” the simulations back into the empirical copula that is stored in the <code>step_one</code> object.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> <span class="op">&lt;-</span> <span class="va">simul_tbl</span> |&gt; 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>cma_comb <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>
-    .x <span class="op">=</span> <span class="va">new_scenarios</span>, 
-    .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/cma_combination.html">cma_combination</a></span><span class="op">(</span>
-      x      <span class="op">=</span> <span class="va">.x</span>,
-      cdf    <span class="op">=</span> <span class="va">step_one</span><span class="op">$</span><span class="va">cdf</span>, 
-      copula <span class="op">=</span> <span class="va">step_one</span><span class="op">$</span><span class="va">copula</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">step_two</span> <span class="op">&lt;-</span> <span class="va">simul_tbl</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>cma_comb <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>
+        .x <span class="op">=</span> <span class="va">new_scenarios</span>, 
+        .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/cma_combination.html">cma_combination</a></span><span class="op">(</span>
+            x      <span class="op">=</span> <span class="va">.x</span>,
+            cdf    <span class="op">=</span> <span class="va">step_one</span><span class="op">$</span><span class="va">cdf</span>, 
+            copula <span class="op">=</span> <span class="va">step_one</span><span class="op">$</span><span class="va">copula</span><span class="op">)</span>
+        <span class="op">)</span>
     <span class="op">)</span>
-  <span class="op">)</span>
-<span class="va">simul_tbl</span>
+<span class="va">step_two</span>
 <span class="co">#&gt; # A tibble: 100 × 3</span>
 <span class="co">#&gt;    simulations new_scenarios cma_comb            </span>
 <span class="co">#&gt;          &lt;int&gt;   &lt;list&lt;dbl&gt;&gt; &lt;named list&gt;        </span>
@@ -198,14 +213,16 @@
 <span class="co">#&gt;  9           9   [1,859 × 4] &lt;tibble [1,859 × 4]&gt;</span>
 <span class="co">#&gt; 10          10   [1,859 × 4] &lt;tibble [1,859 × 4]&gt;</span>
 <span class="co">#&gt; # … with 90 more rows</span></code></pre></div>
+<p>The <code>cma_comb</code> column now holds 100 simulations that share a bond to each other, because their copula is the same.</p>
+<p>Finally, it’s possible to compute the performance of those portfolios over an equal-weight strategy, for example. It could be <em>any</em> strategy.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> <span class="op">&lt;-</span> <span class="va">simul_tbl</span> |&gt; 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, 
-           pnl     <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">cma_comb</span>, 
-                          .y <span class="op">=</span> <span class="va">weights</span>, 
-                          .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">.y</span><span class="op">)</span><span class="op">)</span> |&gt; 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">cma_comb</span>, <span class="va">weights</span><span class="op">)</span><span class="op">)</span>
-<span class="va">simul_tbl</span>
+<code class="sourceCode R"><span class="va">step_two</span> <span class="op">&lt;-</span> <span class="va">step_two</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, 
+                  pnl     <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">cma_comb</span>, 
+                                        .y <span class="op">=</span> <span class="va">weights</span>, 
+                                        .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">.y</span><span class="op">)</span><span class="op">)</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">cma_comb</span>, <span class="va">weights</span><span class="op">)</span><span class="op">)</span>
+<span class="va">step_two</span>
 <span class="co">#&gt; # A tibble: 100 × 3</span>
 <span class="co">#&gt;    simulations new_scenarios pnl              </span>
 <span class="co">#&gt;          &lt;int&gt;   &lt;list&lt;dbl&gt;&gt; &lt;named list&gt;     </span>
@@ -220,19 +237,28 @@
 <span class="co">#&gt;  9           9   [1,859 × 4] &lt;dbl [1,859 × 1]&gt;</span>
 <span class="co">#&gt; 10          10   [1,859 × 4] &lt;dbl [1,859 × 1]&gt;</span>
 <span class="co">#&gt; # … with 90 more rows</span></code></pre></div>
+<p>Translate compounded returns to prices and plot:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simul_tbl</span> |&gt; 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pnl_prices <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">pnl</span>, .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> |&gt; 
-    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">pnl_prices</span><span class="op">)</span> |&gt; 
-  
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">simulations</span><span class="op">)</span> |&gt; 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rowid <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1859</span><span class="op">)</span> |&gt; 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
-  
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rowid</span>, y <span class="op">=</span> <span class="va">pnl_prices</span>, group <span class="op">=</span> <span class="va">simulations</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="what_if_analysis_files/figure-html/unnamed-chunk-8-1.png" width="50%" height="80%" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span class="va">step_two</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pnl_prices <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">pnl</span>, .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, 
+                  pnl_ref    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> |&gt; 
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pnl_prices</span>, <span class="va">pnl_ref</span><span class="op">)</span><span class="op">)</span> |&gt; 
+    
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">simulations</span><span class="op">)</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rowid <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n_row</span><span class="op">)</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
+    
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rowid</span>, y <span class="op">=</span> <span class="va">pnl_prices</span>, group <span class="op">=</span> <span class="va">simulations</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pnl_ref</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_log10</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html">dollar_format</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title    <span class="op">=</span> <span class="st">"EuStockMarkets Equal Weight Strategy"</span>, 
+                  subtitle <span class="op">=</span> <span class="st">"Realized vs. Alternative Scenarios"</span>, 
+                  x        <span class="op">=</span> <span class="st">"Time Evolution"</span>, 
+                  y        <span class="op">=</span> <span class="st">"P&amp;L"</span><span class="op">)</span></code></pre></div>
+<p><img src="what_if_analysis_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>Remember that all the paths above are compatible with the same marginal distribution specification. The difference between the “good” portfolios and the “bad” ones is purely due by chance.</p>
+<p>Also note how the copula “ties” the ups and downs, that happens always at the same time, but with different magnitudes.</p>
 </div>
   </div>
 
