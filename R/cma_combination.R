@@ -26,18 +26,11 @@
 #' comb <- cma_combination(margins, sep$cdf, sep$copula)
 #'
 #' # The result is identical
-#' margins
-#' comb
-#' stopifnot(all.equal(margins[ , "a"], comb$a))
-#' stopifnot(all.equal(margins[ , "b"], comb$b))
+#' margins # matrix
+#' comb    # tibble
+#' all.equal(margins[ , "a"], comb$a)
+#' all.equal(margins[ , "b"], comb$b)
 cma_combination <- function(x, cdf, copula) {
-
-  #assert_cols_length(x, u)
-  #assert_cols_length(x, U)
-  #assert_cols_length(u, U)
-  #assert_rows_length(x, u)
-  #assert_rows_length(x, U)
-  #assert_rows_length(u, U)
 
   x      <- check_input(x)
   cdf    <- check_input(cdf)

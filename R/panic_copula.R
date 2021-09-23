@@ -41,6 +41,7 @@ panic_copula <- function(x, n = 10000, panic_cor = 0.99, panic_prob = 0.02, dist
     } else {
         Z <- match_t(mu = matrix(rep(0, N * 2)), sigma = s2, nu = 5, n = n)
     }
+    Z <- as.matrix(Z)
 
     X_c <- Z[ , 1:N]
     X_p <- Z[ , (N + 1):ncol(Z)]

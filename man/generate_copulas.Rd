@@ -19,5 +19,12 @@ This function takes a fitted object from the \code{cma_copula} class and generat
 new scenarios for the copula
 }
 \examples{
-#
+x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+colnames(x) <- c("a", "b", "c", "d")
+
+# fit normal copula
+sep  <- cma_separation(x)
+normcop <- fit_copula_normal(sep)
+
+generate_copulas(normcop, 10)
 }

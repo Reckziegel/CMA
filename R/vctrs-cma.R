@@ -12,7 +12,7 @@
 new_cma_separation <- function(x, ...) {
 
   dots <- as.list(...)
-  if (!has_names(x)) {
+  if (!has_colnames(x)) {
     colnames(x) <- make_tidy_names(x)
   }
   vctrs::new_list_of(

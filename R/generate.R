@@ -43,7 +43,14 @@ generate_margins <- function(model, n) {
 #' @export
 #'
 #' @examples
-#' #
+#' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+#' colnames(x) <- c("a", "b", "c", "d")
+#'
+#' # fit normal copula
+#' sep  <- cma_separation(x)
+#' normcop <- fit_copula_normal(sep)
+#'
+#' generate_copulas(normcop, 10)
 generate_copulas <- function(model, n) {
     if (inherits(model, "cma_copula")) {
         mod <- attributes(model)$model
@@ -83,7 +90,11 @@ generate_copulas <- function(model, n) {
             stop("model currently not implemeted", call. = FALSE)
         }
 
-        x
+        if (!has_colnames(x)) {
+            colnames(x) <- make_tidy_names(x)
+        }
+
+        tibble::as_tibble(x, .name_repair = "minimal")
 
     } else {
         stop("`model` must be an object of the `cma_copula` class.", call. = FALSE)
