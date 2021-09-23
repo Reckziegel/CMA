@@ -136,29 +136,29 @@ distribution (univariate and multivariate). Wrappers <code><a href='https://rdrr
 and <code><a href='https://rdrr.io/pkg/ghyp/man/fit.ghypmv.html'>fit.VGmv</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for tbl</span>
-<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for xts</span>
-<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>.invariant</span>, .symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span>, symmetric <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.invariant</th>
+      <th>x</th>
       <td><p>A tabular (non-tidy) data structure.</p></td>
     </tr>
     <tr>
-      <th>.symmetric</th>
+      <th>symmetric</th>
       <td><p>A <code>logical</code> flag. Should the estimated distribution be symmetric?
 Defaults to <code>FALSE</code>.</p></td>
     </tr>
@@ -169,20 +169,22 @@ Defaults to <code>FALSE</code>.</p></td>
     <p>A <code>list</code> of the the class <code>cma_fit</code> with <code>21</code> components.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='fit_ghd.html'>fit_ghd</a></code> <code><a href='fit_hyp.html'>fit_hyp</a></code> <code><a href='fit_nig.html'>fit_nig</a></code> <code><a href='fit_t.html'>fit_t</a></code></p></div>
+    <div class='dont-index'><p><code><a href='fit_ghd.html'>fit_ghd</a></code> <code><a href='fit_hyp.html'>fit_hyp</a></code> <code><a href='fit_nig.html'>fit_nig</a></code>
+<code><a href='fit_t.html'>fit_t</a></code> <code><a href='fit_normal.html'>fit_normal</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>##### fit_vg #####</span>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-
-<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>     <span class='co'># multivariate estimation</span>
+<span class='co'># multivariate estimation</span>
+<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># Margins Estimation</span>
 #&gt; Converged:       TRUE
 #&gt; Dimension:       2
 #&gt; AIC:            -25416.89
 #&gt; Log-Likelihood:  12716.45
-#&gt; Model:           Asymmetric Variance Gamma</div><div class='input'><span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>4</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># univariate estimation</span>
+#&gt; Model:           Asymmetric Variance Gamma</div><div class='input'>
+<span class='co'># univariate estimation</span>
+<span class='fu'>fit_vg</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>4</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span class='message'>Singularity (x-mu)==0: Interpolate with splines.</span></div><div class='output co'>#&gt; <span style='color: #555555;'># Margins Estimation</span>
 #&gt; Converged:       TRUE
 #&gt; Dimension:       1
