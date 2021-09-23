@@ -8,20 +8,20 @@
 \alias{fit_nig.matrix}
 \title{Estimation of the Normal-Inverse Gaussian Distribution}
 \usage{
-fit_nig(.invariant, .symmetric = FALSE)
+fit_nig(x, symmetric = FALSE)
 
-\method{fit_nig}{default}(.invariant, .symmetric = FALSE)
+\method{fit_nig}{default}(x, symmetric = FALSE)
 
-\method{fit_nig}{tbl}(.invariant, .symmetric = FALSE)
+\method{fit_nig}{tbl}(x, symmetric = FALSE)
 
-\method{fit_nig}{xts}(.invariant, .symmetric = FALSE)
+\method{fit_nig}{xts}(x, symmetric = FALSE)
 
-\method{fit_nig}{matrix}(.invariant, .symmetric = FALSE)
+\method{fit_nig}{matrix}(x, symmetric = FALSE)
 }
 \arguments{
-\item{.invariant}{A tabular (non-tidy) data structure.}
+\item{x}{A tabular (non-tidy) data structure.}
 
-\item{.symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
+\item{symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
 Defaults to \code{FALSE}.}
 }
 \value{
@@ -33,13 +33,15 @@ distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.NIGuv
 and \code{\link[ghyp]{fit.NIGmv}}.
 }
 \examples{
-##### fit_nig #####
-
 x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 
-fit_nig(x)     # multivariate estimation
-fit_nig(x[ , 4, drop = FALSE]) # univariate estimation
+# multivariate estimation
+fit_nig(x)
+
+# univariate estimation
+fit_nig(x[ , 4, drop = FALSE])
 }
 \seealso{
-\code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_vg}} \code{\link{fit_t}}
+\code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_vg}}
+\code{\link{fit_t}} \code{\link{fit_normal}}
 }

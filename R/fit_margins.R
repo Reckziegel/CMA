@@ -6,68 +6,70 @@
 #' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.ghypuv}} and
 #' \code{\link[ghyp]{fit.ghypmv}}.
 #'
-#' @param .invariant A tabular (non-tidy) data structure.
-#' @param .symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
+#' @param x A tabular (non-tidy) data structure.
+#' @param symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
-#' @seealso \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}} \code{\link{fit_t}}
+#' @seealso \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}}
+#' \code{\link{fit_t}} \code{\link{fit_normal}}
 #'
 #' @export
 #'
 #' @examples
-#' ##### fit_ghd #####
-#'
 #' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 #'
-#' fit_ghd(x) # multivariate estimation
-#' fit_ghd(x[ , 3, drop = FALSE]) # univariate estimation
-fit_ghd <- function(.invariant, .symmetric = FALSE) {
-    UseMethod("fit_ghd", .invariant)
+#' # multivariate estimation
+#' fit_ghd(x)
+#'
+#' # univariate estimation
+#' fit_ghd(x[ , 3, drop = FALSE])
+fit_ghd <- function(x, symmetric = FALSE) {
+    UseMethod("fit_ghd", x)
 }
 
 #' @rdname fit_ghd
 #' @export
-fit_ghd.default <- function(.invariant, .symmetric = FALSE) {
-    stop("`.invariant` must be a tibble, xts or a matrix.", call. = FALSE)
+fit_ghd.default <- function(x, symmetric = FALSE) {
+    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
 }
 
 #' @rdname fit_ghd
 #' @export
-fit_ghd.tbl <- function(.invariant, .symmetric = FALSE) {
-    if (any(purrr::map_lgl(.invariant, lubridate::is.Date))) {
-        .invariant <- .invariant |>
+fit_ghd.tbl <- function(x, symmetric = FALSE) {
+    if (any(purrr::map_lgl(x, lubridate::is.Date))) {
+        x <- x |>
             timetk::tk_xts(silent = TRUE) |>
             as.matrix()
     } else {
-        .invariant <- as.matrix(.invariant)
+        x <- as.matrix(x)
     }
-    fit_ghd_(.invariant = .invariant, .symmetric = .symmetric)
+    fit_ghd_(x = x, symmetric = symmetric)
 }
 
 #' @rdname fit_ghd
 #' @export
-fit_ghd.xts <- function(.invariant, .symmetric = FALSE) {
-    fit_ghd_(.invariant = as.matrix(.invariant), .symmetric = .symmetric)
+fit_ghd.xts <- function(x, symmetric = FALSE) {
+    fit_ghd_(x = as.matrix(x), symmetric = symmetric)
 }
 
 #' @rdname fit_ghd
 #' @export
-fit_ghd.matrix <- function(.invariant, .symmetric = FALSE) {
-    fit_ghd_(.invariant = .invariant, .symmetric = .symmetric)
+fit_ghd.matrix <- function(x, symmetric = FALSE) {
+    fit_ghd_(x = x, symmetric = symmetric)
 }
 
 #' @keywords internal
-fit_ghd_ <- function(.invariant, .symmetric = FALSE) {
+fit_ghd_ <- function(x, symmetric = FALSE) {
 
-    assertthat::assert_that(assertthat::is.flag(.symmetric))
+    assertthat::assert_that(assertthat::is.flag(symmetric))
 
     #stop("fit_generalized_hyperbolic works only in univariate data. Adjust your call.", call. = FALSE)
-    if (NCOL(.invariant) == 1) {
-        x <- ghyp::fit.ghypuv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+    if (NCOL(x) == 1) {
+        x <- ghyp::fit.ghypuv(data = x, symmetric = symmetric, silent = TRUE)
     } else {
-        x <- ghyp::fit.ghypmv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+        x <- ghyp::fit.ghypmv(data = x, symmetric = symmetric, silent = TRUE)
     }
     new_cma_fit(x)
 
@@ -83,68 +85,70 @@ fit_ghd_ <- function(.invariant, .symmetric = FALSE) {
 #' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.hypuv}} and
 #' \code{\link[ghyp]{fit.hypmv}}
 #'
-#' @param .invariant A tabular (non-tidy) data structure.
-#' @param .symmetric A flag. Should the estimated distribution be symmetric?
+#' @param x A tabular (non-tidy) data structure.
+#' @param symmetric A flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
-#' @seealso \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}} \code{\link{fit_t}}
+#' @seealso \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}}
+#' \code{\link{fit_t}} \code{\link{fit_normal}}
 #'
 #' @export
 #'
 #' @examples
-#' ##### fit_hyp #####
-#'
 #' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 #'
-#' fit_hyp(x)     # multivariate estimation
-#' fit_hyp(x[ , 4, drop = FALSE]) # univariate estimation
-fit_hyp <- function(.invariant, .symmetric = FALSE) {
-    UseMethod("fit_hyp", .invariant)
+#' # multivariate estimation
+#' fit_hyp(x)
+#'
+#' # univariate estimation
+#' fit_hyp(x[ , 4, drop = FALSE])
+fit_hyp <- function(x, symmetric = FALSE) {
+    UseMethod("fit_hyp", x)
 }
 
 #' @rdname fit_hyp
 #' @export
-fit_hyp.default <- function(.invariant, .symmetric = FALSE) {
-    stop("`.invariant` must be a tibble, xts or a matrix.", call. = FALSE)
+fit_hyp.default <- function(x, symmetric = FALSE) {
+    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
 }
 
 #' @rdname fit_hyp
 #' @export
-fit_hyp.tbl <- function(.invariant, .symmetric = FALSE) {
-    if (any(purrr::map_lgl(.invariant, lubridate::is.Date))) {
-        .invariant <- .invariant |>
+fit_hyp.tbl <- function(x, symmetric = FALSE) {
+    if (any(purrr::map_lgl(x, lubridate::is.Date))) {
+        x <- x |>
             timetk::tk_xts(silent = TRUE) |>
             as.matrix()
     } else {
-        .invariant <- as.matrix(.invariant)
+        x <- as.matrix(x)
     }
-    fit_hyp_(.invariant = .invariant, .symmetric = .symmetric)
+    fit_hyp_(x = x, symmetric = symmetric)
 
 }
 
 #' @rdname fit_hyp
 #' @export
-fit_hyp.xts <- function(.invariant, .symmetric = FALSE) {
-    fit_hyp_(.invariant = as.matrix(.invariant), .symmetric = .symmetric)
+fit_hyp.xts <- function(x, symmetric = FALSE) {
+    fit_hyp_(x = as.matrix(x), symmetric = symmetric)
 }
 
 #' @rdname fit_hyp
 #' @export
-fit_hyp.matrix <- function(.invariant, .symmetric = FALSE) {
-    fit_hyp_(.invariant = .invariant, .symmetric = .symmetric)
+fit_hyp.matrix <- function(x, symmetric = FALSE) {
+    fit_hyp_(x = x, symmetric = symmetric)
 }
 
 #' @keywords internal
-fit_hyp_ <- function(.invariant, .symmetric = FALSE) {
+fit_hyp_ <- function(x, symmetric = FALSE) {
 
-    assertthat::assert_that(assertthat::is.flag(.symmetric))
+    assertthat::assert_that(assertthat::is.flag(symmetric))
 
-    if (NCOL(.invariant) == 1) {
-        x <- ghyp::fit.hypuv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+    if (NCOL(x) == 1) {
+        x <- ghyp::fit.hypuv(data = x, symmetric = symmetric, silent = TRUE)
     } else {
-        x <- ghyp::fit.hypmv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+        x <- ghyp::fit.hypmv(data = x, symmetric = symmetric, silent = TRUE)
     }
     new_cma_fit(x)
 
@@ -159,67 +163,69 @@ fit_hyp_ <- function(.invariant, .symmetric = FALSE) {
 #' distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.NIGuv}}
 #' and \code{\link[ghyp]{fit.NIGmv}}.
 #'
-#' @param .invariant A tabular (non-tidy) data structure.
-#' @param .symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
+#' @param x A tabular (non-tidy) data structure.
+#' @param symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
-#' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_vg}} \code{\link{fit_t}}
+#' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_vg}}
+#' \code{\link{fit_t}} \code{\link{fit_normal}}
 #'
 #' @export
 #'
 #' @examples
-#' ##### fit_nig #####
-#'
 #' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 #'
-#' fit_nig(x)     # multivariate estimation
-#' fit_nig(x[ , 4, drop = FALSE]) # univariate estimation
-fit_nig <- function(.invariant, .symmetric = FALSE) {
-    UseMethod("fit_nig", .invariant)
+#' # multivariate estimation
+#' fit_nig(x)
+#'
+#' # univariate estimation
+#' fit_nig(x[ , 4, drop = FALSE])
+fit_nig <- function(x, symmetric = FALSE) {
+    UseMethod("fit_nig", x)
 }
 
 #' @rdname fit_nig
 #' @export
-fit_nig.default <- function(.invariant, .symmetric = FALSE) {
-    stop("`.invariant` must be a tibble, xts or a matrix.", call. = FALSE)
+fit_nig.default <- function(x, symmetric = FALSE) {
+    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
 }
 
 #' @rdname fit_nig
 #' @export
-fit_nig.tbl <- function(.invariant, .symmetric = FALSE) {
-    if (any(purrr::map_lgl(.invariant, lubridate::is.Date))) {
-        .invariant <- .invariant |>
+fit_nig.tbl <- function(x, symmetric = FALSE) {
+    if (any(purrr::map_lgl(x, lubridate::is.Date))) {
+        x <- x |>
             timetk::tk_xts(silent = TRUE) |>
             as.matrix()
     } else {
-        .invariant <- as.matrix(.invariant)
+        x <- as.matrix(x)
     }
-    fit_nig_(.invariant = .invariant, .symmetric = .symmetric)
+    fit_nig_(x = x, symmetric = symmetric)
 }
 
 #' @rdname fit_nig
 #' @export
-fit_nig.xts <- function(.invariant, .symmetric = FALSE) {
-    fit_nig_(.invariant = as.matrix(.invariant), .symmetric = .symmetric)
+fit_nig.xts <- function(x, symmetric = FALSE) {
+    fit_nig_(x = as.matrix(x), symmetric = symmetric)
 }
 
 #' @rdname fit_nig
 #' @export
-fit_nig.matrix <- function(.invariant, .symmetric = FALSE) {
-    fit_nig_(.invariant = .invariant, .symmetric = .symmetric)
+fit_nig.matrix <- function(x, symmetric = FALSE) {
+    fit_nig_(x = x, symmetric = symmetric)
 }
 
 #' @keywords internal
-fit_nig_ <- function(.invariant, .symmetric = FALSE) {
+fit_nig_ <- function(x, symmetric = FALSE) {
 
-    assertthat::assert_that(assertthat::is.flag(.symmetric))
+    assertthat::assert_that(assertthat::is.flag(symmetric))
 
-    if (NCOL(.invariant) == 1) {
-        x <- ghyp::fit.NIGuv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+    if (NCOL(x) == 1) {
+        x <- ghyp::fit.NIGuv(data = x, symmetric = symmetric, silent = TRUE)
     } else {
-        x <- ghyp::fit.NIGmv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+        x <- ghyp::fit.NIGmv(data = x, symmetric = symmetric, silent = TRUE)
     }
     new_cma_fit(x)
 
@@ -236,67 +242,69 @@ fit_nig_ <- function(.invariant, .symmetric = FALSE) {
 #' distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.VGuv}}
 #' and \code{\link[ghyp]{fit.VGmv}}.
 #'
-#' @param .invariant A tabular (non-tidy) data structure.
-#' @param .symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
+#' @param x A tabular (non-tidy) data structure.
+#' @param symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
-#' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_t}}
+#' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}}
+#' \code{\link{fit_t}} \code{\link{fit_normal}}
 #'
 #' @export
 #'
 #' @examples
-#' ##### fit_vg #####
-#'
 #' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 #'
-#' fit_vg(x[ , 3:4])     # multivariate estimation
-#' fit_vg(x[ , 4, drop = FALSE]) # univariate estimation
-fit_vg <- function(.invariant, .symmetric = FALSE) {
-    UseMethod("fit_vg", .invariant)
+#' # multivariate estimation
+#' fit_vg(x[ , 3:4])
+#'
+#' # univariate estimation
+#' fit_vg(x[ , 4, drop = FALSE])
+fit_vg <- function(x, symmetric = FALSE) {
+    UseMethod("fit_vg", x)
 }
 
 #' @rdname fit_vg
 #' @export
-fit_vg.default <- function(.invariant, .symmetric = FALSE) {
-    stop("`.invariant` must be a tibble, xts or a matrix.", call. = FALSE)
+fit_vg.default <- function(x, symmetric = FALSE) {
+    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
 }
 
 #' @rdname fit_vg
 #' @export
-fit_vg.tbl <- function(.invariant, .symmetric = FALSE) {
-    if (any(purrr::map_lgl(.invariant, lubridate::is.Date))) {
-        .invariant <- .invariant |>
+fit_vg.tbl <- function(x, symmetric = FALSE) {
+    if (any(purrr::map_lgl(x, lubridate::is.Date))) {
+        x <- x |>
             timetk::tk_xts(silent = TRUE) |>
             as.matrix()
     } else {
-        .invariant <- as.matrix(.invariant)
+        x <- as.matrix(x)
     }
-    fit_vg_(.invariant = .invariant, .symmetric = .symmetric)
+    fit_vg_(x = x, symmetric = symmetric)
 }
 
 #' @rdname fit_vg
 #' @export
-fit_vg.xts <- function(.invariant, .symmetric = FALSE) {
-    fit_vg_(.invariant = as.matrix(.invariant), .symmetric = .symmetric)
+fit_vg.xts <- function(x, symmetric = FALSE) {
+    fit_vg_(x = as.matrix(x), symmetric = symmetric)
 }
 
 #' @rdname fit_vg
 #' @export
-fit_vg.matrix <- function(.invariant, .symmetric = FALSE) {
-    fit_vg_(.invariant = .invariant, .symmetric = .symmetric)
+fit_vg.matrix <- function(x, symmetric = FALSE) {
+    fit_vg_(x = x, symmetric = symmetric)
 }
 
 #' @keywords internal
-fit_vg_ <- function(.invariant, .symmetric = FALSE) {
+fit_vg_ <- function(x, symmetric = FALSE) {
 
-    assertthat::assert_that(assertthat::is.flag(.symmetric))
+    assertthat::assert_that(assertthat::is.flag(symmetric))
 
-    if (NCOL(.invariant) == 1) {
-        x <- ghyp::fit.VGuv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+    if (NCOL(x) == 1) {
+        x <- ghyp::fit.VGuv(data = x, symmetric = symmetric, silent = TRUE)
     } else {
-        x <- ghyp::fit.VGmv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+        x <- ghyp::fit.VGmv(data = x, symmetric = symmetric, silent = TRUE)
     }
     new_cma_fit(x)
 
@@ -311,67 +319,142 @@ fit_vg_ <- function(.invariant, .symmetric = FALSE) {
 #' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.tuv}}
 #' and \code{\link[ghyp]{fit.tmv}}.
 #'
-#' @param .invariant A tabular (non-tidy) data structure.
-#' @param .symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
+#' @param x A tabular (non-tidy) data structure.
+#' @param symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
 #'
-#' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}}
+#' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}}
+#' \code{\link{fit_vg}} \code{\link{fit_normal}}
 #'
 #' @export
 #'
 #' @examples
-#' ##### fit_t #####
-#'
 #' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 #'
-#' fit_t(x)     # multivariate estimation
-#' fit_t(x[ , 4, drop = FALSE]) # univariate estimation
-fit_t <- function(.invariant, .symmetric = FALSE) {
-    UseMethod("fit_t", .invariant)
+#' # multivariate estimation
+#' fit_t(x)
+#'
+#' # univariate estimation
+#' fit_t(x[ , 4, drop = FALSE])
+fit_t <- function(x, symmetric = FALSE) {
+    UseMethod("fit_t", x)
 }
 
 #' @rdname fit_t
 #' @export
-fit_t.default <- function(.invariant, .symmetric = FALSE) {
-    stop("`.invariant` must be a tibble, xts or a matrix.", call. = FALSE)
+fit_t.default <- function(x, symmetric = FALSE) {
+    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
 }
 
 #' @rdname fit_t
 #' @export
-fit_t.tbl <- function(.invariant, .symmetric = FALSE) {
-    if (any(purrr::map_lgl(.invariant, lubridate::is.Date))) {
-        .invariant <- .invariant |>
+fit_t.tbl <- function(x, symmetric = FALSE) {
+    if (any(purrr::map_lgl(x, lubridate::is.Date))) {
+        x <- x |>
             timetk::tk_xts(silent = TRUE) |>
             as.matrix()
     } else {
-        .invariant <- as.matrix(.invariant)
+        x <- as.matrix(x)
     }
-    fit_t_(.invariant = .invariant, .symmetric = .symmetric)
+    fit_t_(x = x, symmetric = symmetric)
 }
 
 #' @rdname fit_t
 #' @export
-fit_t.xts <- function(.invariant, .symmetric = FALSE) {
-    fit_t_(.invariant = as.matrix(.invariant), .symmetric = .symmetric)
+fit_t.xts <- function(x, symmetric = FALSE) {
+    fit_t_(x = as.matrix(x), symmetric = symmetric)
 }
 
 #' @rdname fit_t
 #' @export
-fit_t.matrix <- function(.invariant, .symmetric = FALSE) {
-    fit_t_(.invariant = .invariant, .symmetric = .symmetric)
+fit_t.matrix <- function(x, symmetric = FALSE) {
+    fit_t_(x = x, symmetric = symmetric)
 }
 
 #' @keywords internal
-fit_t_ <- function(.invariant, .symmetric = FALSE) {
+fit_t_ <- function(x, symmetric = FALSE) {
 
-    assertthat::assert_that(assertthat::is.flag(.symmetric))
+    assertthat::assert_that(assertthat::is.flag(symmetric))
 
-    if (NCOL(.invariant) == 1) {
-        x <- ghyp::fit.tuv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+    if (NCOL(x) == 1) {
+        x <- ghyp::fit.tuv(data = x, symmetric = symmetric, silent = TRUE)
     } else {
-        x <- ghyp::fit.tmv(data = .invariant, symmetric = .symmetric, silent = TRUE)
+        x <- ghyp::fit.tmv(data = x, symmetric = symmetric, silent = TRUE)
+    }
+    new_cma_fit(x)
+
+}
+
+
+# Normal Distribution -----------------------------------------------------
+
+#' Estimation of the Normal Distribution
+#'
+#' Performs maximum likelihood estimation on the normal distribution
+#' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.gaussuv}}
+#' and \code{\link[ghyp]{fit.gaussmv}}.
+#'
+#' @param x A tabular (non-tidy) data structure.
+#'
+#' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
+#'
+#' @seealso \code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}}
+#' \code{\link{fit_vg}} \code{\link{fit_t}}
+#'
+#' @export
+#'
+#' @examples
+#' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+#'
+#' # multivariate estimation
+#' fit_normal(x)
+#'
+#' # univariate estimation
+#' fit_normal(x[ , 4, drop = FALSE])
+fit_normal <- function(x) {
+    UseMethod("fit_normal", x)
+}
+
+#' @rdname fit_normal
+#' @export
+fit_normal.default <- function(x) {
+    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
+}
+
+#' @rdname fit_normal
+#' @export
+fit_normal.tbl <- function(x) {
+    if (any(purrr::map_lgl(x, lubridate::is.Date))) {
+        x <- x |>
+            timetk::tk_xts(silent = TRUE) |>
+            as.matrix()
+    } else {
+        x <- as.matrix(x)
+    }
+    fit_normal_(x = x)
+}
+
+#' @rdname fit_normal
+#' @export
+fit_normal.xts <- function(x) {
+    fit_normal_(x = as.matrix(x))
+}
+
+#' @rdname fit_normal
+#' @export
+fit_normal.matrix <- function(x) {
+    fit_normal_(x = x)
+}
+
+#' @keywords internal
+fit_normal_ <- function(x) {
+
+    if (NCOL(x) == 1) {
+        x <- ghyp::fit.gaussuv(data = x)
+    } else {
+        x <- ghyp::fit.gaussmv(data = x)
     }
     new_cma_fit(x)
 

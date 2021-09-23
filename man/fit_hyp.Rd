@@ -8,20 +8,20 @@
 \alias{fit_hyp.matrix}
 \title{Estimation of the Hyperbolic Distribution}
 \usage{
-fit_hyp(.invariant, .symmetric = FALSE)
+fit_hyp(x, symmetric = FALSE)
 
-\method{fit_hyp}{default}(.invariant, .symmetric = FALSE)
+\method{fit_hyp}{default}(x, symmetric = FALSE)
 
-\method{fit_hyp}{tbl}(.invariant, .symmetric = FALSE)
+\method{fit_hyp}{tbl}(x, symmetric = FALSE)
 
-\method{fit_hyp}{xts}(.invariant, .symmetric = FALSE)
+\method{fit_hyp}{xts}(x, symmetric = FALSE)
 
-\method{fit_hyp}{matrix}(.invariant, .symmetric = FALSE)
+\method{fit_hyp}{matrix}(x, symmetric = FALSE)
 }
 \arguments{
-\item{.invariant}{A tabular (non-tidy) data structure.}
+\item{x}{A tabular (non-tidy) data structure.}
 
-\item{.symmetric}{A flag. Should the estimated distribution be symmetric?
+\item{symmetric}{A flag. Should the estimated distribution be symmetric?
 Defaults to \code{FALSE}.}
 }
 \value{
@@ -33,13 +33,15 @@ Performs a maximum likelihood estimation on the Hyperbolic distribution
 \code{\link[ghyp]{fit.hypmv}}
 }
 \examples{
-##### fit_hyp #####
-
 x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 
-fit_hyp(x)     # multivariate estimation
-fit_hyp(x[ , 4, drop = FALSE]) # univariate estimation
+# multivariate estimation
+fit_hyp(x)
+
+# univariate estimation
+fit_hyp(x[ , 4, drop = FALSE])
 }
 \seealso{
-\code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}} \code{\link{fit_t}}
+\code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}}
+\code{\link{fit_t}} \code{\link{fit_normal}}
 }
