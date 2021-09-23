@@ -158,13 +158,13 @@ exactly matches the first two moments.</p>
     <tr>
       <th>stochastic</th>
       <td><p>A <code>logical</code> flag indicating whether (or not) the stochastic
-representation should be used. The default if <code>FALSE</code>.</p></td>
+representation should be used. The default if <code>TRUE</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p># TODO</p>
+    <p>A <code>tibble</code> in the wide format.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='match_normal.html'>match_normal</a></code></p></div>
@@ -175,32 +175,35 @@ representation should be used. The default if <code>FALSE</code>.</p></td>
 <span class='va'>sigma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='va'>nu</span>    <span class='op'>&lt;-</span> <span class='fl'>5</span>
 <span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>nu</span>, <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                [,1]          [,2]          [,3]         [,4]
-#&gt;  [1,]  0.0164244658  0.0129117413  0.0018572518 -0.005524058
-#&gt;  [2,]  0.0061213793  0.0098333912  0.0126673165  0.006940157
-#&gt;  [3,]  0.0079027877 -0.0008374713  0.0013785530  0.006892041
-#&gt;  [4,] -0.0158987238 -0.0141422369 -0.0172534518 -0.012833765
-#&gt;  [5,]  0.0040513031 -0.0033150652  0.0090505799 -0.001425389
-#&gt;  [6,] -0.0078050085 -0.0063880245  0.0001590019  0.003690972
-#&gt;  [7,] -0.0116451611 -0.0207659363 -0.0265579023 -0.014174665
-#&gt;  [8,] -0.0076523066  0.0024308232 -0.0005875199 -0.005939102
-#&gt;  [9,]  0.0209371011  0.0190196680  0.0226198657  0.017394360
-#&gt; [10,] -0.0002958565  0.0016613539 -0.0019338522  0.001042208</div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 × 4</span>
+#&gt;         DAX      SMI       CAC       FTSE
+#&gt;       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> -<span style='color: #BB0000;'>0.001</span><span style='color: #BB0000; text-decoration: underline;'>11</span> -<span style='color: #BB0000;'>0.015</span><span style='color: #BB0000; text-decoration: underline;'>1</span>  -<span style='color: #BB0000;'>0.018</span><span style='color: #BB0000; text-decoration: underline;'>2</span>   -<span style='color: #BB0000;'>0.008</span><span style='color: #BB0000; text-decoration: underline;'>21</span>  
+#&gt; <span style='color: #BCBCBC;'> 2</span>  0.006<span style='text-decoration: underline;'>64</span>  0.010<span style='text-decoration: underline;'>7</span>  -<span style='color: #BB0000;'>0.000</span><span style='color: #BB0000; text-decoration: underline;'>563</span>  0.001<span style='text-decoration: underline;'>26</span>  
+#&gt; <span style='color: #BCBCBC;'> 3</span> -<span style='color: #BB0000;'>0.013</span><span style='color: #BB0000; text-decoration: underline;'>9</span>  -<span style='color: #BB0000;'>0.005</span><span style='color: #BB0000; text-decoration: underline;'>84</span> -<span style='color: #BB0000;'>0.010</span><span style='color: #BB0000; text-decoration: underline;'>1</span>   -<span style='color: #BB0000;'>0.007</span><span style='color: #BB0000; text-decoration: underline;'>54</span>  
+#&gt; <span style='color: #BCBCBC;'> 4</span>  0.013<span style='text-decoration: underline;'>2</span>   0.005<span style='text-decoration: underline;'>66</span>  0.018<span style='text-decoration: underline;'>6</span>    0.002<span style='text-decoration: underline;'>08</span>  
+#&gt; <span style='color: #BCBCBC;'> 5</span> -<span style='color: #BB0000;'>0.002</span><span style='color: #BB0000; text-decoration: underline;'>44</span> -<span style='color: #BB0000;'>0.002</span><span style='color: #BB0000; text-decoration: underline;'>36</span> -<span style='color: #BB0000;'>0.002</span><span style='color: #BB0000; text-decoration: underline;'>66</span>  -<span style='color: #BB0000;'>0.014</span><span style='color: #BB0000; text-decoration: underline;'>4</span>   
+#&gt; <span style='color: #BCBCBC;'> 6</span>  0.001<span style='text-decoration: underline;'>94</span>  0.010<span style='text-decoration: underline;'>4</span>   0.012<span style='text-decoration: underline;'>9</span>    0.005<span style='text-decoration: underline;'>97</span>  
+#&gt; <span style='color: #BCBCBC;'> 7</span> -<span style='color: #BB0000;'>0.007</span><span style='color: #BB0000; text-decoration: underline;'>41</span> -<span style='color: #BB0000;'>0.013</span><span style='color: #BB0000; text-decoration: underline;'>2</span>   0.002<span style='text-decoration: underline;'>30</span>  -<span style='color: #BB0000;'>0.000</span><span style='color: #BB0000; text-decoration: underline;'>468</span> 
+#&gt; <span style='color: #BCBCBC;'> 8</span>  0.027<span style='text-decoration: underline;'>9</span>   0.013<span style='text-decoration: underline;'>2</span>   0.020<span style='text-decoration: underline;'>5</span>    0.016<span style='text-decoration: underline;'>5</span>   
+#&gt; <span style='color: #BCBCBC;'> 9</span> -<span style='color: #BB0000;'>0.003</span><span style='color: #BB0000; text-decoration: underline;'>42</span> -<span style='color: #BB0000;'>0.001</span><span style='color: #BB0000; text-decoration: underline;'>11</span> -<span style='color: #BB0000;'>0.005</span><span style='color: #BB0000; text-decoration: underline;'>15</span>   0.000<span style='text-decoration: underline;'>034</span>3
+#&gt; <span style='color: #BCBCBC;'>10</span>  0.003<span style='text-decoration: underline;'>51</span>  0.002<span style='text-decoration: underline;'>87</span>  0.003<span style='text-decoration: underline;'>70</span>   0.013<span style='text-decoration: underline;'>4</span>   </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            DAX       SMI       CAC      FTSE
 #&gt; DAX  1.0000000 0.7031219 0.7344304 0.6394674
 #&gt; SMI  0.7031219 1.0000000 0.6160454 0.5847791
 #&gt; CAC  0.7344304 0.6160454 1.0000000 0.6485679
-#&gt; FTSE 0.6394674 0.5847791 0.6485679 1.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>5</span>, <span class='fl'>10000</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           [,1]      [,2]      [,3]      [,4]
-#&gt; [1,] 1.0000000 0.6866174 0.7307546 0.6310661
-#&gt; [2,] 0.6866174 1.0000000 0.6140364 0.5748925
-#&gt; [3,] 0.7307546 0.6140364 1.0000000 0.6404942
-#&gt; [4,] 0.6310661 0.5748925 0.6404942 1.0000000</div><div class='input'>
+#&gt; FTSE 0.6394674 0.5847791 0.6485679 1.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>5</span>, <span class='fl'>100000</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            DAX       SMI       CAC      FTSE
+#&gt; DAX  1.0000000 0.7009054 0.7328550 0.6381210
+#&gt; SMI  0.7009054 1.0000000 0.6124058 0.5800144
+#&gt; CAC  0.7328550 0.6124058 1.0000000 0.6479002
+#&gt; FTSE 0.6381210 0.5800144 0.6479002 1.0000000</div><div class='input'>
 <span class='va'>mu</span>
 </div><div class='output co'>#&gt;          DAX          SMI          CAC         FTSE 
-#&gt; 0.0006520417 0.0008178997 0.0004370540 0.0004319851 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>nu</span>, <span class='fl'>10000</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.0004850539 0.0005212520 0.0004975195 0.0005516226</div></pre>
+#&gt; 0.0006520417 0.0008178997 0.0004370540 0.0004319851 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>nu</span>, <span class='fl'>100000</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;          DAX          SMI          CAC         FTSE 
+#&gt; 0.0005937165 0.0006112781 0.0005875299 0.0005845531 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
