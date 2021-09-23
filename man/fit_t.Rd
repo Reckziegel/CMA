@@ -8,20 +8,20 @@
 \alias{fit_t.matrix}
 \title{Estimation of the Student-t Distribution}
 \usage{
-fit_t(.invariant, .symmetric = FALSE)
+fit_t(x, symmetric = FALSE)
 
-\method{fit_t}{default}(.invariant, .symmetric = FALSE)
+\method{fit_t}{default}(x, symmetric = FALSE)
 
-\method{fit_t}{tbl}(.invariant, .symmetric = FALSE)
+\method{fit_t}{tbl}(x, symmetric = FALSE)
 
-\method{fit_t}{xts}(.invariant, .symmetric = FALSE)
+\method{fit_t}{xts}(x, symmetric = FALSE)
 
-\method{fit_t}{matrix}(.invariant, .symmetric = FALSE)
+\method{fit_t}{matrix}(x, symmetric = FALSE)
 }
 \arguments{
-\item{.invariant}{A tabular (non-tidy) data structure.}
+\item{x}{A tabular (non-tidy) data structure.}
 
-\item{.symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
+\item{symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
 Defaults to \code{FALSE}.}
 }
 \value{
@@ -33,13 +33,15 @@ Performs maximum likelihood estimation on the Student-t distribution
 and \code{\link[ghyp]{fit.tmv}}.
 }
 \examples{
-##### fit_t #####
-
 x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 
-fit_t(x)     # multivariate estimation
-fit_t(x[ , 4, drop = FALSE]) # univariate estimation
+# multivariate estimation
+fit_t(x)
+
+# univariate estimation
+fit_t(x[ , 4, drop = FALSE])
 }
 \seealso{
-\code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}}
+\code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}}
+\code{\link{fit_vg}} \code{\link{fit_normal}}
 }

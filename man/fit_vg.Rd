@@ -8,20 +8,20 @@
 \alias{fit_vg.matrix}
 \title{Estimation of the Variance-Gamma Distribution}
 \usage{
-fit_vg(.invariant, .symmetric = FALSE)
+fit_vg(x, symmetric = FALSE)
 
-\method{fit_vg}{default}(.invariant, .symmetric = FALSE)
+\method{fit_vg}{default}(x, symmetric = FALSE)
 
-\method{fit_vg}{tbl}(.invariant, .symmetric = FALSE)
+\method{fit_vg}{tbl}(x, symmetric = FALSE)
 
-\method{fit_vg}{xts}(.invariant, .symmetric = FALSE)
+\method{fit_vg}{xts}(x, symmetric = FALSE)
 
-\method{fit_vg}{matrix}(.invariant, .symmetric = FALSE)
+\method{fit_vg}{matrix}(x, symmetric = FALSE)
 }
 \arguments{
-\item{.invariant}{A tabular (non-tidy) data structure.}
+\item{x}{A tabular (non-tidy) data structure.}
 
-\item{.symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
+\item{symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
 Defaults to \code{FALSE}.}
 }
 \value{
@@ -33,13 +33,15 @@ distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.VGuv}
 and \code{\link[ghyp]{fit.VGmv}}.
 }
 \examples{
-##### fit_vg #####
-
 x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 
-fit_vg(x[ , 3:4])     # multivariate estimation
-fit_vg(x[ , 4, drop = FALSE]) # univariate estimation
+# multivariate estimation
+fit_vg(x[ , 3:4])
+
+# univariate estimation
+fit_vg(x[ , 4, drop = FALSE])
 }
 \seealso{
-\code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_t}}
+\code{\link{fit_ghd}} \code{\link{fit_hyp}} \code{\link{fit_nig}}
+\code{\link{fit_t}} \code{\link{fit_normal}}
 }

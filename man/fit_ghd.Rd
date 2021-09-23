@@ -8,20 +8,20 @@
 \alias{fit_ghd.matrix}
 \title{Estimation of the Generalized Hyperbolic Distribution}
 \usage{
-fit_ghd(.invariant, .symmetric = FALSE)
+fit_ghd(x, symmetric = FALSE)
 
-\method{fit_ghd}{default}(.invariant, .symmetric = FALSE)
+\method{fit_ghd}{default}(x, symmetric = FALSE)
 
-\method{fit_ghd}{tbl}(.invariant, .symmetric = FALSE)
+\method{fit_ghd}{tbl}(x, symmetric = FALSE)
 
-\method{fit_ghd}{xts}(.invariant, .symmetric = FALSE)
+\method{fit_ghd}{xts}(x, symmetric = FALSE)
 
-\method{fit_ghd}{matrix}(.invariant, .symmetric = FALSE)
+\method{fit_ghd}{matrix}(x, symmetric = FALSE)
 }
 \arguments{
-\item{.invariant}{A tabular (non-tidy) data structure.}
+\item{x}{A tabular (non-tidy) data structure.}
 
-\item{.symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
+\item{symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
 Defaults to \code{FALSE}.}
 }
 \value{
@@ -33,13 +33,15 @@ Performs maximum likelihood estimation on the Generalized Hyperbolic distributio
 \code{\link[ghyp]{fit.ghypmv}}.
 }
 \examples{
-##### fit_ghd #####
-
 x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 
-fit_ghd(x) # multivariate estimation
-fit_ghd(x[ , 3, drop = FALSE]) # univariate estimation
+# multivariate estimation
+fit_ghd(x)
+
+# univariate estimation
+fit_ghd(x[ , 3, drop = FALSE])
 }
 \seealso{
-\code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}} \code{\link{fit_t}}
+\code{\link{fit_hyp}} \code{\link{fit_nig}} \code{\link{fit_vg}}
+\code{\link{fit_t}} \code{\link{fit_normal}}
 }

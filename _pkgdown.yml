@@ -25,6 +25,7 @@ reference:
       - fit_ghd
       - fit_hyp
       - fit_nig
+      - fit_normal
       - fit_t
       - fit_vg
 
