@@ -5,6 +5,7 @@
 \alias{check_p.default}
 \alias{check_p.NULL}
 \alias{check_p.numeric}
+\alias{check_p.ffp}
 \alias{check_p.matrix}
 \alias{check_p.xts}
 \alias{check_p.data.frame}
@@ -18,6 +19,8 @@ check_p(p)
 \method{check_p}{`NULL`}(p)
 
 \method{check_p}{numeric}(p)
+
+\method{check_p}{ffp}(p)
 
 \method{check_p}{matrix}(p)
 

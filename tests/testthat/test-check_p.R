@@ -12,6 +12,8 @@ p_xts <- xts::xts(p, order.by = index)
 p_df <- data.frame(index = index, p = p)
 # data tbl
 p_tbl <- tibble::tibble(index = index, a = p)
+# data ffp
+p_ffp <- ffp::exp_decay(p, 0.01)
 
 test_that("check_p transforms objects into a matrix", {
 
@@ -34,6 +36,10 @@ test_that("check_p transforms objects into a matrix", {
     expect_type(check_p(p_tbl), "double")
     expect_equal(nrow(check_p(p_tbl)), 10L)
     expect_equal(ncol(check_p(p_tbl)), 1L)
+    # ffp
+    expect_type(check_p(p_ffp), "double")
+    expect_equal(nrow(check_p(p_ffp)), 10L)
+    expect_equal(ncol(check_p(p_ffp)), 1L)
 
 })
 
