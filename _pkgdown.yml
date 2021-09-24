@@ -57,4 +57,5 @@ reference:
       contents:
       - panic_copula
       - plot_panic_distribution
+      - empirical_stats
 

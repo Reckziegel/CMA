@@ -86,6 +86,11 @@ panic_copula <- function(x, n = 10000, panic_cor = 0.99, panic_prob = 0.02, dist
 
     Y <- cma_combination(y, u, sep_step$copula)
 
-    new_panic_copula(list(simulation = Y, p = p_))
+    if (has_colnames(x)) {
+        colnames(Y) <- colnames(x)
+    }
+    colnames(p_) <- "p"
+
+    new_panic_copula(list(simulation = Y, p = as.double(p_)))
 
 }
