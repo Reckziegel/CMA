@@ -36,7 +36,7 @@ approx_extrap <- function(x, y, xout, method = "linear", n = 50, rule = 2, f = 0
     n <- length(y)
 
     if (any(d)) {
-        w[d] <- (y[n] - y[n - 1])/(x[n] - x[n - 1]) * (xout[d] - x[n - 1]) + y[n - 1]
+        w[d] <- (y[n] - y[n - 1]) / (x[n] - x[n - 1]) * (xout[d] - x[n - 1]) + y[n - 1]
     }
 
     list(x = xout, y = w)
