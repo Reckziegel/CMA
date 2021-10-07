@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Copula Normalization — copula_transformation" />
 <meta property="og:description" content="This function transforms the entries an arbitrary copula so they can be compatible
-with the first two moments of a dataset." />
+with the first two moments of a timeseries." />
 
 
 
@@ -131,7 +131,7 @@ with the first two moments of a dataset." />
 
     <div class="ref-description">
     <p>This function transforms the entries an arbitrary copula so they can be compatible
-with the first two moments of a dataset.</p>
+with the first two moments of a timeseries.</p>
     </div>
 
     <pre class="usage"><span class='fu'>copula_transformation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>copula</span><span class='op'>)</span></pre>
@@ -158,15 +158,17 @@ with the first two moments of a dataset.</p>
 <li><p>1. Normalize the copula to have a standard normal distribution;</p></li>
 <li><p>2. Operate an affine transformation on the normalized variables;</p></li>
 <li><p>3. Do the CMA Separation step on the new rotated variables;</p></li>
-<li><p>4. Extract the copula component that appears in 3.</p></li>
+<li><p>4. Extract the copula component that results from step 3.</p></li>
 </ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>sep</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cma_separation.html'>cma_separation</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>x</span>       <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+
+<span class='va'>sep</span>     <span class='op'>&lt;-</span> <span class='fu'><a href='cma_separation.html'>cma_separation</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='va'>clayton</span> <span class='op'>&lt;-</span> <span class='fu'><a href='fit_copula_clayton.html'>fit_copula_clayton</a></span><span class='op'>(</span><span class='va'>sep</span><span class='op'>)</span>
-<span class='va'>gen</span> <span class='op'>&lt;-</span> <span class='fu'><a href='generate_copulas.html'>generate_copulas</a></span><span class='op'>(</span><span class='va'>clayton</span>, <span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>gen</span>     <span class='op'>&lt;-</span> <span class='fu'><a href='generate_copulas.html'>generate_copulas</a></span><span class='op'>(</span><span class='va'>clayton</span>, <span class='fl'>10</span><span class='op'>)</span>
+
 <span class='fu'>copula_transformation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>gen</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 × 4</span>
 #&gt;      ...1   ...2   ...3   ...4
