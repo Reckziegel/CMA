@@ -93,7 +93,7 @@ new_cma_fit <- function(x, ...) {
 #' @importFrom vctrs obj_print_header
 #' @export
 obj_print_header.cma_fit <- function(x, ...) {
-  cat(crayon::silver("# Margins Estimation"))
+  cat(crayon::cyan("# Margins Estimation"))
   cat("\n")
 }
 
@@ -144,8 +144,18 @@ methods::setOldClass(c("marginal", "vctrs_vctr"))
 #' @rdname cma-marginal
 new_marginal <- function(x, ...) {
   dots <- as.list(...)
-  if (!has_names(x)) {
-    colnames(x) <- make_tidy_names(x)
+  if (NCOL(x) == 1) {
+    if (!has_colnames(x)) {
+      colnames(x) <- make_tidy_names(x)[[1L]]
+    } else {
+      colnames(x) <- names(x)
+    }
+  } else {
+    if (!has_colnames(x)) {
+      colnames(x) <- make_tidy_names(x)
+    } else {
+      colnames(x) <- colnames(x)
+    }
   }
   vctrs::new_list_of(x     = list(marginal = tibble::as_tibble(x)),
                      ptype = double(),

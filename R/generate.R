@@ -21,7 +21,7 @@
 #' generate_margins(dist, 10000)
 generate_margins <- function(model, n) {
     if (inherits(model, "cma_fit")) {
-        x <- ghyp::rghyp(n = n, attributes(model)$ghyp)
+        x <- as.matrix(ghyp::rghyp(n = n, attributes(model)$ghyp))
         new_marginal(x, model$model)
     } else {
         stop("`model` must be an object of the `cma_fit` class.", call. = FALSE)

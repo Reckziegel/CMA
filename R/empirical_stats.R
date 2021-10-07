@@ -18,7 +18,7 @@
 #' x <- diff(log(EuStockMarkets))
 #'
 #' calm_market  <- panic_copula(x = x, n = 10000, panic_prob = 0.00, dist = "normal")
-#' panic_market <- panic_copula(x = x, n = 10000, panic_prob = 0.05, dist = "normal")
+#' panic_market <- panic_copula(x = x, n = 10000, panic_prob = 0.20, dist = "normal")
 #'
 #' # Plot Calm market stats
 #' emp_calm <- empirical_stats(calm_market$simulation, p = calm_market$p)

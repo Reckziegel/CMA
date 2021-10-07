@@ -59,3 +59,9 @@ reference:
       - plot_panic_distribution
       - empirical_stats
 
+    - title: Utilities
+      desc: Additional functions
+      contents:
+      - entropy_pooling
+      - fp_moments
+

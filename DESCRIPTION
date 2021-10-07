@@ -35,7 +35,8 @@ Suggests:
     knitr,
     covr,
     testthat (>= 3.0.0),
-    rmarkdown
+    rmarkdown,
+    roxygen2
 Config/testthat/edition: 3
 Encoding: UTF-8
 RoxygenNote: 7.1.2

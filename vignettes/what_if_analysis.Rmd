@@ -20,11 +20,11 @@ This brief introduction shows how use CMA to price alternative scenarios for an 
 
 2.  Pick one element to play with;
 
-    -   Example: if the "Market" is normally distributed, the t-distribution could be used to see how VaR and CVaR changes;
+    - Example: if the "Market" is normally distributed, the t-distribution could be used to see how VaR and CVaR changes;
 
 3.  Generate new scenarios;
 
-4.  Merge the newly generated scenarios into the empirical copulas.
+4.  Merge the newly generated scenarios with the empirical copulas.
 
 For this vignette, the `EuStockMarket` dataset is used as *proxy* for the "Market".
 
@@ -60,7 +60,8 @@ In this vignette, the margins are manipulated while keeping the copula structure
 
 ## Step 2. Choose a Target Distribution
 
-Once the the "separation" is done it's necessary to choose a target distribution for the data. For simplicity, let's fit a Student-t, but it could be *any* distribution.
+Once the the "separation" is done it's necessary to choose a target distribution for the data. For simplicity, let's fit a Student-t, but it could be *any* distribution (see "Marginal Distributions" 
+on the reference page).
 
 ```{r}
 dist_t <- fit_t(step_one$marginal)
@@ -88,7 +89,7 @@ The `simul_tbl` is a *tidy* (long-format) `tibble` with 100 marginal distributio
 
 ## Step 4. "Glue" the New Scenarios Into the Empirical Copula
 
-To complete the scenario generation process it's important to "glue" the simulations back into the empirical copula that is stored in the `step_one` object.
+To complete the scenario generation process it's important to "glue" the simulations back into the empirical copula that is stored in `step_one`.
 
 ```{r}
 step_two <- simul_tbl |> 
@@ -103,9 +104,9 @@ step_two <- simul_tbl |>
 step_two
 ```
 
-The `cma_comb` column now holds 100 simulations that share a bond to each other, because their copula is the same.
+The `cma_comb` column now holds 100 simulations that, although being different, share a bond to each other because the structure of their copula is the same.
 
-Finally, it's possible to compute the performance of those portfolios over an equal-weight strategy, for example. It could be *any* strategy.
+Finally, it's possible to compute the performance of those realizations over an equal-weight strategy, for example (it could be *any* strategy).
 
 ```{r}
 step_two <- step_two |> 
@@ -121,14 +122,17 @@ Translate compounded returns to prices and plot:
 
 ```{r, fig.width=7, fig.height=4, fig.align='center'}
 step_two |> 
+    # price
     dplyr::mutate(pnl_prices = purrr::map(.x = pnl, .f = ~ cumprod(exp(.x))), 
                   pnl_ref    = list(cumprod(exp(x %*% rep(0.25, 4))))) |> 
     tidyr::unnest(cols = c(pnl_prices, pnl_ref)) |> 
     
+    # build an index
     dplyr::group_by(simulations) |> 
     dplyr::mutate(rowid = 1:n_row) |> 
     dplyr::ungroup() |> 
     
+    # plot
     ggplot2::ggplot(ggplot2::aes(x = rowid, y = pnl_prices, group = simulations)) + 
     ggplot2::geom_line(col = "grey") + 
     ggplot2::geom_line(ggplot2::aes(y = pnl_ref), color = "purple") + 
@@ -139,6 +143,4 @@ step_two |>
                   y        = "P&L")
 ```
 
-Remember that all the paths above are compatible with the same marginal distribution specification. The difference between the "good" portfolios and the "bad" ones is purely due by chance.
-
-Also note how the copula "ties" the ups and downs, that happens always at the same time, but with different magnitudes.
+All the paths generated above are compatible with the same marginal distribution specification. The difference between the "good" portfolios and the "bad" ones is purely due by chance. Indeed, differentiating between skill and luck is notoriously difficult. 
