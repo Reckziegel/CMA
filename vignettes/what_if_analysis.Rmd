@@ -143,4 +143,6 @@ step_two |>
                   y        = "P&L")
 ```
 
-All the paths generated above are compatible with the same marginal distribution specification. The difference between the "good" portfolios and the "bad" ones is purely due by chance. Indeed, differentiating between skill and luck is notoriously difficult. 
+All the paths generated above are compatible with the same marginal distribution specification. The difference between the "good" portfolios and the "bad" ones is purely due by chance. 
+
+Indeed, differentiating skill from luck is notoriously difficult. 

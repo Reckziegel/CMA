@@ -14,7 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-As in 
+As in [_A New Breed for Copulas for Risk and Portfolio Management_](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702), `panic_copula()` models the market as a mixture of calm vs. panic environments. 
+
+The "calm" market happens most of the time, while the "panic" events are triggered endogenously for a brief period.
 
 ```{r setup}
 library(cma)
