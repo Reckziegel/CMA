@@ -193,7 +193,7 @@ representation should be used. The default if <code>TRUE</code>.</p></td>
 #&gt; DAX  1.0000000 0.7031219 0.7344304 0.6394674
 #&gt; SMI  0.7031219 1.0000000 0.6160454 0.5847791
 #&gt; CAC  0.7344304 0.6160454 1.0000000 0.6485679
-#&gt; FTSE 0.6394674 0.5847791 0.6485679 1.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='fl'>5</span>, <span class='fl'>100000</span><span class='op'>)</span><span class='op'>)</span>
+#&gt; FTSE 0.6394674 0.5847791 0.6485679 1.0000000</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>nu</span>, <span class='fl'>100000</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            DAX       SMI       CAC      FTSE
 #&gt; DAX  1.0000000 0.6979682 0.7342261 0.6401667
 #&gt; SMI  0.6979682 1.0000000 0.6106843 0.5817548
@@ -201,9 +201,9 @@ representation should be used. The default if <code>TRUE</code>.</p></td>
 #&gt; FTSE 0.6401667 0.5817548 0.6492973 1.0000000</div><div class='input'>
 <span class='va'>mu</span>
 </div><div class='output co'>#&gt;          DAX          SMI          CAC         FTSE 
-#&gt; 0.0006520417 0.0008178997 0.0004370540 0.0004319851 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>nu</span>, <span class='fl'>100000</span><span class='op'>)</span><span class='op'>)</span>
+#&gt; 0.0006520417 0.0008178997 0.0004370540 0.0004319851 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'>match_t</span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma</span>, <span class='va'>nu</span>, <span class='fl'>100000</span>, <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          DAX          SMI          CAC         FTSE 
-#&gt; 0.0005819711 0.0005812599 0.0005509151 0.0005776222 </div></pre>
+#&gt; 0.0006821289 0.0008120437 0.0004244474 0.0004018878 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
