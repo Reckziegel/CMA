@@ -86,10 +86,10 @@ match_normal <- function(mu, sigma, n) {
 #' match_t(mu, sigma, nu, 10)
 #'
 #' cor(x)
-#' cor(match_t(mu, sigma, 5, 100000))
+#' cor(match_t(mu, sigma, nu, 100000))
 #'
 #' mu
-#' colMeans(match_t(mu, sigma, nu, 100000))
+#' colMeans(match_t(mu, sigma, nu, 100000, TRUE))
 match_t <- function(mu, sigma, nu, n, stochastic = FALSE) {
 
     n_row <- nrow(sigma)

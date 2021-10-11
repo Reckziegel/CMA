@@ -1,5 +1,7 @@
 #' Visualize a Panic Distribution
 #'
+#' Visual display of a panic distribution.
+#'
 #' @param pnl An univariate time series with the PnL marginal distribution.
 #' @param p A \code{double} vector of probabilities. If \code{NULL}, `p` is automatically
 #' set to 1 over n.

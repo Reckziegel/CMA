@@ -36,13 +36,14 @@ A \code{list} with 2 elements: \code{mu} and \code{sigma}.
 Computes the location and dispersion statistics under flexible probabilities.
 }
 \examples{
-x <- diff(log(EuStockMarkets))
+x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+colnames(x) <- colnames(EuStockMarkets)
 p <- stats::runif(nrow(x))
-p <- p /  sum(p)
+p <- p / sum(p)
 
-fp_moments(x = matrix(x, ncol = 4), p = p)
+fp_moments(x = x, p = p)
 
-# compare with the stadard approach
+# compare with the standard approach
 colMeans(x)
 cov(x)
 }

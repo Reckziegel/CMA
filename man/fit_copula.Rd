@@ -53,7 +53,7 @@ The default is \code{mpl}.}
 An S3 \code{list} of the \code{cma_copula} class.
 }
 \description{
-These functions are constructed to help the user to build new types of copulas.
+Functions to build new types of copulas.
 }
 \examples{
 x <- matrix(diff(log(EuStockMarkets)), ncol = 4)

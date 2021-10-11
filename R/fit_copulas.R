@@ -1,6 +1,6 @@
 #' Archimedean Copulas for Scenario Analysis
 #'
-#' These functions are constructed to help the user to build new types of copulas.
+#' Functions to build new types of copulas.
 #'
 #' @param copula An object of the \code{cma} class.
 #' @param method A \code{character} with the method to be used for optimization.

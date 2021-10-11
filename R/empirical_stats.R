@@ -9,7 +9,7 @@
 #' @param level A number with the desired probability level. The default is
 #' \code{level = 0.01}.
 #'
-#' @return A tibble with 2 columns and 6 rows.
+#' @return A \code{tibble} with 2 columns and 6 rows.
 #' @export
 #'
 #' @examples

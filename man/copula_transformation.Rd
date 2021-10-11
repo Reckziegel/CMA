@@ -12,10 +12,10 @@ copula_transformation(x, copula)
 \item{copula}{A multivariate copula.}
 }
 \value{
-A \code{tibble}
+A tabular (non-tidy) \code{tibble}.
 }
 \description{
-This function transforms the entries an arbitrary copula so they can be compatible
+Transforms the entries an arbitrary copula so they can be compatible
 with the first two moments of a timeseries.
 }
 \details{

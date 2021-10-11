@@ -66,12 +66,16 @@ panic_copula <- function(x, n = 10000, panic_cor = 0.99, panic_prob = 0.02, dist
     # merge panic copula with normal marginals
     y <- NULL
     u <- NULL
+    if (dist == "t") {
+        .df <- fit_t(x)$chi
+    }
+
     for (n in 1:N) {
         yn <- as.matrix(seq(from = -4 * sigma[[n]], to = 4 * sigma[[n]], length.out = 1000))
         if (dist == "normal") {
             un <- stats::pnorm(yn , 0, sigma[[n]])
         } else {
-            un <- stats::pt(yn / sigma[[n]], df = 5)
+            un <- stats::pt(yn / sigma[[n]], df = .df)
         }
 
 

@@ -19,7 +19,7 @@ plot the marginal panic distribution.}
 A \code{ggplot2} object.
 }
 \description{
-Visualize a Panic Distribution
+Visual display of a panic distribution.
 }
 \examples{
 x <- diff(log(EuStockMarkets))

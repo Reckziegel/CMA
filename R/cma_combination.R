@@ -7,7 +7,7 @@
 #' @param cdf A rectangular (non-tidy) data structure with the CDF's.
 #' @param copula A rectangular (non-tidy) data structure with the copulas.
 #'
-#' @return A \code{tbl} with the joint scenarios.
+#' @return A tabular (non-tidy) \code{tibble} with the joint scenarios.
 #'
 #' @export
 #'

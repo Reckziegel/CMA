@@ -32,7 +32,7 @@ An S3 list of the \code{cma} class that contains two elements:
 \code{marginal} and \code{copula}.
 }
 \description{
-First CMA step: decomposes the the pure "individual" features of the marginal
+First CMA step: decomposes the the pure "individual" features in the marginals
 from the pure "joint" information available in the copulas.
 }
 \details{

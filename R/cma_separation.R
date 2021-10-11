@@ -1,6 +1,6 @@
 #' CMA Separation Step
 #'
-#' First CMA step: decomposes the the pure "individual" features of the marginal
+#' First CMA step: decomposes the the pure "individual" features in the marginals
 #' from the pure "joint" information available in the copulas.
 #'
 #' Arguments \code{x} and \code{p} must have the same size.

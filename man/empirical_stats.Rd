@@ -16,7 +16,7 @@ empirical_stats(x, p = NULL, level = 0.01)
 \code{level = 0.01}.}
 }
 \value{
-A tibble with 2 columns and 6 rows.
+A \code{tibble} with 2 columns and 6 rows.
 }
 \description{
 Computes the mean, standard deviation, skewness, kurtosis, Value-at-Risk (VaR)

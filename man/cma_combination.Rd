@@ -15,7 +15,7 @@ cma_combination(x, cdf, copula)
 \item{copula}{A rectangular (non-tidy) data structure with the copulas.}
 }
 \value{
-A \code{tbl} with the joint scenarios.
+A tabular (non-tidy) \code{tibble} with the joint scenarios.
 }
 \description{
 Second CMA step: "glue" copulas and marginals into the same data structure.

@@ -41,7 +41,7 @@ reference:
       - fit_copula_joe
 
     - title: Generate
-      desc: A helper to generate scenarios from fitted objects
+      desc: Build scenarios from fitted objects
       contents:
       - generate_margins
       - generate_copulas
@@ -53,7 +53,7 @@ reference:
       - match_t
 
     - title: Panic
-      desc: Generate _ex-ante_ worst case scenarios
+      desc: Generate _ex-ante_ worst case scenarios via entropy-pooling
       contents:
       - panic_copula
       - plot_panic_distribution

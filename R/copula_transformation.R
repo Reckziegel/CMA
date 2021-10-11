@@ -1,6 +1,6 @@
 #' Copula Normalization
 #'
-#' This function transforms the entries an arbitrary copula so they can be compatible
+#' Transforms the entries an arbitrary copula so they can be compatible
 #' with the first two moments of a timeseries.
 #'
 #' Under the hood, the copula transformation is a 4-step recipe:
@@ -14,7 +14,7 @@
 #' @param x A multivariate (non-tidy) dataset.
 #' @param copula A multivariate copula.
 #'
-#' @return A \code{tibble}
+#' @return A tabular (non-tidy) \code{tibble}.
 #' @export
 #'
 #' @examples
