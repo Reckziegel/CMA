@@ -92,10 +92,57 @@
 
     
     
-<p>As in <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702"><em>A New Breed for Copulas for Risk and Portfolio Management</em></a>, <code><a href="../reference/panic_copula.html">panic_copula()</a></code> models the market as a mixture of calm vs. panic environments.</p>
-<p>The “calm” market happens most of the time, while the “panic” events are triggered endogenously for a brief period.</p>
+<p>As in <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702"><em>A New Breed for Copulas for Risk and Portfolio Management</em></a>, the CMA package offers tools to model events of “panic”.</p>
+<p>The <code>EuStockMarkets</code> dataset is used for this vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cma</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cma</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="co"># stationarity - "invariance"</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">EuStockMarkets</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">EuStockMarkets</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt;               DAX          SMI          CAC         FTSE</span>
+<span class="co">#&gt; [1,] -0.009326550  0.006178360 -0.012658756  0.006770286</span>
+<span class="co">#&gt; [2,] -0.004422175 -0.005880448 -0.018740638 -0.004889587</span>
+<span class="co">#&gt; [3,]  0.009003794  0.003271184 -0.005779182  0.009027020</span>
+<span class="co">#&gt; [4,] -0.001778217  0.001483372  0.008743353  0.005771847</span>
+<span class="co">#&gt; [5,] -0.004676712 -0.008933417 -0.005120160 -0.007230164</span>
+<span class="co">#&gt; [6,]  0.012427042  0.006737244  0.011714353  0.008517217</span></code></pre></div>
+<p>With <code><a href="../reference/panic_copula.html">panic_copula()</a></code> it’s possible to build a mixture of calm vs. panic environments. The “calm” market happens most of the time, while a “panic” event is triggered endogenously for a brief period (say 2% of the sample).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">panic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panic_copula.html">panic_copula</a></span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">50000</span>, panic_cor <span class="op">=</span> <span class="fl">0.97</span>, panic_prob <span class="op">=</span> <span class="fl">0.02</span>, dist <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span>
+<span class="va">calm</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panic_copula.html">panic_copula</a></span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">50000</span>, panic_cor <span class="op">=</span> <span class="fl">0.00</span>, panic_prob <span class="op">=</span> <span class="fl">0.00</span>, dist <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span></code></pre></div>
+<p>The <code>panic_cor</code> argument defines the average correlation when the panic is triggered, <code>panic_cor</code> the average correlation for those events and <code>dist</code> allows the user to choose between the normal or the student-t distribution.</p>
+<p>For simplicity, assume an equal-weight strategy:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Equal-Weight Portfolio Under the Calm Market</span>
+<span class="va">pnl_panic</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+  pnl_panic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">panic</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="co"># Equal-Weight Portgolio Under the Panic Market</span>
+<span class="va">pnl_calm</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+  pnl_calm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">calm</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>The P&amp;L can be seen with <code><a href="../reference/plot_panic_distribution.html">plot_panic_distribution()</a></code>:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># PnL under the Panic Regime</span>
+<span class="fu"><a href="../reference/plot_panic_distribution.html">plot_panic_distribution</a></span><span class="op">(</span><span class="va">pnl_panic</span>, <span class="va">panic</span><span class="op">$</span><span class="va">p</span>, breaks <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></code></pre></div>
+<p><img src="panic_copula_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>The marginal distribution shows an agglomeration from probability mass around <code>-2%</code>, which is a direct consequence of the panic being instated.</p>
+<p>The impact of a panic in the portfolio main statistics can be seen with help of <code>ggplot2</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">stats_panic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/empirical_stats.html">empirical_stats</a></span><span class="op">(</span><span class="va">pnl_panic</span><span class="op">)</span>
+<span class="va">stats_calm</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/empirical_stats.html">empirical_stats</a></span><span class="op">(</span><span class="va">pnl_calm</span><span class="op">)</span>
+
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">stats_panic</span>, <span class="va">stats_calm</span><span class="op">)</span> |&gt; 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stat</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">stat</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, fill <span class="op">=</span> <span class="st">"regime"</span><span class="op">)</span></code></pre></div>
+<p><img src="panic_copula_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>The mean and the volatility doesn’t change, but the skewness, kurtosis, VaR and CVaR increases for markets that operate under mixture regimes.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
