@@ -14,11 +14,64 @@ knitr::opts_chunk$set(
 )
 ```
 
-As in [_A New Breed for Copulas for Risk and Portfolio Management_](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702), `panic_copula()` models the market as a mixture of calm vs. panic environments. 
+As in [_A New Breed for Copulas for Risk and Portfolio Management_](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702), the 
+CMA package offers tools to model events of "panic". 
 
-The "calm" market happens most of the time, while the "panic" events are triggered endogenously for a brief period.
+The `EuStockMarkets` dataset is used for this vignette.
 
 ```{r setup}
 library(cma)
+library(dplyr, warn.conflicts = FALSE)
+
+# stationarity - "invariance"
+x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+colnames(x) <- colnames(EuStockMarkets)
+head(x)
 ```
 
+With `panic_copula()` it's possible to build a mixture of calm vs. panic environments. The "calm" market happens most of the time, while a "panic" event is triggered endogenously for a brief period (say 2% of the sample). 
+
+```{r}
+panic <- panic_copula(x, n = 50000, panic_cor = 0.97, panic_prob = 0.02, dist = "normal")
+calm  <- panic_copula(x, n = 50000, panic_cor = 0.00, panic_prob = 0.00, dist = "normal")
+```
+
+The `panic_cor` argument defines the average correlation when the panic is triggered, `panic_cor` the average correlation for those events and `dist` allows the user to choose between the normal or the student-t distribution.
+
+For simplicity, assume an equal-weight strategy:
+
+```{r}
+# Equal-Weight Portfolio Under the Calm Market
+pnl_panic <- tibble::tibble(
+  pnl_panic = as.matrix(panic$simulation) %*% rep(0.25, 4)
+)
+
+# Equal-Weight Portgolio Under the Panic Market
+pnl_calm <- tibble::tibble(
+  pnl_calm = as.matrix(calm$simulation) %*% rep(0.25, 4)
+)
+```
+
+The P&L can be seen with `plot_panic_distribution()`:
+
+```{r, fig.align='center', fig.height=4, fig.width=7}
+# PnL under the Panic Regime
+plot_panic_distribution(pnl_panic, panic$p, breaks = 200)
+```
+
+The marginal distribution shows an agglomeration from probability mass around `-2%`, which is a direct consequence of the panic being instated. 
+
+The impact of a panic in the portfolio main statistics can be seen with help of `ggplot2`:
+
+```{r, fig.align='center', fig.height=4, fig.width=7}
+stats_panic <- empirical_stats(pnl_panic)
+stats_calm  <- empirical_stats(pnl_calm)
+
+bind_rows(stats_panic, stats_calm) |> 
+  ggplot2::ggplot(ggplot2::aes(x = stat, y = value, fill = name)) + 
+  ggplot2::geom_col(position = "dodge") +
+  ggplot2::facet_wrap(~ stat, scales = "free") + 
+  ggplot2::labs(x = NULL, y = NULL, fill = "regime")
+```
+
+The mean and the volatility doesn't change, but the skewness, kurtosis, VaR and CVaR increases for markets that operate under mixture regimes.
