@@ -14,10 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-As in [_A New Breed for Copulas for Risk and Portfolio Management_](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702), the 
-CMA package offers tools to model events of "panic". 
+As in [*A New Breed for Copulas for Risk and Portfolio Management*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702), the CMA package offers tools to model events of "panic" (when the correlation among assets increases dramatically in downturns).
 
-The `EuStockMarkets` dataset is used for this vignette.
+To implement the techniques in this vignette, the `EuStockMarkets` dataset is used.
 
 ```{r setup}
 library(cma)
@@ -29,16 +28,22 @@ colnames(x) <- colnames(EuStockMarkets)
 head(x)
 ```
 
-With `panic_copula()` it's possible to build a mixture of calm vs. panic environments. The "calm" market happens most of the time, while a "panic" event is triggered endogenously for a brief period (say 2% of the sample). 
+With `panic_copula()` it's possible to build a mixture of calm vs. panic environments. The "calm" market happens most of the time, while the "panic" event is triggered endogenously for a brief period - say 2% of the sample - after returns hit a certain quantile.
+
+Because these events tends to push returns downward, `panic_copula()` uses entropy-pooling to rescale the series around zero, via minimum relative entropy.
 
 ```{r}
+# For the details on how the market is modeled, please, see the paper: 
+# "A New Breed for Copulas for Risk and Portfolio Management"
 panic <- panic_copula(x, n = 50000, panic_cor = 0.97, panic_prob = 0.02, dist = "normal")
 calm  <- panic_copula(x, n = 50000, panic_cor = 0.00, panic_prob = 0.00, dist = "normal")
 ```
 
-The `panic_cor` argument defines the average correlation when the panic is triggered, `panic_cor` the average correlation for those events and `dist` allows the user to choose between the normal or the student-t distribution.
+We simulate `50.000` scenarios that matches the normal distribution exactly. In one scenario we assume there is a `2%` probability of panic, in which *all* the correlations go to `0.97`.
 
-For simplicity, assume an equal-weight strategy:
+We also model a "calm" scenario assuming that history will repeat itself.
+
+For simplicity, assume an equal-weight strategy for both simulations:
 
 ```{r}
 # Equal-Weight Portfolio Under the Calm Market
@@ -59,7 +64,7 @@ The P&L can be seen with `plot_panic_distribution()`:
 plot_panic_distribution(pnl_panic, panic$p, breaks = 200)
 ```
 
-The marginal distribution shows an agglomeration from probability mass around `-2%`, which is a direct consequence of the panic being instated. 
+The marginal distribution shows an agglomeration from probability mass around `-2%`, which is a direct consequence of the panic being instated.
 
 The impact of a panic in the portfolio main statistics can be seen with help of `ggplot2`:
 
@@ -74,4 +79,6 @@ bind_rows(stats_panic, stats_calm) |>
   ggplot2::labs(x = NULL, y = NULL, fill = "regime")
 ```
 
-The mean and the volatility doesn't change, but the skewness, kurtosis, VaR and CVaR increases for markets that operate under mixture regimes.
+While the location and dispersion doesn't change, the other metrics increases for markets that operate under binary regimes.
+
+`panic_copula()` allow the user to price this impact: in our example, a 2% probability of panic increases the VaR and CVaR by 10%.
