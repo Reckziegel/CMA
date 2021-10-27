@@ -29,7 +29,7 @@ CMA can quickly decompose any multivariate distribution between unique (*margina
 
 # Vignettes
 
-- Panic Copulas:
+- Panic Copulas: [here](https://reckziegel.github.io/CMA/articles/panic_copula.html)
 
 - "What if" Analysis: [here](https://reckziegel.github.io/CMA/articles/what_if_analysis.html)
 

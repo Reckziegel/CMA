@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 ```{r setup}
 library(cma)
 library(dplyr, warn.conflicts = FALSE)
@@ -25,26 +24,26 @@ colnames(x) <- colnames(EuStockMarkets)
 head(x)
 ```
 
-Assume there is a portfolio of stocks that is equally weighted on the 4 exchanges that appears in object `x`. 
+Assume there is a portfolio of stocks that is equally weighted on the indexes that appears in object `x`.
 
 ```{r}
 # weights
 w <- rep(0.25, 4)
 
-base_case <- tibble::tibble(
+pnl <- tibble::tibble(
   base_pnl = as.double(x %*% w)
 )
 ```
 
-The main statistics of this P&L can be seen with `empirical_stats()`: 
+The main statistics of the P&L can be seen with `empirical_stats()`:
 
 ```{r}
-empirical_stats(base_case)
+empirical_stats(pnl)
 ```
 
-The big question here is: __how would the P&L statistics change in response to a shift in regime that throws a massive sell-off?__
+The big question here is: **how would the P&L statistics change in response to a massive sell-off?**
 
-To address this question we follow [*A New Breed for Copulas for Risk and Portfolio Management*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702) and model the market as a mixture of "calm" vs. "panic" distributions. For details on the full specification of this market, please, see the mentioned paper.
+To address this question we follow [*A New Breed for Copulas for Risk and Portfolio Management*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702) and model the market as a mixture of "calm" vs. "panic" distributions. For details on the full specification of this market, please, see the reference above.
 
 ```{r}
 # For the details on how the market is modeled, please, see the paper: 
@@ -53,9 +52,9 @@ panic <- panic_copula(x, n = 50000, panic_cor = 0.97, panic_prob = 0.02, dist = 
 calm  <- panic_copula(x, n = 50000, panic_cor = 0.00, panic_prob = 0.00, dist = "normal")
 ```
 
-We simulate `50.000` scenarios that matches the normal distribution _exactly_, with the sample counterparts of $\mu$ and $\sigma$. 
+We simulate `50.000` scenarios that matches the normal distribution *exactly*, with the sample counterparts of $\mu$ and $\sigma$.
 
-In the first scenario we assume there is a `2%` probability of panic, in which *all* the cross-correlations go to `0.97`. We also model a "calm" scenario from history, with no further structure.
+In the first scenario we assume there is a `2%` probability of panic, in which *all* the cross-correlations are equal to `0.97`. We also model a "calm" scenario without changing the historical correlation structure.
 
 For consistency, we continue with an equal-weight strategy for both simulations:
 
@@ -78,9 +77,9 @@ The "panic" P&L can be seen with `plot_panic_distribution()`:
 plot_panic_distribution(pnl_panic, panic$p, breaks = 200)
 ```
 
-The marginal distribution shows a hump shape format around `-2%`, which is a direct consequence of the panic.
+The new marginal distribution shows a hump shape format around `-2%`, which is a direct consequence of the panic. Nevertheless, the location and dispersion still matches the sample counterparts. *The panic is hidden*!
 
-The full picture - with the similarities and differences - can be seen with help of `ggplot2`:
+The full picture - with the similarities and differences - among these markets can be seen with help of `ggplot2`:
 
 ```{r, fig.align='center', fig.height=4, fig.width=7}
 stats_panic <- empirical_stats(pnl_panic)
@@ -90,9 +89,8 @@ bind_rows(stats_panic, stats_calm) |>
   ggplot2::ggplot(ggplot2::aes(x = stat, y = value, fill = name)) + 
   ggplot2::geom_col(position = "dodge") +
   ggplot2::facet_wrap(~ stat, scales = "free") + 
-  ggplot2::labs(x = NULL, y = NULL, fill = "regime")
+  ggplot2::labs(x = NULL, y = NULL, fill = "regime") + 
+  ggplot2::scale_fill_viridis_d()
 ```
 
-While the location and dispersion doesn't change, all the other metrics are transformed for markets that operate under multiple regimes.
-
-Manipulating the objects `stats_panic` and `stats_calm` we can finally answer the question imposed above: a 2% probability of panic increases the kurtosis by 6% and VaR and CVaR by 10%.  
+While the location and dispersion doesn't change, all the other metrics are twisted for markets that operate under multiple regimes. The objects `stats_panic` and `stats_calm` imply that a 2% probability of panic increases the kurtosis by 6% and VaR and CVaR by 10%.

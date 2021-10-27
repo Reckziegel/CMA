@@ -26,6 +26,7 @@ add a high level of flexibility for estimation and simulation purposes.
 # Vignettes
 
 -   Panic Copulas:
+    [here](https://reckziegel.github.io/CMA/articles/panic_copula.html)
 
 -   “What if” Analysis:
     [here](https://reckziegel.github.io/CMA/articles/what_if_analysis.html)
