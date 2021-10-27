@@ -22,7 +22,6 @@ Imports:
     pillar (>= 1.6.1),
     pracma (>= 2.3.3),
     purrr (>= 0.3.4),
-    QZ (>= 0.2-1),
     rlang (>= 0.4.11),
     scales (>= 1.1.1),
     tidyr (>= 1.1.3),
@@ -30,7 +29,8 @@ Imports:
     timetk (>= 2.6.1),
     vctrs (>= 0.3.8),
     xts (>= 0.12.1),
-    ffp (>= 0.1.0)
+    ffp (>= 0.1.0),
+    QZ (>= 0.2-1)
 Suggests: 
     knitr,
     covr,

@@ -14,9 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-As in [*A New Breed for Copulas for Risk and Portfolio Management*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702), the CMA package offers tools to model events of "panic" (when the correlation among assets increases dramatically in downturns).
-
-To implement the techniques in this vignette, the `EuStockMarkets` dataset is used.
 
 ```{r setup}
 library(cma)
@@ -28,9 +25,26 @@ colnames(x) <- colnames(EuStockMarkets)
 head(x)
 ```
 
-With `panic_copula()` it's possible to build a mixture of calm vs. panic environments. The "calm" market happens most of the time, while the "panic" event is triggered endogenously for a brief period - say 2% of the sample - after returns hit a certain quantile.
+Assume there is a portfolio of stocks that is equally weighted on the 4 exchanges that appears in object `x`. 
 
-Because these events tends to push returns downward, `panic_copula()` uses entropy-pooling to rescale the series around zero, via minimum relative entropy.
+```{r}
+# weights
+w <- rep(0.25, 4)
+
+base_case <- tibble::tibble(
+  base_pnl = as.double(x %*% w)
+)
+```
+
+The main statistics of this P&L can be seen with `empirical_stats()`: 
+
+```{r}
+empirical_stats(base_case)
+```
+
+The big question here is: __how would the P&L statistics change in response to a shift in regime that throws a massive sell-off?__
+
+To address this question we follow [*A New Breed for Copulas for Risk and Portfolio Management*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702) and model the market as a mixture of "calm" vs. "panic" distributions. For details on the full specification of this market, please, see the mentioned paper.
 
 ```{r}
 # For the details on how the market is modeled, please, see the paper: 
@@ -39,34 +53,34 @@ panic <- panic_copula(x, n = 50000, panic_cor = 0.97, panic_prob = 0.02, dist = 
 calm  <- panic_copula(x, n = 50000, panic_cor = 0.00, panic_prob = 0.00, dist = "normal")
 ```
 
-We simulate `50.000` scenarios that matches the normal distribution exactly. In one scenario we assume there is a `2%` probability of panic, in which *all* the correlations go to `0.97`.
+We simulate `50.000` scenarios that matches the normal distribution _exactly_, with the sample counterparts of $\mu$ and $\sigma$. 
 
-We also model a "calm" scenario assuming that history will repeat itself.
+In the first scenario we assume there is a `2%` probability of panic, in which *all* the cross-correlations go to `0.97`. We also model a "calm" scenario from history, with no further structure.
 
-For simplicity, assume an equal-weight strategy for both simulations:
+For consistency, we continue with an equal-weight strategy for both simulations:
 
 ```{r}
-# Equal-Weight Portfolio Under the Calm Market
+# Equal-Weight Portfolio Under the Panic Market
 pnl_panic <- tibble::tibble(
-  pnl_panic = as.matrix(panic$simulation) %*% rep(0.25, 4)
+  pnl_panic = as.matrix(panic$simulation) %*% w
 )
 
-# Equal-Weight Portgolio Under the Panic Market
+# Equal-Weight Portfolio Under the Calm Market
 pnl_calm <- tibble::tibble(
-  pnl_calm = as.matrix(calm$simulation) %*% rep(0.25, 4)
+  pnl_calm = as.matrix(calm$simulation) %*% w
 )
 ```
 
-The P&L can be seen with `plot_panic_distribution()`:
+The "panic" P&L can be seen with `plot_panic_distribution()`:
 
 ```{r, fig.align='center', fig.height=4, fig.width=7}
 # PnL under the Panic Regime
 plot_panic_distribution(pnl_panic, panic$p, breaks = 200)
 ```
 
-The marginal distribution shows an agglomeration from probability mass around `-2%`, which is a direct consequence of the panic being instated.
+The marginal distribution shows a hump shape format around `-2%`, which is a direct consequence of the panic.
 
-The impact of a panic in the portfolio main statistics can be seen with help of `ggplot2`:
+The full picture - with the similarities and differences - can be seen with help of `ggplot2`:
 
 ```{r, fig.align='center', fig.height=4, fig.width=7}
 stats_panic <- empirical_stats(pnl_panic)
@@ -79,6 +93,6 @@ bind_rows(stats_panic, stats_calm) |>
   ggplot2::labs(x = NULL, y = NULL, fill = "regime")
 ```
 
-While the location and dispersion doesn't change, the other metrics increases for markets that operate under binary regimes.
+While the location and dispersion doesn't change, all the other metrics are transformed for markets that operate under multiple regimes.
 
-`panic_copula()` allow the user to price this impact: in our example, a 2% probability of panic increases the VaR and CVaR by 10%.
+Manipulating the objects `stats_panic` and `stats_calm` we can finally answer the question imposed above: a 2% probability of panic increases the kurtosis by 6% and VaR and CVaR by 10%.  
