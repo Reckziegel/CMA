@@ -92,8 +92,6 @@
 
     
     
-<p>As in <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702"><em>A New Breed for Copulas for Risk and Portfolio Management</em></a>, the CMA package offers tools to model events of “panic” (when the correlation among assets increases dramatically in downturns).</p>
-<p>To implement the techniques in this vignette, the <code>EuStockMarkets</code> dataset is used.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cma</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -109,34 +107,54 @@
 <span class="co">#&gt; [4,] -0.001778217  0.001483372  0.008743353  0.005771847</span>
 <span class="co">#&gt; [5,] -0.004676712 -0.008933417 -0.005120160 -0.007230164</span>
 <span class="co">#&gt; [6,]  0.012427042  0.006737244  0.011714353  0.008517217</span></code></pre></div>
-<p>With <code><a href="../reference/panic_copula.html">panic_copula()</a></code> it’s possible to build a mixture of calm vs. panic environments. The “calm” market happens most of the time, while the “panic” event is triggered endogenously for a brief period - say 2% of the sample - after returns hit a certain quantile.</p>
-<p>Because these events tends to push returns downward, <code><a href="../reference/panic_copula.html">panic_copula()</a></code> uses entropy-pooling to rescale the series around zero, via minimum relative entropy.</p>
+<p>Assume there is a portfolio of stocks that is equally weighted on the 4 exchanges that appears in object <code>x</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># weights</span>
+<span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span>
+
+<span class="va">base_case</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+  base_pnl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%*%</span> <span class="va">w</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>The main statistics of this P&amp;L can be seen with <code><a href="../reference/empirical_stats.html">empirical_stats()</a></code>:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/empirical_stats.html">empirical_stats</a></span><span class="op">(</span><span class="va">base_case</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 6 × 3</span>
+<span class="co">#&gt;   stat  name         value</span>
+<span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;        &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Mu    base_pnl  0.000585</span>
+<span class="co">#&gt; 2 Std   base_pnl  0.00832 </span>
+<span class="co">#&gt; 3 Skew  base_pnl -0.583   </span>
+<span class="co">#&gt; 4 Kurt  base_pnl  7.83    </span>
+<span class="co">#&gt; 5 VaR   base_pnl  0.0223  </span>
+<span class="co">#&gt; 6 CVaR  base_pnl  0.0302</span></code></pre></div>
+<p>The big question here is: <strong>how would the P&amp;L statistics change in response to a shift in regime that throws a massive sell-off?</strong></p>
+<p>To address this question we follow <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702"><em>A New Breed for Copulas for Risk and Portfolio Management</em></a> and model the market as a mixture of “calm” vs. “panic” distributions. For details on the full specification of this market, please, see the mentioned paper.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For the details on how the market is modeled, please, see the paper: </span>
 <span class="co"># "A New Breed for Copulas for Risk and Portfolio Management"</span>
 <span class="va">panic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panic_copula.html">panic_copula</a></span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">50000</span>, panic_cor <span class="op">=</span> <span class="fl">0.97</span>, panic_prob <span class="op">=</span> <span class="fl">0.02</span>, dist <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span>
 <span class="va">calm</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panic_copula.html">panic_copula</a></span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">50000</span>, panic_cor <span class="op">=</span> <span class="fl">0.00</span>, panic_prob <span class="op">=</span> <span class="fl">0.00</span>, dist <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span></code></pre></div>
-<p>We simulate <code>50.000</code> scenarios that matches the normal distribution exactly. In one scenario we assume there is a <code>2%</code> probability of panic, in which <em>all</em> the correlations go to <code>0.97</code>.</p>
-<p>We also model a “calm” scenario assuming that history will repeat itself.</p>
-<p>For simplicity, assume an equal-weight strategy for both simulations:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Equal-Weight Portfolio Under the Calm Market</span>
+<p>We simulate <code>50.000</code> scenarios that matches the normal distribution <em>exactly</em>, with the sample counterparts of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>.</p>
+<p>In the first scenario we assume there is a <code>2%</code> probability of panic, in which <em>all</em> the cross-correlations go to <code>0.97</code>. We also model a “calm” scenario from history, with no further structure.</p>
+<p>For consistency, we continue with an equal-weight strategy for both simulations:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Equal-Weight Portfolio Under the Panic Market</span>
 <span class="va">pnl_panic</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  pnl_panic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">panic</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span>
+  pnl_panic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">panic</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">w</span>
 <span class="op">)</span>
 
-<span class="co"># Equal-Weight Portgolio Under the Panic Market</span>
+<span class="co"># Equal-Weight Portfolio Under the Calm Market</span>
 <span class="va">pnl_calm</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  pnl_calm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">calm</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op">%*%</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span>
+  pnl_calm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">calm</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">w</span>
 <span class="op">)</span></code></pre></div>
-<p>The P&amp;L can be seen with <code><a href="../reference/plot_panic_distribution.html">plot_panic_distribution()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>The “panic” P&amp;L can be seen with <code><a href="../reference/plot_panic_distribution.html">plot_panic_distribution()</a></code>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># PnL under the Panic Regime</span>
 <span class="fu"><a href="../reference/plot_panic_distribution.html">plot_panic_distribution</a></span><span class="op">(</span><span class="va">pnl_panic</span>, <span class="va">panic</span><span class="op">$</span><span class="va">p</span>, breaks <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></code></pre></div>
-<p><img src="panic_copula_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>The marginal distribution shows an agglomeration from probability mass around <code>-2%</code>, which is a direct consequence of the panic being instated.</p>
-<p>The impact of a panic in the portfolio main statistics can be seen with help of <code>ggplot2</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p><img src="panic_copula_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>The marginal distribution shows a hump shape format around <code>-2%</code>, which is a direct consequence of the panic.</p>
+<p>The full picture - with the similarities and differences - can be seen with help of <code>ggplot2</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stats_panic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/empirical_stats.html">empirical_stats</a></span><span class="op">(</span><span class="va">pnl_panic</span><span class="op">)</span>
 <span class="va">stats_calm</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/empirical_stats.html">empirical_stats</a></span><span class="op">(</span><span class="va">pnl_calm</span><span class="op">)</span>
 
@@ -145,9 +163,9 @@
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">stat</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, fill <span class="op">=</span> <span class="st">"regime"</span><span class="op">)</span></code></pre></div>
-<p><img src="panic_copula_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>While the location and dispersion doesn’t change, the other metrics increases for markets that operate under binary regimes.</p>
-<p><code><a href="../reference/panic_copula.html">panic_copula()</a></code> allow the user to price this impact: in our example, a 2% probability of panic increases the VaR and CVaR by 10%.</p>
+<p><img src="panic_copula_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>While the location and dispersion doesn’t change, all the other metrics are transformed for markets that operate under multiple regimes.</p>
+<p>Manipulating the objects <code>stats_panic</code> and <code>stats_calm</code> we can finally answer the question imposed above: a 2% probability of panic increases the kurtosis by 6% and VaR and CVaR by 10%.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
