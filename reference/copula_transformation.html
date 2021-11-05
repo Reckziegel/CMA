@@ -163,26 +163,27 @@ with the first two moments of a timeseries.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>x</span>       <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-
-<span class='va'>sep</span>     <span class='op'>&lt;-</span> <span class='fu'><a href='cma_separation.html'>cma_separation</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-<span class='va'>clayton</span> <span class='op'>&lt;-</span> <span class='fu'><a href='fit_copula_clayton.html'>fit_copula_clayton</a></span><span class='op'>(</span><span class='va'>sep</span><span class='op'>)</span>
-<span class='va'>gen</span>     <span class='op'>&lt;-</span> <span class='fu'><a href='generate_copulas.html'>generate_copulas</a></span><span class='op'>(</span><span class='va'>clayton</span>, <span class='fl'>10</span><span class='op'>)</span>
-
-<span class='fu'>copula_transformation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>gen</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 10 × 4</span>
-#&gt;      ...1   ...2   ...3   ...4
-#&gt;     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> 0.909  0.909  0.545  0.545 
-#&gt; <span style='color: #BCBCBC;'> 2</span> 0.364  0.818  0.727  0.818 
-#&gt; <span style='color: #BCBCBC;'> 3</span> 0.182  0.727  0.182  0.364 
-#&gt; <span style='color: #BCBCBC;'> 4</span> 0.636  0.273  0.818  0.909 
-#&gt; <span style='color: #BCBCBC;'> 5</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span>
-#&gt; <span style='color: #BCBCBC;'> 6</span> 0.545  0.455  0.455  0.455 
-#&gt; <span style='color: #BCBCBC;'> 7</span> 0.818  0.636  0.909  0.636 
-#&gt; <span style='color: #BCBCBC;'> 8</span> 0.455  0.364  0.636  0.182 
-#&gt; <span style='color: #BCBCBC;'> 9</span> 0.273  0.182  0.364  0.273 
-#&gt; <span style='color: #BCBCBC;'>10</span> 0.727  0.545  0.273  0.727 </div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>x</span>       <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>sep</span>     <span class='op'>&lt;-</span> <span class='fu'><a href='cma_separation.html'>cma_separation</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>clayton</span> <span class='op'>&lt;-</span> <span class='fu'><a href='fit_copula_clayton.html'>fit_copula_clayton</a></span><span class='op'>(</span><span class='va'>sep</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>gen</span>     <span class='op'>&lt;-</span> <span class='fu'><a href='generate_copulas.html'>generate_copulas</a></span><span class='op'>(</span><span class='va'>clayton</span>, <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>copula_transformation</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>gen</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 10 × 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ...1   ...2   ...3   ...4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 0.909  0.909  0.545  0.545 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 0.364  0.818  0.727  0.818 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 0.182  0.727  0.182  0.364 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 0.636  0.273  0.818  0.909 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span> 0.090<span style='text-decoration: underline;'>9</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 0.545  0.455  0.455  0.455 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 0.818  0.636  0.909  0.636 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 0.455  0.364  0.636  0.182 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 0.273  0.182  0.364  0.273 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 0.727  0.545  0.273  0.727 </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

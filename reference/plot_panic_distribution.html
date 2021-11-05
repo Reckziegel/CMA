@@ -158,12 +158,13 @@ plot the marginal panic distribution.</p></td>
     <p>A <code>ggplot2</code> object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='panic_copula.html'>panic_copula</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>10000</span>, panic_prob <span class='op'>=</span> <span class='fl'>0.02</span><span class='op'>)</span>
-<span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>pnl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>simulation</span><span class='op'>)</span> <span class='op'>%*%</span> <span class='va'>w</span>
-<span class='fu'>plot_panic_distribution</span><span class='op'>(</span>pnl <span class='op'>=</span> <span class='va'>pnl</span>, p <span class='op'>=</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>p</span><span class='op'>)</span>
-</div><div class='img'><img src='plot_panic_distribution-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='panic_copula.html'>panic_copula</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>10000</span>, panic_prob <span class='op'>=</span> <span class='fl'>0.02</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>pnl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>simulation</span><span class='op'>)</span> <span class='op'><a href='https://rdrr.io/r/base/matmult.html'>%*%</a></span> <span class='va'>w</span></span>
+<span class='r-in'><span class='fu'>plot_panic_distribution</span><span class='op'>(</span>pnl <span class='op'>=</span> <span class='va'>pnl</span>, p <span class='op'>=</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>p</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='plot_panic_distribution-1.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

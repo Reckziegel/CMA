@@ -113,7 +113,7 @@
 <span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">4</span><span class="op">)</span>
 
 <span class="va">pnl</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  base_pnl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%*%</span> <span class="va">w</span><span class="op">)</span>
+  base_pnl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">w</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>The main statistics of the P&amp;L can be seen with <code><a href="../reference/empirical_stats.html">empirical_stats()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -140,12 +140,12 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Equal-Weight Portfolio Under the Panic Market</span>
 <span class="va">pnl_panic</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  pnl_panic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">panic</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">w</span>
+  pnl_panic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">panic</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">w</span>
 <span class="op">)</span>
 
 <span class="co"># Equal-Weight Portfolio Under the Calm Market</span>
 <span class="va">pnl_calm</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  pnl_calm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">calm</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op">%*%</span> <span class="va">w</span>
+  pnl_calm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">calm</span><span class="op">$</span><span class="va">simulation</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">w</span>
 <span class="op">)</span></code></pre></div>
 <p>The “panic” P&amp;L can be seen with <code><a href="../reference/plot_panic_distribution.html">plot_panic_distribution()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">

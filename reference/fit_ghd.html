@@ -173,24 +173,26 @@ Defaults to <code>FALSE</code>.</p></td>
 <code><a href='fit_t.html'>fit_t</a></code> <code><a href='fit_normal.html'>fit_normal</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-
-<span class='co'># multivariate estimation</span>
-<span class='fu'>fit_ghd</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #00BBBB;'># Margins Estimation</span>
-#&gt; Converged:       TRUE
-#&gt; Dimension:       4
-#&gt; AIC:            -56122.36
-#&gt; Log-Likelihood:  28081.18
-#&gt; Model:           Asymmetric Generalized Hyperbolic</div><div class='input'>
-<span class='co'># univariate estimation</span>
-<span class='fu'>fit_ghd</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>3</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #00BBBB;'># Margins Estimation</span>
-#&gt; Converged:       TRUE
-#&gt; Dimension:       1
-#&gt; AIC:            -11563.82
-#&gt; Log-Likelihood:  5786.912
-#&gt; Model:           Asymmetric Generalized Hyperbolic</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>EuStockMarkets</span><span class='op'>)</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># multivariate estimation</span></span>
+<span class='r-in'><span class='fu'>fit_ghd</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'># Margins Estimation</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Converged:       TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dimension:       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AIC:            -56122.36</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Log-Likelihood:  28081.18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Model:           Asymmetric Generalized Hyperbolic</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># univariate estimation</span></span>
+<span class='r-in'><span class='fu'>fit_ghd</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span> , <span class='fl'>3</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'># Margins Estimation</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Converged:       TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dimension:       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AIC:            -11563.82</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Log-Likelihood:  5786.912</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Model:           Asymmetric Generalized Hyperbolic</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
