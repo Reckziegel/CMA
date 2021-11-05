@@ -31,6 +31,15 @@ add a high level of flexibility for estimation and simulation purposes.
 -   “What if” Analysis:
     [here](https://reckziegel.github.io/CMA/articles/what_if_analysis.html)
 
+# Installation
+
+Install the development version of `CMA` from github with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("Reckziegel/CMA")
+```
+
 # References
 
 -   Meucci, Attilio, A New Breed of Copulas for Risk and Portfolio
