@@ -41,7 +41,7 @@ The main statistics of the P&L can be seen with `empirical_stats()`:
 empirical_stats(pnl)
 ```
 
-The big question here is: **how would the P&L statistics change in response to a massive sell-off?**
+The big question here is: **how would the P&L statistics change in response to a massive *hidden* sell-off?**
 
 To address this question we follow [*A New Breed for Copulas for Risk and Portfolio Management*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702) and model the market as a mixture of "calm" vs. "panic" distributions. For details on the full specification of this market, please, see the reference above.
 
