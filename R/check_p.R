@@ -4,8 +4,6 @@
 #'
 #' @return A matrix object with 1 column.
 #'
-#' @export
-#'
 #' @examples
 #' #
 check_p <- function(p) {
