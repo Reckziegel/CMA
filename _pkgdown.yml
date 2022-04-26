@@ -63,5 +63,5 @@ reference:
       desc: Additional functions
       contents:
       - entropy_pooling
-      - fp_moments
+      - ffp_moments
 
