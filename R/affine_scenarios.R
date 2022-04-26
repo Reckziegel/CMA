@@ -18,7 +18,7 @@ affine_scenarios <- function(x, mu, sigma, p = NULL) {
     }
 
     # original moments of x
-    result_meancov_sp <- fp_moments(x, p)
+    result_meancov_sp <- ffp_moments(x, as_ffp(p))
 
     m_x <- as.matrix(as.vector(result_meancov_sp$mu)) # converts to column vector
     s2_x <- result_meancov_sp$sigma

@@ -59,7 +59,7 @@ panic_copula <- function(x, n = 10000, panic_cor = 0.99, panic_prob = 0.02, dist
     Aeq <- rbind(Aeq , t(X)) # ...constrain the first moments...
     beq <- 1
     beq <- as.matrix(rbind(beq , matrix(0, N , 1)))
-    p_  <- entropy_pooling(p, NULL, NULL, Aeq, beq)
+    p_  <- entropy_pooling(p, NULL, NULL, Aeq, beq, solver = "nlminb")
 
     sep_step <- cma_separation(X, p_)
 
@@ -93,8 +93,7 @@ panic_copula <- function(x, n = 10000, panic_cor = 0.99, panic_prob = 0.02, dist
     if (has_colnames(x)) {
         colnames(Y) <- colnames(x)
     }
-    colnames(p_) <- "p"
 
-    new_panic_copula(list(simulation = Y, p = as.double(p_)))
+    new_panic_copula(list(simulation = Y, p = p_))
 
 }

@@ -17,7 +17,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 The Copula Marginal Algorithm (CMA) is a simple two step recipe to
 manipulate multivariate distributions under [Fully Flexible
-Probabilities](https://github.com/Reckziegel/FFP).
+Probabilities](https://reckziegel.github.io/FFP/).
 
 CMA can quickly decompose any multivariate distribution between unique
 (*marginals*) and their shared components (*copulas*). This approach can

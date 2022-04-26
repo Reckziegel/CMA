@@ -272,6 +272,6 @@ obj_print_header.panic_copula <- function(x, ...) {
 obj_print_data.panic_copula <- function(x, ...) {
   cat("simulation: <<", crayon::silver("tbl"), NROW(x$simulation), "x", NCOL(x$simulation),">>")
   cat("\n")
-  cat("p:          <<", crayon::silver("dbl"), NROW(x$p), "x", NCOL(x$p),">>")
+  cat("p:          <<", crayon::silver("ffp"), NROW(x$p), "x", NCOL(x$p),">>")
   cat("\n")
 }

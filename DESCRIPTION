@@ -8,7 +8,8 @@ Description: Implements the Copula Marginal Algorithm (CMA) as described
     in Meucci, Attilio (2011).
 License: MIT + file LICENSE
 Depends:
-    R (>= 4.1.0)
+    R (>= 4.1.0),
+    ffp (>= 0.2.1)
 Imports: 
     assertthat (>= 0.2.1),
     copula (>= 1.0-1),
@@ -16,21 +17,20 @@ Imports:
     dplyr (>= 1.0.7),
     ggplot2 (>= 3.3.5),
     ghyp (>= 1.6.1),
-    lubridate (>= 1.7.10),
+    lubridate (>= 1.8.0),
     methods,
     NlcOptim (>= 0.6),
-    pillar (>= 1.6.1),
+    pillar (>= 1.7.0),
     pracma (>= 2.3.3),
     purrr (>= 0.3.4),
-    rlang (>= 0.4.11),
+    rlang (>= 1.0.2),
     scales (>= 1.1.1),
-    tidyr (>= 1.1.3),
-    tibble (>= 3.1.3),
-    timetk (>= 2.6.1),
-    vctrs (>= 0.3.8),
+    tidyr (>= 1.2.0),
+    tibble (>= 3.1.6),
+    timetk (>= 2.8.0),
+    vctrs (>= 0.4.0),
     xts (>= 0.12.1),
-    ffp (>= 0.1.0),
-    QZ (>= 0.2-1)
+    QZ (>= 0.2-2)
 Suggests: 
     knitr,
     covr,
