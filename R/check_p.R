@@ -23,7 +23,7 @@ check_p.NULL <- function(p) NULL
 #' @rdname check_p
 #' @export
 check_p.numeric <- function(p) {
-  p <- as.matrix(p)
+  p <- as.matrix(as.double(p))
   if (sum(p) > 1.00001 | sum(p) < 0.99998) {
     stop("Probabilities must sum 1.", call. = FALSE)
   } else if (any(p < -0.00001)) {
@@ -35,7 +35,7 @@ check_p.numeric <- function(p) {
 #' @rdname check_p
 #' @export
 check_p.ffp <- function(p) {
-  p <- as.matrix(p)
+  p <- as.matrix(as.double(p))
   if (sum(p) > 1.00001 | sum(p) < 0.99998) {
     stop("Probabilities must sum 1.", call. = FALSE)
   } else if (any(p < -0.00001)) {
