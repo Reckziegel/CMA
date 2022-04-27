@@ -18,9 +18,7 @@ This brief introduction shows how use CMA to price alternative scenarios for an 
 
 1.  Detach the copulas from the margins;
 
-2.  Pick one element to play with;
-
-    - Example: if the "Market" is normally distributed, the t-distribution could be used to see how VaR and CVaR changes;
+2.  Pick one element to play with (copula, marginals, correlations, etc);
 
 3.  Generate new scenarios;
 
@@ -60,8 +58,7 @@ In this vignette, the margins are manipulated while keeping the copula structure
 
 ## Step 2. Choose a Target Distribution
 
-Once the the "separation" is done it's necessary to choose a target distribution for the data. For simplicity, let's fit a Student-t, but it could be *any* distribution (see "Marginal Distributions" 
-on the reference page).
+Once the the "separation" is done it's necessary to choose a target distribution for the data. For simplicity, let's fit a Student-t, but it could be *any* distribution (see "Marginal Distributions" on the [reference page](https://reckziegel.github.io/CMA/reference/index.html)).
 
 ```{r}
 dist_t <- fit_t(step_one$marginal)
@@ -143,6 +140,6 @@ step_two |>
                   y        = "P&L")
 ```
 
-All the paths generated above are compatible with the same marginal distribution specification. The difference between the "good" portfolios and the "bad" ones is purely due by chance. 
+All the paths generated above are compatible with the same marginal distribution specification. The difference between the "good" portfolios and the "bad" ones is purely due by chance.
 
-Indeed, differentiating skill from luck is notoriously difficult. 
+Indeed, differentiating skill from luck is notoriously difficult.
