@@ -34,7 +34,7 @@ fit_copula_clayton <- function(copula, method = c("mpl", "ml", "itau", "irho", "
         new_copula(x)
 
     } else {
-        stop("`copula` must be an object of the `cma_separation` class.", call. = FALSE)
+        rlang::abort("`copula` must be an object of the `cma_separation` class.")
     }
 
 }
@@ -56,7 +56,7 @@ fit_copula_gumbel <- function(copula, method = c("mpl", "ml", "itau", "irho", "i
         new_copula(x)
 
     } else {
-        stop("`copula` must be an object of the `cma_separation` class.", call. = FALSE)
+        rlang::abort("`copula` must be an object of the `cma_separation` class.")
     }
 
 }
@@ -78,7 +78,7 @@ fit_copula_frank <- function(copula, method = c("mpl", "ml", "itau", "irho", "it
         new_copula(x)
 
     } else {
-        stop("`copula` must be an object of the `cma_separation` class.", call. = FALSE)
+        rlang::abort("`copula` must be an object of the `cma_separation` class.")
     }
 
 }
@@ -100,7 +100,7 @@ fit_copula_t <- function(copula, method = c("mpl", "ml", "itau", "irho", "itau.m
         new_copula(x)
 
     } else {
-        stop("`copula` must be an object of the `cma_separation` class.", call. = FALSE)
+        rlang::abort("`copula` must be an object of the `cma_separation` class.")
     }
 
 }
@@ -122,7 +122,7 @@ fit_copula_normal <- function(copula, method = c("mpl", "ml", "itau", "irho", "i
         new_copula(x)
 
     } else {
-        stop("`copula` must be an object of the `cma_separation` class.", call. = FALSE)
+        rlang::abort("`copula` must be an object of the `cma_separation` class.")
     }
 
 }
@@ -144,7 +144,7 @@ fit_copula_joe <- function(copula, method = c("mpl", "ml", "itau", "irho", "itau
         new_copula(x)
 
     } else {
-        stop("`copula` must be an object of the `cma_separation` class.", call. = FALSE)
+        rlang::abort("`copula` must be an object of the `cma_separation` class.")
     }
 
 }

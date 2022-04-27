@@ -24,7 +24,7 @@ colnames(x) <- colnames(EuStockMarkets)
 head(x)
 ```
 
-Assume there is a portfolio of stocks that is equally weighted on the indexes that appears in object `x`.
+Assume there is a equally-weighted portfolio of stocks of the indexes that appears in object `x`.
 
 ```{r}
 # weights
@@ -41,9 +41,9 @@ The main statistics of the P&L can be seen with `empirical_stats()`:
 empirical_stats(pnl)
 ```
 
-The big question here is: **how would the P&L statistics change in response to a massive *hidden* sell-off?**
+The big question here is: **how would the P&L statistics change in response to a massive *sudden* sell-off?**
 
-To address this question we follow [*A New Breed for Copulas for Risk and Portfolio Management*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702) and model the market as a mixture of "calm" vs. "panic" distributions. For details on the full specification of this market, please, see the reference above.
+To address this question we follow [*A New Breed for Copulas for Risk and Portfolio Management*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1752702) and model the market as a mixture of "calm" vs. "panic" distributions. For details on the full specification of this market, please, see the reference attached.
 
 ```{r}
 # For the details on how the market is modeled, please, see the paper: 
@@ -54,7 +54,17 @@ calm  <- panic_copula(x, n = 50000, panic_cor = 0.00, panic_prob = 0.00, dist = 
 
 We simulate `50.000` scenarios that matches the normal distribution *exactly*, with the sample counterparts of $\mu$ and $\sigma$.
 
-In the first scenario we assume there is a `2%` probability of panic, in which *all* the cross-correlations are equal to `0.97`. We also model a "calm" scenario without changing the historical correlation structure.
+In the first scenario we assume there is a `2%` probability of panic, in which *all* the cross-correlations are equal to `0.97`:
+
+```{r, echo=FALSE}
+co <- matrix(0.97, 4, 4)
+rownames(co) <- colnames(EuStockMarkets)
+colnames(co) <- colnames(EuStockMarkets)
+diag(co) <- 1
+co
+```
+
+We also model a "calm" scenario without changing the historical correlation structure.
 
 For consistency, we continue with an equal-weight strategy for both simulations:
 
@@ -77,9 +87,9 @@ The "panic" P&L can be seen with `plot_panic_distribution()`:
 plot_panic_distribution(pnl_panic, panic$p, breaks = 200)
 ```
 
-The new marginal distribution shows a hump shape format around `-2%`, which is a direct consequence of the panic. Nevertheless, the location and dispersion still matches the sample counterparts. *The panic is hidden*!
+The new marginal distribution shows a hump shape format around `-2%`, which is a direct consequence of the panic we just modeled. Nevertheless, the location and dispersion parameters still matches the sample counterparts. *The panic is hidden*!
 
-The full picture - with the similarities and differences - among these markets can be seen with help of `ggplot2`:
+The full picture - with the similarities and differences - among these markets regiems can be seen with help of `ggplot2`:
 
 ```{r, fig.align='center', fig.height=4, fig.width=7}
 stats_panic <- empirical_stats(pnl_panic)
@@ -93,4 +103,4 @@ bind_rows(stats_panic, stats_calm) |>
   ggplot2::scale_fill_viridis_d()
 ```
 
-While the location and dispersion doesn't change, all the other metrics are twisted for markets that operate under multiple regimes. The objects `stats_panic` and `stats_calm` imply that a 2% probability of panic increases the kurtosis by 6% and VaR and CVaR by 10%.
+While the location and dispersion doesn't change, all the other metrics are twisted for markets that operate under dual regimes. The objects `stats_panic` and `stats_calm` imply that a 2% probability of panic increases the kurtosis by 6% and VaR and CVaR by 10%.
