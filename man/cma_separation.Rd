@@ -28,8 +28,8 @@ cma_separation(x, p = NULL)
 1 over N is used.}
 }
 \value{
-An S3 list of the \code{cma} class that contains two elements:
-\code{marginal} and \code{copula}.
+An S3 list of the \code{cma} class that contains three elements:
+\code{marginal}, \code{cdf} and \code{copula}.
 }
 \description{
 First CMA step: decomposes the the pure "individual" features in the marginals

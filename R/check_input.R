@@ -14,7 +14,7 @@ check_input <- function(x) {
 #' @rdname check_input
 #' @export
 check_input.default <- function(x) {
-  stop("CMA doesn't support the `", class(x), "` yet.", call. = FALSE)
+  rlang::abort("CMA doesn't support the `", class(x), "` yet.")
 }
 
 #' @rdname check_input

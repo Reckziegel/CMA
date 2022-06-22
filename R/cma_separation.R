@@ -9,8 +9,8 @@
 #' @param p A probability vector. If \code{NULL} (the default) the standard
 #' 1 over N is used.
 #'
-#' @return An S3 list of the \code{cma} class that contains two elements:
-#' \code{marginal} and \code{copula}.
+#' @return An S3 list of the \code{cma} class that contains three elements:
+#' \code{marginal}, \code{cdf} and \code{copula}.
 #'
 #' @export
 #'
@@ -33,7 +33,7 @@ cma_separation <- function(x, p = NULL) {
 #' @rdname cma_separation
 #' @export
 cma_separation.default <- function(x, p = NULL) {
-  stop("CMA doesn't support the `", class(x), "` class yet.", call. = FALSE)
+  rlang::abort("CMA doesn't support the `", class(x), "` class yet.")
 }
 
 #' @rdname cma_separation
@@ -99,6 +99,4 @@ cma_separation.tbl <- function(x, p = NULL) {
   new_cma_separation(x, cma_separate(x = x, p = p))
 
 }
-
-
 

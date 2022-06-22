@@ -7,7 +7,7 @@
 empirical_stats(x, p = NULL, level = 0.01)
 }
 \arguments{
-\item{x}{A time series defining the scenario-probability distribution.}
+\item{x}{A (non-tidy) scenario-probability distribution.}
 
 \item{p}{A probability vector. If \code{NULL} (the default) the standard
 1 over N is used.}

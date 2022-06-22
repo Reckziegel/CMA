@@ -21,7 +21,7 @@ fit_ghd(x, symmetric = FALSE)
 \arguments{
 \item{x}{A tabular (non-tidy) data structure.}
 
-\item{symmetric}{A \code{logical} flag. Should the estimated distribution be symmetric?
+\item{symmetric}{A \code{logical} flag. Should the fitted distribution be symmetric?
 Defaults to \code{FALSE}.}
 }
 \value{

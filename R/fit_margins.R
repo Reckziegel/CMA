@@ -7,7 +7,7 @@
 #' \code{\link[ghyp]{fit.ghypmv}}.
 #'
 #' @param x A tabular (non-tidy) data structure.
-#' @param symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
+#' @param symmetric A \code{logical} flag. Should the fitted distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
@@ -32,7 +32,7 @@ fit_ghd <- function(x, symmetric = FALSE) {
 #' @rdname fit_ghd
 #' @export
 fit_ghd.default <- function(x, symmetric = FALSE) {
-    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
+    rlang::abort("`x` must be a tibble, xts or a matrix.")
 }
 
 #' @rdname fit_ghd
@@ -65,19 +65,18 @@ fit_ghd_ <- function(x, symmetric = FALSE) {
 
     assertthat::assert_that(assertthat::is.flag(symmetric))
 
-    #stop("fit_generalized_hyperbolic works only in univariate data. Adjust your call.", call. = FALSE)
     if (NCOL(x) == 1) {
         x <- ghyp::fit.ghypuv(data = x, symmetric = symmetric, silent = TRUE)
     } else {
         x <- ghyp::fit.ghypmv(data = x, symmetric = symmetric, silent = TRUE)
     }
+
     new_cma_fit(x)
 
 }
 
 
 # Hyperbolic --------------------------------------------------------------
-
 
 #' Estimation of the Hyperbolic Distribution
 #'
@@ -86,7 +85,7 @@ fit_ghd_ <- function(x, symmetric = FALSE) {
 #' \code{\link[ghyp]{fit.hypmv}}
 #'
 #' @param x A tabular (non-tidy) data structure.
-#' @param symmetric A flag. Should the estimated distribution be symmetric?
+#' @param symmetric A flag. Should the fitted distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
@@ -111,12 +110,13 @@ fit_hyp <- function(x, symmetric = FALSE) {
 #' @rdname fit_hyp
 #' @export
 fit_hyp.default <- function(x, symmetric = FALSE) {
-    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
+    rlang::abort("`x` must be a tibble, xts or a matrix.")
 }
 
 #' @rdname fit_hyp
 #' @export
 fit_hyp.tbl <- function(x, symmetric = FALSE) {
+
     if (any(purrr::map_lgl(x, lubridate::is.Date))) {
         x <- x |>
             timetk::tk_xts(silent = TRUE) |>
@@ -124,6 +124,7 @@ fit_hyp.tbl <- function(x, symmetric = FALSE) {
     } else {
         x <- as.matrix(x)
     }
+
     fit_hyp_(x = x, symmetric = symmetric)
 
 }
@@ -150,6 +151,7 @@ fit_hyp_ <- function(x, symmetric = FALSE) {
     } else {
         x <- ghyp::fit.hypmv(data = x, symmetric = symmetric, silent = TRUE)
     }
+
     new_cma_fit(x)
 
 }
@@ -164,7 +166,7 @@ fit_hyp_ <- function(x, symmetric = FALSE) {
 #' and \code{\link[ghyp]{fit.NIGmv}}.
 #'
 #' @param x A tabular (non-tidy) data structure.
-#' @param symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
+#' @param symmetric A \code{logical} flag. Should the fitted distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
@@ -189,12 +191,13 @@ fit_nig <- function(x, symmetric = FALSE) {
 #' @rdname fit_nig
 #' @export
 fit_nig.default <- function(x, symmetric = FALSE) {
-    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
+    rlang::abort("`x` must be a tibble, xts or a matrix.")
 }
 
 #' @rdname fit_nig
 #' @export
 fit_nig.tbl <- function(x, symmetric = FALSE) {
+
     if (any(purrr::map_lgl(x, lubridate::is.Date))) {
         x <- x |>
             timetk::tk_xts(silent = TRUE) |>
@@ -202,7 +205,9 @@ fit_nig.tbl <- function(x, symmetric = FALSE) {
     } else {
         x <- as.matrix(x)
     }
+
     fit_nig_(x = x, symmetric = symmetric)
+
 }
 
 #' @rdname fit_nig
@@ -227,11 +232,10 @@ fit_nig_ <- function(x, symmetric = FALSE) {
     } else {
         x <- ghyp::fit.NIGmv(data = x, symmetric = symmetric, silent = TRUE)
     }
+
     new_cma_fit(x)
 
 }
-
-
 
 
 # Variance-Gamma ----------------------------------------------------------
@@ -243,7 +247,7 @@ fit_nig_ <- function(x, symmetric = FALSE) {
 #' and \code{\link[ghyp]{fit.VGmv}}.
 #'
 #' @param x A tabular (non-tidy) data structure.
-#' @param symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
+#' @param symmetric A \code{logical} flag. Should the fitted distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
@@ -268,12 +272,13 @@ fit_vg <- function(x, symmetric = FALSE) {
 #' @rdname fit_vg
 #' @export
 fit_vg.default <- function(x, symmetric = FALSE) {
-    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
+    rlang::abort("`x` must be a tibble, xts or a matrix.")
 }
 
 #' @rdname fit_vg
 #' @export
 fit_vg.tbl <- function(x, symmetric = FALSE) {
+
     if (any(purrr::map_lgl(x, lubridate::is.Date))) {
         x <- x |>
             timetk::tk_xts(silent = TRUE) |>
@@ -281,7 +286,9 @@ fit_vg.tbl <- function(x, symmetric = FALSE) {
     } else {
         x <- as.matrix(x)
     }
+
     fit_vg_(x = x, symmetric = symmetric)
+
 }
 
 #' @rdname fit_vg
@@ -306,6 +313,7 @@ fit_vg_ <- function(x, symmetric = FALSE) {
     } else {
         x <- ghyp::fit.VGmv(data = x, symmetric = symmetric, silent = TRUE)
     }
+
     new_cma_fit(x)
 
 }
@@ -320,7 +328,7 @@ fit_vg_ <- function(x, symmetric = FALSE) {
 #' and \code{\link[ghyp]{fit.tmv}}.
 #'
 #' @param x A tabular (non-tidy) data structure.
-#' @param symmetric A \code{logical} flag. Should the estimated distribution be symmetric?
+#' @param symmetric A \code{logical} flag. Should the fitted distribution be symmetric?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A \code{list} of the the class \code{cma_fit} with \code{21} components.
@@ -345,12 +353,13 @@ fit_t <- function(x, symmetric = FALSE) {
 #' @rdname fit_t
 #' @export
 fit_t.default <- function(x, symmetric = FALSE) {
-    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
+    rlang::abort("`x` must be a tibble, xts or a matrix.")
 }
 
 #' @rdname fit_t
 #' @export
 fit_t.tbl <- function(x, symmetric = FALSE) {
+
     if (any(purrr::map_lgl(x, lubridate::is.Date))) {
         x <- x |>
             timetk::tk_xts(silent = TRUE) |>
@@ -358,7 +367,9 @@ fit_t.tbl <- function(x, symmetric = FALSE) {
     } else {
         x <- as.matrix(x)
     }
+
     fit_t_(x = x, symmetric = symmetric)
+
 }
 
 #' @rdname fit_t
@@ -383,6 +394,7 @@ fit_t_ <- function(x, symmetric = FALSE) {
     } else {
         x <- ghyp::fit.tmv(data = x, symmetric = symmetric, silent = TRUE)
     }
+
     new_cma_fit(x)
 
 }
@@ -420,12 +432,13 @@ fit_normal <- function(x) {
 #' @rdname fit_normal
 #' @export
 fit_normal.default <- function(x) {
-    stop("`x` must be a tibble, xts or a matrix.", call. = FALSE)
+    rlang::abort("`x` must be a tibble, xts or a matrix.")
 }
 
 #' @rdname fit_normal
 #' @export
 fit_normal.tbl <- function(x) {
+
     if (any(purrr::map_lgl(x, lubridate::is.Date))) {
         x <- x |>
             timetk::tk_xts(silent = TRUE) |>
@@ -433,7 +446,9 @@ fit_normal.tbl <- function(x) {
     } else {
         x <- as.matrix(x)
     }
+
     fit_normal_(x = x)
+
 }
 
 #' @rdname fit_normal
@@ -456,6 +471,7 @@ fit_normal_ <- function(x) {
     } else {
         x <- ghyp::fit.gaussmv(data = x)
     }
+
     new_cma_fit(x)
 
 }

@@ -9,7 +9,7 @@ copula_transformation(x, copula)
 \arguments{
 \item{x}{A multivariate (non-tidy) dataset.}
 
-\item{copula}{A multivariate copula.}
+\item{copula}{A copula.}
 }
 \value{
 A tabular (non-tidy) \code{tibble}.
@@ -28,7 +28,7 @@ Under the hood, the copula transformation is a 4-step recipe:
     }
 }
 \examples{
-x       <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 
 sep     <- cma_separation(x)
 clayton <- fit_copula_clayton(sep)

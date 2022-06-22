@@ -3,7 +3,7 @@
 #' Computes the mean, standard deviation, skewness, kurtosis, Value-at-Risk (VaR)
 #' and Conditional Value-at-Risk CVaR) under flexible probabilities.
 #'
-#' @param x A time series defining the scenario-probability distribution.
+#' @param x A (non-tidy) scenario-probability distribution.
 #' @param p A probability vector. If \code{NULL} (the default) the standard
 #' 1 over N is used.
 #' @param level A number with the desired probability level. The default is

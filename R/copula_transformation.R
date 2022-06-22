@@ -12,13 +12,13 @@
 #'     }
 #'
 #' @param x A multivariate (non-tidy) dataset.
-#' @param copula A multivariate copula.
+#' @param copula A copula.
 #'
 #' @return A tabular (non-tidy) \code{tibble}.
 #' @export
 #'
 #' @examples
-#' x       <- matrix(diff(log(EuStockMarkets)), ncol = 4)
+#' x <- matrix(diff(log(EuStockMarkets)), ncol = 4)
 #'
 #' sep     <- cma_separation(x)
 #' clayton <- fit_copula_clayton(sep)
