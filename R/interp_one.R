@@ -26,6 +26,7 @@ interp_one <- function(x, y, xi = x) {
         y <- y[o]
     }
 
+    # FIXME does duplicated.default improves performance?
     if (any(duplicated(x))) {
         warning("There are duplicated values in 'x'; mean will be tried.")
     }

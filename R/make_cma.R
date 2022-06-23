@@ -7,7 +7,8 @@ cma_separate <- function(x, p) {
   J <- nrow(x)
   N <- ncol(x)
   l <- J / (J + 1)
-  p <- apply(cbind(p, 1 / J * 10e-9), 1, max, na.rm = TRUE)
+  # p <- apply(cbind(p, 1 / J * 10e-9), 1, max, na.rm = TRUE)
+  p[p == 0] <- 10e-9
   p <- p / sum(p)
   u <- 0 * x
   U <- 0 * x
@@ -21,7 +22,7 @@ cma_separate <- function(x, p) {
   X    <- 0 * x
   Indx <- 0 * x
   for (n in 1:N) {
-    tmp <- sort(x[ , n, drop = FALSE], index.return = TRUE)
+    tmp <- sort.int(x[ , n, drop = FALSE], index.return = TRUE)
     X[ , n]    <- tmp$x
     Indx[ , n] <- tmp$ix
   }
