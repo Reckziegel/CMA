@@ -65,3 +65,7 @@ reference:
       - entropy_pooling
       - ffp_moments
 
+    - title: internal
+      - check_p
+      - check_input
+
