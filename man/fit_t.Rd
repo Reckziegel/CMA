@@ -28,7 +28,7 @@ Defaults to \code{FALSE}.}
 A \code{list} of the the class \code{cma_fit} with \code{21} components.
 }
 \description{
-Performs maximum likelihood estimation on the Student-t distribution
+Performs the estimation on the Student-t distribution
 (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.tuv}}
 and \code{\link[ghyp]{fit.tmv}}.
 }

@@ -7,8 +7,7 @@
 cma_combination(x, cdf, copula)
 }
 \arguments{
-\item{x}{A rectangular (non-tidy) data structure with the sorted marginals
-(ascending order).}
+\item{x}{A rectangular (non-tidy) data structure with the margins.}
 
 \item{cdf}{A rectangular (non-tidy) data structure with the CDF's.}
 
@@ -25,6 +24,7 @@ set.seed(123)
 
 margins <- matrix(stats::rnorm(20), ncol = 2)
 colnames(margins) <- c("a", "b")
+
 probs   <- rep(1 / 10, 10)
 
 # separate
@@ -34,7 +34,9 @@ comb <- cma_combination(margins, sep$cdf, sep$copula)
 
 # The result is identical
 margins # matrix
-comb    # tibble
+
+comb # tibble
+
 all.equal(margins[ , "a"], comb$a)
 all.equal(margins[ , "b"], comb$b)
 }

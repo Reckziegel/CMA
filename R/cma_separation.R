@@ -18,7 +18,10 @@
 #'
 #' @examples
 #' set.seed(123)
+#'
 #' margins <- matrix(stats::rnorm(30), ncol = 3)
+#' colnames(margins) <- c("a", "b", "c")
+#'
 #' cma <- cma_separation(x = margins)
 #' cma
 #'

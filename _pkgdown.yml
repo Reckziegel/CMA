@@ -66,6 +66,7 @@ reference:
       - ffp_moments
 
     - title: internal
+      desc: internal functions
       - check_p
       - check_input
 

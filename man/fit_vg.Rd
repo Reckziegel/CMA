@@ -28,7 +28,7 @@ Defaults to \code{FALSE}.}
 A \code{list} of the the class \code{cma_fit} with \code{21} components.
 }
 \description{
-Performs maximum likelihood estimation on the Variance-Gamma (VG)
+Performs the estimation on the Variance-Gamma (VG)
 distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.VGuv}}
 and \code{\link[ghyp]{fit.VGmv}}.
 }
