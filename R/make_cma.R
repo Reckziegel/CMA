@@ -57,16 +57,22 @@ cma_separate <- function(x, p) {
 #' @keywords internal
 cma_combine <- function(x, u, U) {
 
-  is_unsorted <- any(apply(x, 2, is.unsorted))
-  if (is_unsorted) {
-    #warning(
-    #  "The marginal distribution was unsorted. Sorting in ascending order.",
-    #  immediate. = TRUE
-    #)
-    x <- apply(x, 2, sort)
+  K <- NCOL(x)
+
+  # verify if any of the columns is unsorted
+  is_unsorted <- vector("logical", 2) # pre-allocate
+  for (k in 1:K) {
+    is_unsorted[k] <- is.unsorted(x[ , k])
   }
 
-  K <- ncol(x)
+  # if they do... sort!
+  #is_unsorted <- any(apply(x, 2, is.unsorted))
+  if (any(is_unsorted)) {
+    for (k in 1:K) {
+      x[ , k] <- sort.int(x[ , k])
+    }
+  }
+
   X <- 0 * U
 
   for (k in 1:K) {
