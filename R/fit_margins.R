@@ -2,7 +2,7 @@
 
 #' Estimation of the Generalized Hyperbolic Distribution
 #'
-#' Performs maximum likelihood estimation on the Generalized Hyperbolic distribution
+#' Performs the estimation on the Generalized Hyperbolic distribution
 #' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.ghypuv}} and
 #' \code{\link[ghyp]{fit.ghypmv}}.
 #'
@@ -80,7 +80,7 @@ fit_ghd_ <- function(x, symmetric = FALSE) {
 
 #' Estimation of the Hyperbolic Distribution
 #'
-#' Performs a maximum likelihood estimation on the Hyperbolic distribution
+#' Performs the estimation on the Hyperbolic distribution
 #' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.hypuv}} and
 #' \code{\link[ghyp]{fit.hypmv}}
 #'
@@ -161,7 +161,7 @@ fit_hyp_ <- function(x, symmetric = FALSE) {
 
 #' Estimation of the Normal-Inverse Gaussian Distribution
 #'
-#' Performs maximum likelihood estimation on the Normal-Inverse Gaussian (NIG)
+#' Performs the estimation on the Normal-Inverse Gaussian (NIG)
 #' distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.NIGuv}}
 #' and \code{\link[ghyp]{fit.NIGmv}}.
 #'
@@ -242,7 +242,7 @@ fit_nig_ <- function(x, symmetric = FALSE) {
 
 #' Estimation of the Variance-Gamma Distribution
 #'
-#' Performs maximum likelihood estimation on the Variance-Gamma (VG)
+#' Performs the estimation on the Variance-Gamma (VG)
 #' distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.VGuv}}
 #' and \code{\link[ghyp]{fit.VGmv}}.
 #'
@@ -323,7 +323,7 @@ fit_vg_ <- function(x, symmetric = FALSE) {
 
 #' Estimation of the Student-t Distribution
 #'
-#' Performs maximum likelihood estimation on the Student-t distribution
+#' Performs the estimation on the Student-t distribution
 #' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.tuv}}
 #' and \code{\link[ghyp]{fit.tmv}}.
 #'
@@ -404,7 +404,7 @@ fit_t_ <- function(x, symmetric = FALSE) {
 
 #' Estimation of the Normal Distribution
 #'
-#' Performs maximum likelihood estimation on the normal distribution
+#' Performs the estimation on the normal distribution
 #' (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.gaussuv}}
 #' and \code{\link[ghyp]{fit.gaussmv}}.
 #'
@@ -475,7 +475,3 @@ fit_normal_ <- function(x) {
     new_cma_fit(x)
 
 }
-
-
-
-

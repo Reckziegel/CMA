@@ -28,7 +28,7 @@ Defaults to \code{FALSE}.}
 A \code{list} of the the class \code{cma_fit} with \code{21} components.
 }
 \description{
-Performs maximum likelihood estimation on the Normal-Inverse Gaussian (NIG)
+Performs the estimation on the Normal-Inverse Gaussian (NIG)
 distribution (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.NIGuv}}
 and \code{\link[ghyp]{fit.NIGmv}}.
 }

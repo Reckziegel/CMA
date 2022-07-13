@@ -25,7 +25,7 @@ fit_normal(x)
 A \code{list} of the the class \code{cma_fit} with \code{21} components.
 }
 \description{
-Performs maximum likelihood estimation on the normal distribution
+Performs the estimation on the normal distribution
 (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.gaussuv}}
 and \code{\link[ghyp]{fit.gaussmv}}.
 }

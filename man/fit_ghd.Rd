@@ -28,7 +28,7 @@ Defaults to \code{FALSE}.}
 A \code{list} of the the class \code{cma_fit} with \code{21} components.
 }
 \description{
-Performs maximum likelihood estimation on the Generalized Hyperbolic distribution
+Performs the estimation on the Generalized Hyperbolic distribution
 (univariate and multivariate). Wrappers \code{\link[ghyp]{fit.ghypuv}} and
 \code{\link[ghyp]{fit.ghypmv}}.
 }

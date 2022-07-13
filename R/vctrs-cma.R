@@ -213,7 +213,7 @@ new_copula <- function(x, ...) {
 
   } else {
 
-    stop("`new_copula` can only be used with objects from the `fitCopula` class.", call. = FALSE)
+    rlang::abort("`new_copula` can only be used with objects from the `fitCopula` class.")
 
   }
 

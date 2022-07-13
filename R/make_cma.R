@@ -7,7 +7,8 @@ cma_separate <- function(x, p) {
   J <- nrow(x)
   N <- ncol(x)
   l <- J / (J + 1)
-  p <- apply(cbind(p, 1 / J * 10e-9), 1, max, na.rm = TRUE)
+  # p <- apply(cbind(p, 1 / J * 10e-9), 1, max, na.rm = TRUE)
+  p[p == 0] <- 10e-9
   p <- p / sum(p)
   u <- 0 * x
   U <- 0 * x
@@ -21,7 +22,7 @@ cma_separate <- function(x, p) {
   X    <- 0 * x
   Indx <- 0 * x
   for (n in 1:N) {
-    tmp <- sort(x[ , n, drop = FALSE], index.return = TRUE)
+    tmp <- sort.int(x[ , n, drop = FALSE], index.return = TRUE)
     X[ , n]    <- tmp$x
     Indx[ , n] <- tmp$ix
   }
@@ -56,16 +57,22 @@ cma_separate <- function(x, p) {
 #' @keywords internal
 cma_combine <- function(x, u, U) {
 
-  is_unsorted <- any(apply(x, 2, is.unsorted))
-  if (is_unsorted) {
-    #warning(
-    #  "The marginal distribution was unsorted. Sorting in ascending order.",
-    #  immediate. = TRUE
-    #)
-    x <- apply(x, 2, sort)
+  K <- NCOL(x)
+
+  # verify if any of the columns is unsorted
+  is_unsorted <- vector("logical", 2) # pre-allocate
+  for (k in 1:K) {
+    is_unsorted[k] <- is.unsorted(x[ , k])
   }
 
-  K <- ncol(x)
+  # if they do... sort!
+  #is_unsorted <- any(apply(x, 2, is.unsorted))
+  if (any(is_unsorted)) {
+    for (k in 1:K) {
+      x[ , k] <- sort.int(x[ , k])
+    }
+  }
+
   X <- 0 * U
 
   for (k in 1:K) {

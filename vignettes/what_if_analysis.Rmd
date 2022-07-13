@@ -22,7 +22,7 @@ This brief introduction shows how use CMA to price alternative scenarios for an 
 
 3.  Generate new scenarios;
 
-4.  Merge the newly generated scenarios with the empirical copulas.
+4.  Merge the newly generated scenarios with the empirical copulas (or margins).
 
 For this vignette, the `EuStockMarket` dataset is used as *proxy* for the "Market".
 
@@ -58,7 +58,7 @@ In this vignette, the margins are manipulated while keeping the copula structure
 
 ## Step 2. Choose a Target Distribution
 
-Once the the "separation" is done it's necessary to choose a target distribution for the data. For simplicity, let's fit a Student-t, but it could be *any* distribution (see "Marginal Distributions" on the [reference page](https://reckziegel.github.io/CMA/reference/index.html)).
+Once the the "separation" is done it's necessary to choose a target distribution for the data. For simplicity, let's use a Student-t, but it could be *any* distribution (see "Marginal Distributions" on the [reference page](https://reckziegel.github.io/CMA/reference/index.html)).
 
 ```{r}
 dist_t <- fit_t(step_one$marginal)
@@ -86,7 +86,7 @@ The `simul_tbl` is a *tidy* (long-format) `tibble` with 100 marginal distributio
 
 ## Step 4. "Glue" the New Scenarios Into the Empirical Copula
 
-To complete the scenario generation process it's important to "glue" the simulations back into the empirical copula that is stored in `step_one`.
+To complete the scenario generation process it's important to "glue" the simulations back into the empirical copula that was stored in the object `step_one`.
 
 ```{r}
 step_two <- simul_tbl |> 
@@ -141,5 +141,3 @@ step_two |>
 ```
 
 All the paths generated above are compatible with the same marginal distribution specification. The difference between the "good" portfolios and the "bad" ones is purely due by chance.
-
-Indeed, differentiating skill from luck is notoriously difficult.

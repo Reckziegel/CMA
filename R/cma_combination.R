@@ -2,8 +2,7 @@
 #'
 #' Second CMA step: "glue" copulas and marginals into the same data structure.
 #'
-#' @param x A rectangular (non-tidy) data structure with the sorted marginals
-#' (ascending order).
+#' @param x A rectangular (non-tidy) data structure with the margins.
 #' @param cdf A rectangular (non-tidy) data structure with the CDF's.
 #' @param copula A rectangular (non-tidy) data structure with the copulas.
 #'
@@ -18,6 +17,7 @@
 #'
 #' margins <- matrix(stats::rnorm(20), ncol = 2)
 #' colnames(margins) <- c("a", "b")
+#'
 #' probs   <- rep(1 / 10, 10)
 #'
 #' # separate
@@ -27,7 +27,9 @@
 #'
 #' # The result is identical
 #' margins # matrix
-#' comb    # tibble
+#'
+#' comb # tibble
+#'
 #' all.equal(margins[ , "a"], comb$a)
 #' all.equal(margins[ , "b"], comb$b)
 cma_combination <- function(x, cdf, copula) {
